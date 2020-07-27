@@ -1,0 +1,830 @@
+<html lang=""><head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="public/uploads/settings/favicon.png" type="image/png">
+    <title>Infix Edu | Infix Education software</title>
+    <meta name="_token" content="D1TjMxCEzx6PlQehw9Ak9u5unY7bZGTm0tAku2Zo">
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="public/backEnd/vendors/css/bootstrap.css">
+
+
+    <link rel="stylesheet" href="public/backEnd/vendors/css/jquery-ui.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/jquery.data-tables.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/responsive.dataTables.min.css">
+
+
+    <link rel="stylesheet" href="public/backEnd/vendors/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/themify-icons.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/flaticon.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/font-awesome.min.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/nice-select.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/magnific-popup.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/fastselect.min.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/toastr.min.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/js/select2/select2.css">
+    <link rel="stylesheet" href="public/backEnd/vendors/css/fullcalendar.min.css">
+
+    <link rel="stylesheet" href="public/backEnd/css/loade.css">
+    <link rel="stylesheet" href="public/backEnd/css/style.css">
+    <link rel="stylesheet" href="public/backEnd/css/infix.css">
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover { background: #7c32ff !important; }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover { background: #7c32ff  !important; }
+        ::placeholder { color: #415094  !important; }
+        .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-bottom{ z-index: 99999999999 !important; background: #fff !important;        }
+        .input-effect { float: left;  width: 100%; }
+    </style>
+
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : (event.keyCode);
+            if (charCode > 31 && (charCode < 48 || charCode > 57)){
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <style>.cke{visibility:hidden;}</style></head>
+<body class="admin" style="  background: url('public/backEnd/img/body-bg.jpg')  no-repeat center; background-size: cover;   ">
+
+<input type="text" value="" id="logo_img" hidden="">
+<input type="text" value="Infix Edu" id="logo_title" hidden="">
+<div class="main-wrapper" style="min-height: 600px">
+    <!-- Sidebar  -->
+    <input type="hidden" name="url" id="url" value="http://demo.infixedu.com">
+    <nav id="sidebar">
+        <div class="sidebar-header update_sidebar">
+            <a href="http://demo.infixedu.com">
+                <img src="public/uploads/settings/logo.png" alt="logo">
+            </a>
+            <a id="close_sidebar" class="d-lg-none">
+                <i class="ti-close"></i>
+            </a>
+        </div>
+
+        <ul class="list-unstyled components">
+
+
+            <li>
+                <a href="admin-dashboard" id="admin-dashboard">
+                    <span class="flaticon-speedometer"></span>
+                    Dashboard                    </a>
+            </li>
+
+
+            <li>
+                <a href="#subMenuAdmin" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span class="flaticon-analytics"></span>
+                    Admin Section                    </a>
+                <ul class="collapse list-unstyled" id="subMenuAdmin">
+                    <li>
+                        <a href="admission-query">Admission Query</a>
+                    </li>
+                    <li>
+                        <a href="visitor">Visitor Book </a>
+                    </li>
+                    <li>
+                        <a href="complaint">Complaint</a>
+                    </li>
+                    <li>
+                        <a href="postal-receive">Postal Receive</a>
+                    </li>
+                    <li>
+                        <a href="postal-dispatch">Postal Dispatch</a>
+                    </li>
+                    <li>
+                        <a href="phone-call">Phone Call Log</a>
+                    </li>
+                    <li>
+                        <a href="setup-admin">Admin Setup</a>
+                    </li>
+                    <li>
+                        <a href="student-certificate">Student Certificate</a>
+                    </li>
+                    <li>
+                        <a href="generate-certificate">Generate Certificate</a>
+                    </li>
+                    <li>
+                        <a href="student-id-card">Student ID Card</a>
+                    </li>
+                    <li>
+                        <a href="generate-id-card">Generate ID Card</a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+
+
+
+            <li>
+                <a href="#subMenuStudent" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span class="flaticon-reading"></span>
+                    Student Info                    </a>
+                <ul class="collapse list-unstyled" id="subMenuStudent">
+
+                    <li>
+                        <a href="student-list"> Student List</a>
+                    </li>
+
+
+                    <li>
+                        <a href="student-attendance"> Student Attendance</a>
+                    </li>
+
+                    <li>
+                        <a href="student-attendance-report"> Student Attendance Report</a>
+                    </li>
+
+
+
+
+
+                    <li>
+                        <a href="disabled-student">Disabled Students</a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+
+
+
+            <li>
+                <a href="#subMenuFeesCollection" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span class="flaticon-wallet"></span>
+                    Fees Collection                        </a>
+                <ul class="collapse list-unstyled" id="subMenuFeesCollection">
+                    <li>
+                        <a href="fees-group"> Fees Group</a>
+                    </li>
+                    <li>
+                        <a href="fees-type"> Fees Type</a>
+                    </li>
+                    <li>
+                        <a href="fees-discount"> Fees Discount</a>
+                    </li>
+                    <li>
+                        <a href="fees-master"> Fees Master</a>
+                    </li>
+                    <li>
+                        <a href="collect-fees"> Collect Fees</a>
+                    </li>
+                    <li>
+                        <a href="search-fees-payment"> Search Fees Payment</a>
+                    </li>
+                    <li>
+                        <a href="search-fees-due"> Search Fees Due</a>
+                    </li>
+
+
+
+                </ul>
+            </li>
+
+
+
+
+
+            <li>
+                <a href="#subMenuHumanResource" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle active">
+                    <span class="flaticon-consultation"></span>
+                    Human resource                    </a>
+                <ul class="collapse list-unstyled show" id="subMenuHumanResource">
+                    <li>
+                        <a href="staff-directory"> Staff Directory</a>
+                    </li>
+                    <li>
+                        <a href="staff-attendance"> Staff Attendance</a>
+                    </li>
+                    <li>
+                        <a href="staff-attendance-report"> Staff Attendance Report</a>
+                    </li>
+
+
+                    <li>
+                        <a href="payroll" class="active"> Payroll</a>
+                    </li>
+                    <li>
+                        <a href="payroll-report"> Payroll Report</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li>
+                <a href="#subMenuLeaveManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span class="flaticon-slumber"></span>
+                    Leave                    </a>
+                <ul class="collapse list-unstyled" id="subMenuLeaveManagement">
+                    <li>
+                        <a href="apply-leave">Apply Leave</a>
+                    </li>
+
+                </ul>
+            </li>
+
+
+
+
+
+
+
+
+
+
+            <li>
+                <a href="#subMenusystemReports" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span class="flaticon-analysis"></span>
+                    Reports                    </a>
+                <ul class="collapse list-unstyled" id="subMenusystemReports">
+                    <li>
+                        <a href="guardian-report">Guardian Reports</a>
+                    </li>
+                    <li>
+                        <a href="student-history">Student History</a>
+                    </li>
+                    <li>
+                        <a href="student-login-report">Student Login Report</a>
+                    </li>
+                    <li>
+                        <a href="fees-statement">Fees Statement</a>
+                    </li>
+                    <li>
+                        <a href="balance-fees-report">Balance Fees Report</a>
+                    </li>
+                    <li>
+                        <a href="transaction-report">Transaction Report</a>
+                    </li>
+
+
+
+
+
+                </ul>
+            </li>
+
+
+
+
+
+
+
+
+            <!-- Student Panel -->
+            <!-- End student panel -->
+
+            <!-- Parents Panel Menu -->
+            <!-- End Parents Panel Menu -->
+
+
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="main-content">
+        <style>
+            #livesearch a{  text-align: left; display: block; }
+            .languageChange .list{    padding-top: 40px !important;}
+            .infix_theme_rtl .list{    padding-top: 40px !important;}
+            .infix_theme_style .list{    padding-top: 40px !important;}
+            p.date {
+                font-size: 11px;
+            }
+
+            .mr-10.text-right.bell_time {
+                text-align: right !;
+                margin-right: 0;
+                padding-right: 0;
+                position: relative;
+                left: 22px;
+            }
+
+            .profile_single_notification i {
+                margin-bottom: 20px;
+            }
+
+            .profile_single_notification span.ti-bell {
+                font-size: 12px;
+                margin-right: 5px;
+                display: inline-block;
+                overflow: hidden;
+            }
+
+            .dropdown-item:last-child .profile_single_notification {background: #;background: #000;}
+
+            .profile_single_notification.d-flex.justify-content-between.align-items-center {
+                /* background: red; */
+                margin-bottom: 10px !important;
+                margin-top: 10px !important;
+            }
+            .admin .navbar .right-navbar .dropdown .message.notification_msg {
+                font-size: 12px;
+                max-width: 127px;
+                max-height: auto !important;
+                line-height: 1.2;
+                overflow: visible !important;
+                -webkit-transition: all 0.4s ease 0s;
+                -moz-transition: all 0.4s ease 0s;
+                -o-transition: all 0.4s ease 0s;
+                transition: all 0.4s ease 0s;
+                line-height: 1.4;
+                white-space: normal;
+
+            }
+            .admin .navbar .right-navbar .dropdown .message {
+                max-height: initial !important;
+            }
+        </style>
+
+        <nav class="navbar navbar-expand-lg up_navbar">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="up_dash_menu">
+                            <button type="button" id="sidebarCollapse" class="btn d-lg-none nav_icon">
+                                <i class="ti-more"></i>
+                            </button>
+
+                            <ul class="nav navbar-nav mr-auto search-bar">
+                                <li class="">
+                                    <div class="input-group" id="serching">
+                            <span>
+                                <i class="ti-search" aria-hidden="true" id="search-icon"></i>
+                            </span>
+                                        <input type="text" class="form-control primary-input input-left-icon" placeholder="Search" id="search" onkeyup="showResult(this.value)">
+                                        <span class="focus-border"></span>
+                                    </div>
+                                    <div id="livesearch" style="display: none;"></div>
+                                </li>
+                            </ul>
+
+                            <button class="btn btn-dark d-inline-block d-lg-none ml-auto nav_icon" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+                                <div class="client_thumb_btn">
+                                    <img class="client_img" src="public/uploads/staff/demo/staff.jpg" alt="">
+                                </div>
+                            </button>
+
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                                <ul class="nav navbar-nav mr-auto nav-buttons flex-sm-row">
+
+                                    <li class="nav-item">
+                                        <a class="primary-btn white mr-10" href="home">Website</a>
+                                    </li>
+
+
+
+
+
+                                </ul>
+                                <!-- Start Right Navbar -->
+                                <ul class="nav navbar-nav right-navbar">
+
+                                    <li class="nav-item notification-area  d-none d-lg-block">
+                                        <div class="dropdown">
+                                            <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+                                                <span class="badge">0</span>
+                                                <span class="flaticon-notification"></span>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <div class="white-box">
+                                                    <div class="p-h-20">
+                                                        <p class="notification">You have                                                <span>0 new</span>
+                                                            notification</p>
+                                                    </div>
+
+                                                    <a href="view/all/notification/8" class="primary-btn text-center text-uppercase mark-all-as-read">
+                                                        Mark All As Read                                            </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item setting-area">
+                                        <div class="dropdown">
+                                            <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+                                                <img class="rounded-circle" src="public/uploads/staff/demo/staff.jpg" alt="">
+                                            </button>
+                                            <div class="dropdown-menu profile-box">
+                                                <div class="white-box">
+                                                    <a class="dropdown-item" href="#">
+                                                        <div class="">
+                                                            <div class="d-flex">
+
+                                                                <img class="client_img" src="public/uploads/staff/demo/staff.jpg " alt="">
+                                                                <div class="d-flex ml-10">
+                                                                    <div class="">
+                                                                        <h5 class="name text-uppercase">Eugene McLaughlin</h5>
+                                                                        <p class="message">Eugene1@infixedu.com</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <ul class="list-unstyled">
+                                                        <li>
+                                                            <a href="view-staff/8">
+                                                                <span class="ti-user"></span>
+                                                                view profile                                                        </a>
+                                                        </li>
+
+
+                                                        <li>
+                                                            <a href="change-password">
+                                                                <span class="ti-key"></span>
+                                                                Password                                                    </a>
+                                                        </li>
+                                                        <li>
+
+                                                            <a href="logout" onclick="event.preventDefault();
+
+                                                         document.getElementById('logout-form').submit();">
+                                                                <span class="ti-unlock"></span>
+                                                                logout
+                                                            </a>
+
+                                                            <form id="logout-form" action="logout" method="POST" style="display: none;">
+
+                                                                <input type="hidden" name="_token" value="D1TjMxCEzx6PlQehw9Ak9u5unY7bZGTm0tAku2Zo">                                                    </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!-- End Right Navbar -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <section class="sms-breadcrumb mb-40 white-box">
+            <div class="container-fluid">
+                <div class="row justify-content-between">
+                    <h1>Generate Payroll</h1>
+                    <div class="bc-pages">
+                        <a href="dashboard">Dashboard</a>
+                        <a href="#">Human resource</a>
+                        <a href="#">Generate Payroll</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="admin-visitor-area">
+            <div class="container-fluid p-0">
+
+
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="main-title">
+                            <h3 class="mb-30">Select Criteria</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="white-box">
+                            <form method="POST" action="payroll" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data"><input name="_token" type="hidden" value="D1TjMxCEzx6PlQehw9Ak9u5unY7bZGTm0tAku2Zo">
+                                <div class="row">
+                                    <div class="col-lg-4 mt-30-md">
+                                        <select class="niceSelect w-100 bb form-control " name="role_id" id="role_id" style="display: none;">
+                                            <option data-display="Role *" value="">Select Role *</option>
+                                            <option value="4">Teacher</option>
+                                            <option value="5">Admin</option>
+                                            <option value="6">Accountant</option>
+                                            <option value="7">Receptionist</option>
+                                            <option value="8">Librarian</option>
+                                            <option value="9">Driver</option>
+                                            <option value="11">mm</option>
+                                            <option value="12">HOD</option>
+                                            <option value="13">HOD</option>
+                                        </select><div class="nice-select niceSelect w-100 bb form-control" tabindex="0"><span class="current">Role *</span><div class="nice-select-search-box"><input type="text" class="nice-select-search" placeholder="Search..."></div><ul class="list"><li data-value="" data-display="Role *" class="option selected">Select Role *</li><li data-value="4" class="option">Teacher</li><li data-value="5" class="option">Admin</li><li data-value="6" class="option">Accountant</li><li data-value="7" class="option">Receptionist</li><li data-value="8" class="option">Librarian</li><li data-value="9" class="option">Driver</li><li data-value="11" class="option">mm</li><li data-value="12" class="option">HOD</li><li data-value="13" class="option">HOD</li></ul></div>
+                                    </div>
+                                    <div class="col-lg-4 mt-30-md">
+                                        <select class="niceSelect w-100 bb form-control " name="payroll_month" id="payroll_month" style="display: none;">
+                                            <option data-display="Select Month *" value="">Select Month *</option>
+                                            <option value="January">January</option>
+                                            <option value="February">February</option>
+                                            <option value="March">March</option>
+                                            <option value="April">April</option>
+                                            <option value="May">May</option>
+                                            <option value="June">June</option>
+                                            <option value="July" selected="">July</option>
+                                            <option value="August">August</option>
+                                            <option value="September">September</option>
+                                            <option value="October">October</option>
+                                            <option value="November">November</option>
+                                            <option value="December">December</option>
+                                        </select><div class="nice-select niceSelect w-100 bb form-control" tabindex="0"><span class="current">July</span><div class="nice-select-search-box"><input type="text" class="nice-select-search" placeholder="Search..."></div><ul class="list"><li data-value="" data-display="Select Month *" class="option">Select Month *</li><li data-value="January" class="option">January</li><li data-value="February" class="option">February</li><li data-value="March" class="option">March</li><li data-value="April" class="option">April</li><li data-value="May" class="option">May</li><li data-value="June" class="option">June</li><li data-value="July" class="option selected">July</li><li data-value="August" class="option">August</li><li data-value="September" class="option">September</li><li data-value="October" class="option">October</li><li data-value="November" class="option">November</li><li data-value="December" class="option">December</li></ul></div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <select class="niceSelect w-100 bb form-control " name="payroll_year" id="payroll_year" style="display: none;">
+                                            <option data-display="Select Year *" value="">Select Year *</option>
+
+
+
+                                            <option value="2020" selected="">2020</option>
+
+
+                                            <option value="2019">2019</option>
+
+
+                                            <option value="2018">2018</option>
+
+
+                                            <option value="2017">2017</option>
+
+
+                                            <option value="2016">2016</option>
+
+
+                                            <option value="2015">2015</option>
+
+
+                                            <option value="2014">2014</option>
+
+
+                                            <option value="2013">2013</option>
+
+
+                                            <option value="2012">2012</option>
+
+
+                                            <option value="2011">2011</option>
+
+
+                                            <option value="2010">2010</option>
+
+
+                                            <option value="2009">2009</option>
+
+
+                                            <option value="2008">2008</option>
+
+
+                                            <option value="2007">2007</option>
+
+
+                                            <option value="2006">2006</option>
+
+
+                                            <option value="2005">2005</option>
+
+
+                                            <option value="2004">2004</option>
+
+
+                                            <option value="2003">2003</option>
+
+
+                                            <option value="2002">2002</option>
+
+
+                                            <option value="2001">2001</option>
+
+
+                                            <option value="2000">2000</option>
+
+
+                                            <option value="1999">1999</option>
+
+
+                                            <option value="1998">1998</option>
+
+
+                                            <option value="1997">1997</option>
+
+
+                                            <option value="1996">1996</option>
+
+
+                                            <option value="1995">1995</option>
+
+
+                                            <option value="1994">1994</option>
+
+
+                                            <option value="1993">1993</option>
+
+
+                                            <option value="1992">1992</option>
+
+
+                                            <option value="1991">1991</option>
+
+
+                                            <option value="1990">1990</option>
+
+                                        </select><div class="nice-select niceSelect w-100 bb form-control" tabindex="0"><span class="current">2020</span><div class="nice-select-search-box"><input type="text" class="nice-select-search" placeholder="Search..."></div><ul class="list"><li data-value="" data-display="Select Year *" class="option">Select Year *</li><li data-value="2020" class="option selected">2020</li><li data-value="2019" class="option">2019</li><li data-value="2018" class="option">2018</li><li data-value="2017" class="option">2017</li><li data-value="2016" class="option">2016</li><li data-value="2015" class="option">2015</li><li data-value="2014" class="option">2014</li><li data-value="2013" class="option">2013</li><li data-value="2012" class="option">2012</li><li data-value="2011" class="option">2011</li><li data-value="2010" class="option">2010</li><li data-value="2009" class="option">2009</li><li data-value="2008" class="option">2008</li><li data-value="2007" class="option">2007</li><li data-value="2006" class="option">2006</li><li data-value="2005" class="option">2005</li><li data-value="2004" class="option">2004</li><li data-value="2003" class="option">2003</li><li data-value="2002" class="option">2002</li><li data-value="2001" class="option">2001</li><li data-value="2000" class="option">2000</li><li data-value="1999" class="option">1999</li><li data-value="1998" class="option">1998</li><li data-value="1997" class="option">1997</li><li data-value="1996" class="option">1996</li><li data-value="1995" class="option">1995</li><li data-value="1994" class="option">1994</li><li data-value="1993" class="option">1993</li><li data-value="1992" class="option">1992</li><li data-value="1991" class="option">1991</li><li data-value="1990" class="option">1990</li></ul></div>
+                                    </div>
+                                    <div class="col-lg-12 mt-20 text-right">
+                                        <button type="submit" class="primary-btn small fix-gr-bg">
+                                            <span class="ti-search pr-2"></span>
+                                            Search                </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<div class="has-modal modal fade" id="showDetaildModal">
+    <div class="modal-dialog modal-dialog-centered" id="modalSize">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" id="showDetaildModalTile">New Client Information</h4>
+                <button type="button" class="close icons" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" id="showDetaildModalBody">
+
+            </div>
+
+            <!-- Modal footer -->
+
+        </div>
+    </div>
+</div>
+
+
+<!--  Start Modal Area -->
+<div class="modal fade invoice-details" id="showDetaildModalInvoice">
+    <div class="modal-dialog large-modal modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Invoice</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <div class="modal-body" id="showDetaildModalBodyInvoice">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--
+<div class="skype-button bubble" data-bot-id="spondonit"></div>
+
+
+<!-- ================Footer Area ================= -->
+<footer class="footer-area">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12 text-center">
+                <p>Copyright © 2019 - 2020 All rights reserved | This template is made by Codethemes </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- ================End Footer Area ================= -->
+
+<script src="public/backEnd/vendors/js/jquery-3.2.1.min.js"></script>
+<script src="public/backEnd/vendors/js/jquery-ui.js">
+</script>
+<script src="public/backEnd/vendors/js/jquery.data-tables.js">
+</script>
+<script src="public/backEnd/vendors/js/dataTables.buttons.min.js">
+</script>
+<script src="public/backEnd/vendors/js/buttons.flash.min.js">
+</script>
+<script src="public/backEnd/vendors/js/jszip.min.js"></script>
+<script src="public/backEnd/vendors/js/pdfmake.min.js"></script>
+<script src="public/backEnd/vendors/js/vfs_fonts.js"></script>
+<script src="public/backEnd/vendors/js/buttons.html5.min.js">
+</script>
+<script src="public/backEnd/vendors/js/buttons.print.min.js">
+</script>
+<script src="public/backEnd/vendors/js/dataTables.rowReorder.min.js">
+</script>
+<script src="public/backEnd/vendors/js/dataTables.responsive.min.js">
+</script>
+<script src="public/backEnd/vendors/js/buttons.colVis.min.js">
+</script>
+<script src="public/backEnd/vendors/js/popper.js">
+</script>
+
+
+<script src="public/backEnd/css/rtl/bootstrap.min.js">
+</script>
+
+
+<script src="public/backEnd/vendors/js/nice-select.min.js"></script>
+<script src="public/backEnd/vendors/js/jquery.magnific-popup.min.js">
+</script>
+<script src="public/backEnd/vendors/js/fastselect.standalone.min.js">
+</script>
+<script src="public/backEnd/vendors/js/raphael-min.js">
+</script>
+<script src="public/backEnd/vendors/js/morris.min.js">
+</script>
+<script src="public/backEnd/vendors/js/ckeditor.js"></script>
+
+<script type="text/javascript" src="public/backEnd/vendors/js/toastr.min.js"></script>
+
+<script type="text/javascript" src="public/backEnd/vendors/js/moment.min.js"></script>
+<script src="public/backEnd/vendors/js/ckeditor.js"></script>
+<script src="public/backEnd/vendors/js/bootstrap_datetimepicker.min.js"></script>
+<script src="public/backEnd/vendors/js/bootstrap-datepicker.min.js"></script>
+
+
+<script type="text/javascript" src="public/backEnd/vendors/js/fullcalendar.min.js"></script>
+
+
+<script type="text/javascript" src="public/backEnd/js/jquery.validate.min.js"></script>
+<script src="public/backEnd/vendors/js/select2/select2.min.js"></script>
+
+<script src="public/backEnd/js/main.js"></script>
+<script src="public/backEnd/js/custom.js"></script>
+<script src="public/js/registration_custom.js"></script>
+<script src="public/backEnd/js/developer.js"></script>
+
+
+<script type="text/javascript">
+    //$('table').parent().addClass('table-responsive pt-4');
+    // for select2 multiple dropdown in send email/Sms in Individual Tab
+    $("#selectStaffss").select2();
+    $("#checkbox").click(function () {
+        if ($("#checkbox").is(':checked')) {
+            $("#selectStaffss > option").prop("selected", "selected");
+            $("#selectStaffss").trigger("change");
+        } else {
+            $("#selectStaffss > option").removeAttr("selected");
+            $("#selectStaffss").trigger("change");
+        }
+    });
+
+
+    // for select2 multiple dropdown in send email/Sms in Class tab
+    $("#selectSectionss").select2();
+    $("#checkbox_section").click(function () {
+        if ($("#checkbox_section").is(':checked')) {
+            $("#selectSectionss > option").prop("selected", "selected");
+            $("#selectSectionss").trigger("change");
+        } else {
+            $("#selectSectionss > option").removeAttr("selected");
+            $("#selectSectionss").trigger("change");
+        }
+    });
+
+</script>
+
+<script>
+
+
+    $('.close_modal').on('click', function() {
+        $('.custom_notification').removeClass('open_notification');
+    });
+    $('.notification_icon').on('click', function() {
+        $('.custom_notification').addClass('open_notification');
+    });
+    $(document).click(function(event) {
+        if (!$(event.target).closest(".custom_notification").length) {
+            $("body").find(".custom_notification").removeClass("open_notification");
+        }
+    });
+
+
+
+</script>
+<script src="public/backEnd/js/search.js"></script>
+
+<script type="text/javascript"></script>
+
+
+
+
+
+
+
+
+
+
+</body></html>

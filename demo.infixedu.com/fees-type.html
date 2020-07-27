@@ -1,0 +1,1321 @@
+<html lang=""><head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="
+    public/uploads/settings/favicon.png" type="image/png">
+    <title>Infix Edu | Infix Education software</title>
+    <meta name="_token" content="D1TjMxCEzx6PlQehw9Ak9u5unY7bZGTm0tAku2Zo">
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/bootstrap.css">
+
+
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/jquery-ui.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/jquery.data-tables.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/responsive.dataTables.min.css">
+
+
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/themify-icons.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/flaticon.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/font-awesome.min.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/nice-select.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/magnific-popup.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/fastselect.min.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/toastr.min.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/js/select2/select2.css">
+    <link rel="stylesheet" href="
+    public/backEnd/vendors/css/fullcalendar.min.css">
+
+    <link rel="stylesheet" href="
+    public/backEnd/css/loade.css">
+    <link rel="stylesheet" href="
+    public/backEnd/css/style.css">
+    <link rel="stylesheet" href="
+    public/backEnd/css/infix.css">
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover { background: #7c32ff !important; }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover { background: #7c32ff  !important; }
+        ::placeholder { color: #415094  !important; }
+        .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-bottom{ z-index: 99999999999 !important; background: #fff !important;        }
+        .input-effect { float: left;  width: 100%; }
+    </style>
+
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : (event.keyCode);
+            if (charCode > 31 && (charCode < 48 || charCode > 57)){
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <style>.cke{visibility:hidden;}</style></head>
+<body class="admin" style="  background: url('
+public/backEnd/img/body-bg.jpg')  no-repeat center; background-size: cover;   ">
+
+<input type="text" value="" id="logo_img" hidden="">
+<input type="text" value="Infix Edu" id="logo_title" hidden="">
+<div class="main-wrapper" style="min-height: 600px">
+    <!-- Sidebar  -->
+    <input type="hidden" name="url" id="url" value="http://demo.infixedu.com">
+    <nav id="sidebar">
+        <div class="sidebar-header update_sidebar">
+            <a href="http://demo.infixedu.com">
+                <img src="
+                public/uploads/settings/logo.png" alt="logo">
+            </a>
+            <a id="close_sidebar" class="d-lg-none">
+                <i class="ti-close"></i>
+            </a>
+        </div>
+
+        <ul class="list-unstyled components">
+
+
+            <li>
+                <a href="
+                admin-dashboard" id="admin-dashboard">
+                    <span class="flaticon-speedometer"></span>
+                    Dashboard                    </a>
+            </li>
+
+
+            <li>
+                <a href="#subMenuAdmin" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span class="flaticon-analytics"></span>
+                    Admin Section                    </a>
+                <ul class="collapse list-unstyled" id="subMenuAdmin">
+                    <li>
+                        <a href="
+                        admission-query">Admission Query</a>
+                    </li>
+                    <li>
+                        <a href="
+                        visitor">Visitor Book </a>
+                    </li>
+                    <li>
+                        <a href="
+                        complaint">Complaint</a>
+                    </li>
+                    <li>
+                        <a href="
+                        postal-receive">Postal Receive</a>
+                    </li>
+                    <li>
+                        <a href="
+                        postal-dispatch">Postal Dispatch</a>
+                    </li>
+                    <li>
+                        <a href="
+                        phone-call">Phone Call Log</a>
+                    </li>
+                    <li>
+                        <a href="
+                        setup-admin">Admin Setup</a>
+                    </li>
+                    <li>
+                        <a href="
+                        student-certificate">Student Certificate</a>
+                    </li>
+                    <li>
+                        <a href="
+                        generate-certificate">Generate Certificate</a>
+                    </li>
+                    <li>
+                        <a href="
+                        student-id-card">Student ID Card</a>
+                    </li>
+                    <li>
+                        <a href="
+                        generate-id-card">Generate ID Card</a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+
+
+
+            <li>
+                <a href="#subMenuStudent" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span class="flaticon-reading"></span>
+                    Student Info                    </a>
+                <ul class="collapse list-unstyled" id="subMenuStudent">
+
+                    <li>
+                        <a href="
+                        student-list"> Student List</a>
+                    </li>
+
+
+                    <li>
+                        <a href="
+                        student-attendance"> Student Attendance</a>
+                    </li>
+
+                    <li>
+                        <a href="
+                        student-attendance-report"> Student Attendance Report</a>
+                    </li>
+
+
+
+
+
+                    <li>
+                        <a href="
+                        disabled-student">Disabled Students</a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+
+
+
+            <li>
+                <a href="#subMenuFeesCollection" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle active">
+                    <span class="flaticon-wallet"></span>
+                    Fees Collection                        </a>
+                <ul class="collapse list-unstyled show" id="subMenuFeesCollection">
+                    <li>
+                        <a href="
+                        fees-group"> Fees Group</a>
+                    </li>
+                    <li>
+                        <a href="
+                        fees-type" class="active"> Fees Type</a>
+                    </li>
+                    <li>
+                        <a href="
+                        fees-discount"> Fees Discount</a>
+                    </li>
+                    <li>
+                        <a href="
+                        fees-master"> Fees Master</a>
+                    </li>
+                    <li>
+                        <a href="
+                        collect-fees"> Collect Fees</a>
+                    </li>
+                    <li>
+                        <a href="
+                        search-fees-payment"> Search Fees Payment</a>
+                    </li>
+                    <li>
+                        <a href="
+                        search-fees-due"> Search Fees Due</a>
+                    </li>
+
+
+
+                </ul>
+            </li>
+
+
+
+
+
+            <li>
+                <a href="#subMenuHumanResource" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span class="flaticon-consultation"></span>
+                    Human resource                    </a>
+                <ul class="collapse list-unstyled" id="subMenuHumanResource">
+                    <li>
+                        <a href="
+                        staff-directory"> Staff Directory</a>
+                    </li>
+                    <li>
+                        <a href="
+                        staff-attendance"> Staff Attendance</a>
+                    </li>
+                    <li>
+                        <a href="
+                        staff-attendance-report"> Staff Attendance Report</a>
+                    </li>
+
+
+                    <li>
+                        <a href="
+                        payroll"> Payroll</a>
+                    </li>
+                    <li>
+                        <a href="
+                        payroll-report"> Payroll Report</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li>
+                <a href="#subMenuLeaveManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span class="flaticon-slumber"></span>
+                    Leave                    </a>
+                <ul class="collapse list-unstyled" id="subMenuLeaveManagement">
+                    <li>
+                        <a href="
+                        apply-leave">Apply Leave</a>
+                    </li>
+
+                </ul>
+            </li>
+
+
+
+
+
+
+
+
+
+
+            <li>
+                <a href="#subMenusystemReports" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span class="flaticon-analysis"></span>
+                    Reports                    </a>
+                <ul class="collapse list-unstyled" id="subMenusystemReports">
+                    <li>
+                        <a href="
+                        guardian-report">Guardian Reports</a>
+                    </li>
+                    <li>
+                        <a href="
+                        student-history">Student History</a>
+                    </li>
+                    <li>
+                        <a href="
+                        student-login-report">Student Login Report</a>
+                    </li>
+                    <li>
+                        <a href="
+                        fees-statement">Fees Statement</a>
+                    </li>
+                    <li>
+                        <a href="
+                        balance-fees-report">Balance Fees Report</a>
+                    </li>
+                    <li>
+                        <a href="
+                        transaction-report">Transaction Report</a>
+                    </li>
+
+
+
+
+
+                </ul>
+            </li>
+
+
+
+
+
+
+
+
+            <!-- Student Panel -->
+            <!-- End student panel -->
+
+            <!-- Parents Panel Menu -->
+            <!-- End Parents Panel Menu -->
+
+
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="main-content">
+        <style>
+            #livesearch a{  text-align: left; display: block; }
+            .languageChange .list{    padding-top: 40px !important;}
+            .infix_theme_rtl .list{    padding-top: 40px !important;}
+            .infix_theme_style .list{    padding-top: 40px !important;}
+            p.date {
+                font-size: 11px;
+            }
+
+            .mr-10.text-right.bell_time {
+                text-align: right !;
+                margin-right: 0;
+                padding-right: 0;
+                position: relative;
+                left: 22px;
+            }
+
+            .profile_single_notification i {
+                margin-bottom: 20px;
+            }
+
+            .profile_single_notification span.ti-bell {
+                font-size: 12px;
+                margin-right: 5px;
+                display: inline-block;
+                overflow: hidden;
+            }
+
+            .dropdown-item:last-child .profile_single_notification {background: #;background: #000;}
+
+            .profile_single_notification.d-flex.justify-content-between.align-items-center {
+                /* background: red; */
+                margin-bottom: 10px !important;
+                margin-top: 10px !important;
+            }
+            .admin .navbar .right-navbar .dropdown .message.notification_msg {
+                font-size: 12px;
+                max-width: 127px;
+                max-height: auto !important;
+                line-height: 1.2;
+                overflow: visible !important;
+                -webkit-transition: all 0.4s ease 0s;
+                -moz-transition: all 0.4s ease 0s;
+                -o-transition: all 0.4s ease 0s;
+                transition: all 0.4s ease 0s;
+                line-height: 1.4;
+                white-space: normal;
+
+            }
+            .admin .navbar .right-navbar .dropdown .message {
+                max-height: initial !important;
+            }
+        </style>
+
+        <nav class="navbar navbar-expand-lg up_navbar">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="up_dash_menu">
+                            <button type="button" id="sidebarCollapse" class="btn d-lg-none nav_icon">
+                                <i class="ti-more"></i>
+                            </button>
+
+                            <ul class="nav navbar-nav mr-auto search-bar">
+                                <li class="">
+                                    <div class="input-group" id="serching">
+                            <span>
+                                <i class="ti-search" aria-hidden="true" id="search-icon"></i>
+                            </span>
+                                        <input type="text" class="form-control primary-input input-left-icon" placeholder="Search" id="search" onkeyup="showResult(this.value)">
+                                        <span class="focus-border"></span>
+                                    </div>
+                                    <div id="livesearch" style="display: none;"></div>
+                                </li>
+                            </ul>
+
+                            <button class="btn btn-dark d-inline-block d-lg-none ml-auto nav_icon" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+                                <div class="client_thumb_btn">
+                                    <img class="client_img" src="
+                                    public/uploads/staff/demo/staff.jpg" alt="">
+                                </div>
+                            </button>
+
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                                <ul class="nav navbar-nav mr-auto nav-buttons flex-sm-row">
+
+                                    <li class="nav-item">
+                                        <a class="primary-btn white mr-10" href="
+                                        home">Website</a>
+                                    </li>
+
+
+
+
+
+                                </ul>
+                                <!-- Start Right Navbar -->
+                                <ul class="nav navbar-nav right-navbar">
+
+                                    <li class="nav-item notification-area  d-none d-lg-block">
+                                        <div class="dropdown">
+                                            <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+                                                <span class="badge">0</span>
+                                                <span class="flaticon-notification"></span>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <div class="white-box">
+                                                    <div class="p-h-20">
+                                                        <p class="notification">You have                                                <span>0 new</span>
+                                                            notification</p>
+                                                    </div>
+
+                                                    <a href="
+                                                    view/all/notification/8" class="primary-btn text-center text-uppercase mark-all-as-read">
+                                                        Mark All As Read                                            </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item setting-area">
+                                        <div class="dropdown">
+                                            <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+                                                <img class="rounded-circle" src="
+                                                public/uploads/staff/demo/staff.jpg" alt="">
+                                            </button>
+                                            <div class="dropdown-menu profile-box">
+                                                <div class="white-box">
+                                                    <a class="dropdown-item" href="#">
+                                                        <div class="">
+                                                            <div class="d-flex">
+
+                                                                <img class="client_img" src="
+                                                                public/uploads/staff/demo/staff.jpg " alt="">
+                                                                <div class="d-flex ml-10">
+                                                                    <div class="">
+                                                                        <h5 class="name text-uppercase">Eugene McLaughlin</h5>
+                                                                        <p class="message">Eugene1@infixedu.com</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <ul class="list-unstyled">
+                                                        <li>
+                                                            <a href="
+                                                            view-staff/8">
+                                                                <span class="ti-user"></span>
+                                                                view profile                                                        </a>
+                                                        </li>
+
+
+                                                        <li>
+                                                            <a href="
+                                                            change-password">
+                                                                <span class="ti-key"></span>
+                                                                Password                                                    </a>
+                                                        </li>
+                                                        <li>
+
+                                                            <a href="
+                                                            logout" onclick="event.preventDefault();
+
+                                                         document.getElementById('logout-form').submit();">
+                                                                <span class="ti-unlock"></span>
+                                                                logout
+                                                            </a>
+
+                                                            <form id="logout-form" action="
+                                                            logout" method="POST" style="display: none;">
+
+                                                                <input type="hidden" name="_token" value="D1TjMxCEzx6PlQehw9Ak9u5unY7bZGTm0tAku2Zo">                                                    </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!-- End Right Navbar -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <section class="sms-breadcrumb mb-40 white-box">
+            <div class="container-fluid">
+                <div class="row justify-content-between">
+                    <h1>Fees Type</h1>
+                    <div class="bc-pages">
+                        <a href="
+                        dashboard">Dashboard</a>
+                        <a href="#">Fees Collection</a>
+                        <a href="#">Fees Type</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="admin-visitor-area up_st_admin_visitor">
+            <div class="container-fluid p-0">
+                <div class="row">
+
+
+                    <div class="col-lg-3">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="main-title">
+                                    <h3 class="mb-30">                                    Add                                                                Fees Type                            </h3>
+                                </div>
+                                <form method="POST" action="
+                                fees-type-store" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data"><input name="_token" type="hidden" value="D1TjMxCEzx6PlQehw9Ak9u5unY7bZGTm0tAku2Zo">
+                                    <div class="white-box">
+                                        <div class="add-visitor">
+                                            <div class="row  mt-25">
+                                                <div class="col-lg-12">
+                                                    <div class="input-effect">
+                                                        <input class="primary-input form-control" type="text" name="name" autocomplete="off" value="">
+                                                        <input type="hidden" name="id" value="">
+                                                        <label>Name <span>*</span></label>
+                                                        <span class="focus-border"></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-25">
+                                                <div class="col-lg-12">
+                                                    <select class="niceSelect w-100 bb form-control" name="fees_group" id="fees_group" style="display: none;">
+                                                        <option data-display="Fees Group *" value="">Fees Group *</option>
+                                                        <option value="1">Library Fee</option>
+                                                        <option value="2">Processing Fee</option>
+                                                        <option value="3">Tuition Fee</option>
+                                                        <option value="4">Development Fee</option>
+                                                        <option value="5">উন্নয়ন ফি</option>
+                                                        <option value="6">Admission Fee</option>
+                                                        <option value="7">Security Deposit</option>
+                                                        <option value="8">IT Fee</option>
+                                                        <option value="9">Composite Fee</option>
+                                                        <option value="10">install 1</option>
+                                                        <option value="11">test</option>
+                                                        <option value="12">Monthly</option>
+                                                        <option value="13">Class2Monthly</option>
+                                                        <option value="14">Colegiatura</option>
+                                                        <option value="15">nnaann</option>
+                                                        <option value="16">Crashcourse fee</option>
+                                                    </select><div class="nice-select niceSelect w-100 bb form-control" tabindex="0"><span class="current">Fees Group *</span><div class="nice-select-search-box"><input type="text" class="nice-select-search" placeholder="Search..."></div><ul class="list"><li data-value="" data-display="Fees Group *" class="option selected">Fees Group *</li><li data-value="1" class="option">Library Fee</li><li data-value="2" class="option">Processing Fee</li><li data-value="3" class="option">Tuition Fee</li><li data-value="4" class="option">Development Fee</li><li data-value="5" class="option">উন্নয়ন ফি</li><li data-value="6" class="option">Admission Fee</li><li data-value="7" class="option">Security Deposit</li><li data-value="8" class="option">IT Fee</li><li data-value="9" class="option">Composite Fee</li><li data-value="10" class="option">install 1</li><li data-value="11" class="option">test</li><li data-value="12" class="option">Monthly</li><li data-value="13" class="option">Class2Monthly</li><li data-value="14" class="option">Colegiatura</li><li data-value="15" class="option">nnaann</li><li data-value="16" class="option">Crashcourse fee</li></ul></div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-25">
+                                                <div class="col-lg-12">
+                                                    <div class="input-effect">
+                                                        <textarea class="primary-input form-control" cols="0" rows="4" name="description"></textarea>
+                                                        <label>Description <span></span></label>
+                                                        <span class="focus-border textarea"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-40">
+                                                <div class="col-lg-12 text-center">
+                                                    <button class="primary-btn fix-gr-bg" data-toggle="tooltip" title="" data-original-title="">
+                                                        <span class="ti-check"></span>
+
+                                                        Save                                                                                        content                                        </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9">
+                        <div class="row">
+                            <div class="col-lg-4 no-gutters">
+                                <div class="main-title">
+                                    <h3 class="mb-0"> Fees Type  List</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <div class="modal fade admin-query" id="deleteFeesTypeModal1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Delete Type</h4>
+                                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <h4>Are you sure to delete this item?</h4>
+                                                </div>
+
+                                                <div class="mt-40 d-flex justify-content-between">
+                                                    <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                    <a href="
+                                                    fees-type-delete/1"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div><div class="modal fade admin-query" id="deleteFeesTypeModal2">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h4>Are you sure to delete this item?</h4>
+                                            </div>
+
+                                            <div class="mt-40 d-flex justify-content-between">
+                                                <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                <a href="
+                                                fees-type-delete/2"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div class="modal fade admin-query" id="deleteFeesTypeModal3">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h4>Are you sure to delete this item?</h4>
+                                            </div>
+
+                                            <div class="mt-40 d-flex justify-content-between">
+                                                <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                <a href="
+                                                fees-type-delete/3"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div class="modal fade admin-query" id="deleteFeesTypeModal4">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h4>Are you sure to delete this item?</h4>
+                                            </div>
+
+                                            <div class="mt-40 d-flex justify-content-between">
+                                                <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                <a href="
+                                                fees-type-delete/4"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div class="modal fade admin-query" id="deleteFeesTypeModal5">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h4>Are you sure to delete this item?</h4>
+                                            </div>
+
+                                            <div class="mt-40 d-flex justify-content-between">
+                                                <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                <a href="
+                                                fees-type-delete/5"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div class="modal fade admin-query" id="deleteFeesTypeModal6">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h4>Are you sure to delete this item?</h4>
+                                            </div>
+
+                                            <div class="mt-40 d-flex justify-content-between">
+                                                <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                <a href="
+                                                fees-type-delete/6"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div class="modal fade admin-query" id="deleteFeesTypeModal7">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h4>Are you sure to delete this item?</h4>
+                                            </div>
+
+                                            <div class="mt-40 d-flex justify-content-between">
+                                                <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                <a href="
+                                                fees-type-delete/7"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div class="modal fade admin-query" id="deleteFeesTypeModal8">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h4>Are you sure to delete this item?</h4>
+                                            </div>
+
+                                            <div class="mt-40 d-flex justify-content-between">
+                                                <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                <a href="
+                                                fees-type-delete/8"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div class="modal fade admin-query" id="deleteFeesTypeModal9">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h4>Are you sure to delete this item?</h4>
+                                            </div>
+
+                                            <div class="mt-40 d-flex justify-content-between">
+                                                <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                <a href="
+                                                fees-type-delete/9"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div class="modal fade admin-query" id="deleteFeesTypeModal10">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h4>Are you sure to delete this item?</h4>
+                                            </div>
+
+                                            <div class="mt-40 d-flex justify-content-between">
+                                                <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                <a href="
+                                                fees-type-delete/10"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div class="modal fade admin-query" id="deleteFeesTypeModal11">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h4>Are you sure to delete this item?</h4>
+                                            </div>
+
+                                            <div class="mt-40 d-flex justify-content-between">
+                                                <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                <a href="
+                                                fees-type-delete/11"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div class="modal fade admin-query" id="deleteFeesTypeModal12">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h4>Are you sure to delete this item?</h4>
+                                            </div>
+
+                                            <div class="mt-40 d-flex justify-content-between">
+                                                <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
+                                                <a href="
+                                                fees-type-delete/12"><button class="primary-btn fix-gr-bg" type="submit">Delete</button></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div id="table_id_wrapper" class="dataTables_wrapper no-footer"><div class="dt-buttons">               <button class="dt-button buttons-copy buttons-html5" tabindex="0" aria-controls="table_id" type="button" title="Copy"><span><i class="fa fa-files-o"></i></span></button> <button class="dt-button buttons-excel buttons-html5" tabindex="0" aria-controls="table_id" type="button" title="Excel"><span><i class="fa fa-file-excel-o"></i></span></button> <button class="dt-button buttons-csv buttons-html5" tabindex="0" aria-controls="table_id" type="button" title="CSV"><span><i class="fa fa-file-text-o"></i></span></button> <button class="dt-button buttons-pdf buttons-html5" tabindex="0" aria-controls="table_id" type="button" title="PDF"><span><i class="fa fa-file-pdf-o"></i></span></button> <button class="dt-button buttons-print" tabindex="0" aria-controls="table_id" type="button" title="Print"><span><i class="fa fa-print"></i></span></button> <button class="dt-button buttons-collection buttons-colvis" tabindex="0" aria-controls="table_id" type="button" aria-haspopup="true"><span><i class="fa fa-columns"></i></span></button> </div><div id="table_id_filter" class="dataTables_filter"><label><i class="ti-search"></i><input type="search" class="" placeholder="Quick Search" aria-controls="table_id"></label></div><table id="table_id" class="display school-table dataTable no-footer dtr-inline" role="grid" aria-describedby="table_id_info" style="width: 100%;" width="100%" cellspacing="0">
+
+                                <thead>
+                                <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="table_id" rowspan="1" colspan="1" style="width: 257px;" aria-sort="ascending" aria-label=" Name: activate to sort column descending"> Name</th><th class="sorting" tabindex="0" aria-controls="table_id" rowspan="1" colspan="1" style="width: 180px;" aria-label=" Fees Group: activate to sort column ascending"> Fees Group</th><th class="sorting" tabindex="0" aria-controls="table_id" rowspan="1" colspan="1" style="width: 146px;" aria-label=" Action: activate to sort column ascending"> Action</th></tr>
+                                </thead>
+
+                                <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1" tabindex="0">Coaching Fees</td>
+                                    <td>Library Fee</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                Select                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+
+                                                <a class="dropdown-item" href="
+                                                fees-type-edit/12">Edit</a>
+
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#deleteFeesTypeModal12" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr><tr role="row" class="even">
+                                    <td tabindex="0" class="sorting_1">College fee</td>
+                                    <td>Tuition Fee</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                Select                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+
+                                                <a class="dropdown-item" href="
+                                                fees-type-edit/7">Edit</a>
+
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#deleteFeesTypeModal7" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr><tr role="row" class="odd">
+                                    <td tabindex="0" class="sorting_1">Extra-curricular activities</td>
+                                    <td>Library Fee</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                Select                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+
+                                                <a class="dropdown-item" href="
+                                                fees-type-edit/1">Edit</a>
+
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#deleteFeesTypeModal1" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr><tr role="row" class="even">
+                                    <td tabindex="0" class="sorting_1">Extra-curricular activities</td>
+                                    <td>Tuition Fee</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                Select                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+
+                                                <a class="dropdown-item" href="
+                                                fees-type-edit/3">Edit</a>
+
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#deleteFeesTypeModal3" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr><tr role="row" class="odd">
+                                    <td tabindex="0" class="sorting_1">Fine</td>
+                                    <td>উন্নয়ন ফি</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                Select                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+
+                                                <a class="dropdown-item" href="
+                                                fees-type-edit/5">Edit</a>
+
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#deleteFeesTypeModal5" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr><tr role="row" class="even">
+                                    <td tabindex="0" class="sorting_1">Jan</td>
+                                    <td>Monthly</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                Select                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+
+                                                <a class="dropdown-item" href="
+                                                fees-type-edit/10">Edit</a>
+
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#deleteFeesTypeModal10" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr><tr role="row" class="odd">
+                                    <td class="sorting_1" tabindex="0">Jan</td>
+                                    <td>Class2Monthly</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                Select                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+
+                                                <a class="dropdown-item" href="
+                                                fees-type-edit/11">Edit</a>
+
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#deleteFeesTypeModal11" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr><tr role="row" class="even">
+                                    <td tabindex="0" class="sorting_1">kunal</td>
+                                    <td>Processing Fee</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                Select                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+
+                                                <a class="dropdown-item" href="
+                                                fees-type-edit/8">Edit</a>
+
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#deleteFeesTypeModal8" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr><tr role="row" class="odd">
+                                    <td tabindex="0" class="sorting_1">Lunch</td>
+                                    <td>Admission Fee</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                Select                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+
+                                                <a class="dropdown-item" href="
+                                                fees-type-edit/6">Edit</a>
+
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#deleteFeesTypeModal6" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr><tr role="row" class="even">
+                                    <td tabindex="0" class="sorting_1">sfsdf</td>
+                                    <td>Processing Fee</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                Select                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+
+                                                <a class="dropdown-item" href="
+                                                fees-type-edit/9">Edit</a>
+
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#deleteFeesTypeModal9" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr></tbody>
+                            </table><div class="dataTables_info" id="table_id_info" role="status" aria-live="polite">Showing 1 to 10 of 12 entries</div><div class="dataTables_paginate paging_simple_numbers" id="table_id_paginate"><a class="paginate_button previous disabled" aria-controls="table_id" data-dt-idx="0" tabindex="0" id="table_id_previous"><i class="ti-arrow-left"></i></a><span><a class="paginate_button current" aria-controls="table_id" data-dt-idx="1" tabindex="0">1</a><a class="paginate_button " aria-controls="table_id" data-dt-idx="2" tabindex="0">2</a></span><a class="paginate_button next" aria-controls="table_id" data-dt-idx="3" tabindex="0" id="table_id_next"><i class="ti-arrow-right"></i></a></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<div class="has-modal modal fade" id="showDetaildModal">
+    <div class="modal-dialog modal-dialog-centered" id="modalSize">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" id="showDetaildModalTile">New Client Information</h4>
+                <button type="button" class="close icons" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" id="showDetaildModalBody">
+
+            </div>
+
+            <!-- Modal footer -->
+
+        </div>
+    </div>
+</div>
+
+
+<!--  Start Modal Area -->
+<div class="modal fade invoice-details" id="showDetaildModalInvoice">
+    <div class="modal-dialog large-modal modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Invoice</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <div class="modal-body" id="showDetaildModalBodyInvoice">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--
+<div class="skype-button bubble" data-bot-id="spondonit"></div>
+
+
+<!-- ================Footer Area ================= -->
+<footer class="footer-area">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12 text-center">
+                <p>Copyright © 2019 - 2020 All rights reserved | This template is made by Codethemes </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- ================End Footer Area ================= -->
+
+<script src="
+public/backEnd/vendors/js/jquery-3.2.1.min.js"></script>
+<script src="
+public/backEnd/vendors/js/jquery-ui.js">
+</script>
+<script src="
+public/backEnd/vendors/js/jquery.data-tables.js">
+</script>
+<script src="
+public/backEnd/vendors/js/dataTables.buttons.min.js">
+</script>
+<script src="
+public/backEnd/vendors/js/buttons.flash.min.js">
+</script>
+<script src="
+public/backEnd/vendors/js/jszip.min.js"></script>
+<script src="
+public/backEnd/vendors/js/pdfmake.min.js"></script>
+<script src="
+public/backEnd/vendors/js/vfs_fonts.js"></script>
+<script src="
+public/backEnd/vendors/js/buttons.html5.min.js">
+</script>
+<script src="
+public/backEnd/vendors/js/buttons.print.min.js">
+</script>
+<script src="
+public/backEnd/vendors/js/dataTables.rowReorder.min.js">
+</script>
+<script src="
+public/backEnd/vendors/js/dataTables.responsive.min.js">
+</script>
+<script src="
+public/backEnd/vendors/js/buttons.colVis.min.js">
+</script>
+<script src="
+public/backEnd/vendors/js/popper.js">
+</script>
+
+
+<script src="
+public/backEnd/css/rtl/bootstrap.min.js">
+</script>
+
+
+<script src="
+public/backEnd/vendors/js/nice-select.min.js"></script>
+<script src="
+public/backEnd/vendors/js/jquery.magnific-popup.min.js">
+</script>
+<script src="
+public/backEnd/vendors/js/fastselect.standalone.min.js">
+</script>
+<script src="
+public/backEnd/vendors/js/raphael-min.js">
+</script>
+<script src="
+public/backEnd/vendors/js/morris.min.js">
+</script>
+<script src="
+public/backEnd/vendors/js/ckeditor.js"></script>
+
+<script type="text/javascript" src="
+public/backEnd/vendors/js/toastr.min.js"></script>
+
+<script type="text/javascript" src="
+public/backEnd/vendors/js/moment.min.js"></script>
+<script src="
+public/backEnd/vendors/js/ckeditor.js"></script>
+<script src="
+public/backEnd/vendors/js/bootstrap_datetimepicker.min.js"></script>
+<script src="
+public/backEnd/vendors/js/bootstrap-datepicker.min.js"></script>
+
+
+<script type="text/javascript" src="
+public/backEnd/vendors/js/fullcalendar.min.js"></script>
+
+
+<script type="text/javascript" src="
+public/backEnd/js/jquery.validate.min.js"></script>
+<script src="
+public/backEnd/vendors/js/select2/select2.min.js"></script>
+
+<script src="
+public/backEnd/js/main.js"></script>
+<script src="
+public/backEnd/js/custom.js"></script>
+<script src="
+public/js/registration_custom.js"></script>
+<script src="
+public/backEnd/js/developer.js"></script>
+
+
+<script type="text/javascript">
+    //$('table').parent().addClass('table-responsive pt-4');
+    // for select2 multiple dropdown in send email/Sms in Individual Tab
+    $("#selectStaffss").select2();
+    $("#checkbox").click(function () {
+        if ($("#checkbox").is(':checked')) {
+            $("#selectStaffss > option").prop("selected", "selected");
+            $("#selectStaffss").trigger("change");
+        } else {
+            $("#selectStaffss > option").removeAttr("selected");
+            $("#selectStaffss").trigger("change");
+        }
+    });
+
+
+    // for select2 multiple dropdown in send email/Sms in Class tab
+    $("#selectSectionss").select2();
+    $("#checkbox_section").click(function () {
+        if ($("#checkbox_section").is(':checked')) {
+            $("#selectSectionss > option").prop("selected", "selected");
+            $("#selectSectionss").trigger("change");
+        } else {
+            $("#selectSectionss > option").removeAttr("selected");
+            $("#selectSectionss").trigger("change");
+        }
+    });
+
+</script>
+
+<script>
+
+
+    $('.close_modal').on('click', function() {
+        $('.custom_notification').removeClass('open_notification');
+    });
+    $('.notification_icon').on('click', function() {
+        $('.custom_notification').addClass('open_notification');
+    });
+    $(document).click(function(event) {
+        if (!$(event.target).closest(".custom_notification").length) {
+            $("body").find(".custom_notification").removeClass("open_notification");
+        }
+    });
+
+
+
+</script>
+<script src="
+public/backEnd/js/search.js"></script>
+
+<script type="text/javascript"></script>
+
+
+
+
+
+
+
+
+
+
+</body></html>
