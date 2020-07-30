@@ -1,0 +1,69 @@
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{{--    <link rel="icon" href="public/uploads/settings/favicon.png" type="image/png">--}}
+    <title>Goova | </title>
+    <meta name="_token" content="6gTTeQoxHaLjsJkKDMwMIVLmrSOSs29Ye7YZ4Hhl">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+
+
+    <link rel="stylesheet" href="{{asset('css/jquery-ui.css')}}">
+    <link rel="stylesheet" href="{{asset('css/jquery.data-tables.css')}}">
+    <link rel="stylesheet" href="{{asset('css/buttons.dataTables.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/rowReorder.dataTables.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/responsive.dataTables.min.css')}}">
+
+
+    <link rel="stylesheet" href="{{asset('css/bootstrap-datepicker.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/themify-icons.css')}}">
+    <link rel="stylesheet" href="{{asset('css/flaticon.css')}}">
+    <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/nice-select.css')}}">
+    <link rel="stylesheet" href="{{asset('css/magnific-popup.css')}}">
+    <link rel="stylesheet" href="{{asset('css/fastselect.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/toastr.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/select2.css')}}">
+    <link rel="stylesheet" href="{{asset('css/fullcalendar.min.css')}}">
+
+    <link rel="stylesheet" href="{{asset('css/loade.css')}}">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/infix.css')}}">
+
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover { 
+            background: #7c32ff !important; 
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover { 
+            background: #7c32ff  !important; 
+        }
+        
+        ::placeholder { 
+            color: #415094  !important; 
+        }
+
+        .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-bottom{ 
+            z-index: 99999999999 !important;
+            background: #fff !important;   
+        }
+        
+        .input-effect { 
+            float: left;  
+            width: 100%; 
+        }
+    </style>
+
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : (event.keyCode);
+            if (charCode > 31 && (charCode < 48 || charCode > 57)){
+                return false;
+            }
+            return true;
+        }
+    </script>
