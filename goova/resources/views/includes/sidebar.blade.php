@@ -1,7 +1,8 @@
+<input type="hidden" name="url" id="url" value="http://127.0.0.1:8000/">
 <nav id="sidebar">
    <div class="sidebar-header update_sidebar">
       	<a href="http://demo.infixedu.com">
-      		<img src="public/uploads/settings/logo.png" alt="logo">
+      		<img src="" alt="logo">
       	</a>
       	<a id="close_sidebar" class="d-lg-none">
       		<i class="ti-close"></i>
@@ -11,13 +12,13 @@
       	<li>
          	<a href="admin-dashboard" id="admin-dashboard" class="active">
          		<span class="flaticon-speedometer"></span>
-         		Dashboard                    
+         		Dashboard
          	</a>
       	</li>
       	<li>
          	<a href="#subMenuAdmin" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
          		<span class="flaticon-analytics"></span>
-         		Admin Section                    
+         		Admin Section
          	</a>
          	<ul class="collapse list-unstyled" id="subMenuAdmin">
             	<li>
