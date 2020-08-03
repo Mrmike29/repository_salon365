@@ -5,6 +5,8 @@
     </head>
     <body class="admin">
 
+        Cambio de prueba
+
 		<div class="main-wrapper" style="min-height: 600px">
     		<!-- Sidebar  -->
     		@include('includes.sidebar')
