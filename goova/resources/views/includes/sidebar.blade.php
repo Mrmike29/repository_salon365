@@ -65,6 +65,31 @@ los menus que no contengan sub-menu deben tener id.
          </ul>
       </li>
       <li>
+         <a href="#subMenuNotas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <span class=""></span>
+            Notas y Reportes
+         </a>
+         <ul class="collapse list-unstyled" id="subMenuNotas">
+            <li>
+               <a href="rubricas_mostrar">Rúbricas</a>
+            </li>
+            <li>
+               <a href="notas">Notas Parciales</a>
+            </li>
+            <li>
+               <a href="#reportes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">oTRO</a>
+               <ul class="collapse list-unstyled" id="reportes">
+                  <li>
+                     <a href="reporte_anual">Reporte Anual</a>
+                  </li>
+                  <li>
+                     <a href="reporte_periodo">Reporte por Periodo</a>
+                  </li>
+               </ul>
+            </li>
+         </ul>
+      </li>
+      <li>
          <a href="#subMenuConfiguracion" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <span class="flaticon-analytics"></span>
             Configuraciòn
@@ -83,6 +108,7 @@ los menus que no contengan sub-menu deben tener id.
             </li>
          </ul>
       </li>
+      
       {{-- <li>
          <a href="admin-dashboard" id="admin-dashboard" class="active">
             <span class="flaticon-speedometer"></span>
