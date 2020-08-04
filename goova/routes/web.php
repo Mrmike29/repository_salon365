@@ -16,3 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/rubricas', function () {
+    return view('rubricas');
+});
+
+Route::get('/ciclo-o-periodo', function () {
+    return view('ciclo_o_periodo');
+});
+
+Route::get('/fechas-importantes', function () {
+    return view('fechas_importantes');
+});
+

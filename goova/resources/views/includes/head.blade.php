@@ -3,8 +3,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 {{--    <link rel="icon" href="public/uploads/settings/favicon.png" type="image/png">--}}
-    <title>Goova | </title>
-    <meta name="_token" content="6gTTeQoxHaLjsJkKDMwMIVLmrSOSs29Ye7YZ4Hhl">
+    <title>Goova  <?= ($_SERVER['REQUEST_URI'] != '/' ? '| ' . ucwords(preg_replace(["/[\/]/", "/[-]/"], ['', ' '], explode("/", "$_SERVER[REQUEST_URI]")[1])) : '') ?></title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
@@ -31,7 +30,7 @@
 
     <link rel="stylesheet" href="{{asset('css/loade.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
-    <link rel="stylesheet" href="{{asset('css/infix.css')}}">
+    <link rel="stylesheet" href="{{asset('css/goova.css')}}">
 
     <style>
         .dataTables_wrapper .dataTables_paginate .paginate_button.current,
@@ -66,11 +65,11 @@
             padding-top: 40px !important;
         }
 
-        .infix_theme_rtl .list{
+        .goova_theme_rtl .list{
             padding-top: 40px !important;
         }
 
-        .infix_theme_style .list{
+        .goova_theme_style .list{
             padding-top: 40px !important;
         }
 
