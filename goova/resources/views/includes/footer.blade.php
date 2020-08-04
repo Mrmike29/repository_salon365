@@ -1,5 +1,5 @@
 
-
+<div class="modal fade admin-query" id="universal_modal"></div>
 <footer class="footer-area">
     <div class="container">
         <div class="row">
@@ -37,12 +37,33 @@
 <script type="text/javascript" src="{{asset('js/bootstrap_datetimepicker.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/fullcalendar.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/fullcalendar-lang-es.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.validate.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/select2.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/main.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/custom.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/registration_custom.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/developer.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/socket.io.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/message.js')}}"></script>
+<script type="text/javascript">
+
+    function universalModal(title, body) {
+        let html =
+            '<div class="modal-dialog modal-dialog-centered">' +
+                '<div class="modal-content">' +
+                    '<div class="modal-header">' +
+                        '<h4 class="modal-title">' + title + '</h4>' +
+                        '<button type="button" class="close" data-dismiss="modal">×</button>' +
+                    '</div>' +
+                    '<div class="modal-body">\n' +
+                        body +
+                    '</div>\n' +
+                '</div>\n' +
+            '</div>'
+        $('#universal_modal').html(html).modal('show');
+    }
+</script>
 <script type="text/javascript">
     //$('table').parent().addClass('table-responsive pt-4');
     // for select2 multiple dropdown in send email/Sms in Individual Tab
@@ -140,6 +161,7 @@
        -------------------------------------------------------------------------------*/
     if ($('.common-calendar').length) {
         $('.common-calendar').fullCalendar({
+            lang: 'es',
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -153,14 +175,39 @@
                     return false;
                 },
             height: 650,
-            events: [{"title":"Winter Vacation","start":"2019-01-22","end":"2019-01-28","description":null,"url":null},{"title":"Summer Vacation","start":"2019-05-02","end":"2019-05-08","description":null,"url":null},{"title":"Public Holiday","start":"2019-05-10","end":"2019-05-11","description":null,"url":null},{"title":"asas","start":"2020-07-26","end":"2020-07-30","description":"asasa","url":"public\/uploads\/holidays\/6cbe47ef8980c008e523a55dccf72820.png"}] ,
+            events: [{
+                "title":"Winter Vacation",
+                "start":"2019-01-22",
+                "end":"2019-01-28",
+                "description":null,
+                "url":null
+            },
+            {"title":"Summer Vacation",
+                "start":"2019-05-02",
+                "end":"2019-05-08",
+                "description":null,
+                "url":null
+            },
+            {"title":"Public Holiday",
+                "start":"2019-05-10",
+                "end":"2019-05-11",
+                "description":null,
+                "url":null
+            },
+            {"title":"asas",
+                "start":"2020-07-26",
+                "end":"2020-07-30",
+                "description":"asasa",
+                "url":"public\/uploads\/holidays\/6cbe47ef8980c008e523a55dccf72820.png"
+            }] ,
         });
     }
 
 
 </script>
 <script type="application/javascript" id="global_js_goova">
-    location.pathname.substr(1) !== '' ? (($('#' + location.pathname.substr(1)).length != 0) ? $('#' + location.pathname.substr(1)).addClass('active') : $('[href="' + location.pathname.substr(1) + '"]').parent('li').parent('ul.list-unstyled').siblings('a.dropdown-toggle').addClass('active')) : $('#admin-dashboard').addClass('active');
+    location.pathname.substr(1) !== '' ? (($('#' + location.pathname.substr(1)).length != 0) ? $('#' + location.pathname.substr(1)).addClass('active') : $('[href="' + location.pathname.substr(1) + '"]').parent('li').parent('ul.list-unstyled').siblings('a.dropdown-toggle').addClass('active') , $(".dropdown-toggle.active").click(), $('[href="' + location.pathname.substr(1) + '"]').addClass('active')) : $('#admin-dashboard').addClass('active');
+    // addMessage(response.data.usersNotificacion, response.data.nameNotificacion, response.data.descNotificacion);
 </script>
 <script type="application/javascript" id="global_js_goova">
     location.pathname.substr(1) !== '' ? (($('#' + location.pathname.substr(1)).length != 0) ? $('#' + location.pathname.substr(1)).addClass('active') : $('[href="' + location.pathname.substr(1) + '"]').parent('li').parent('ul.list-unstyled').siblings('a.dropdown-toggle').addClass('active') , $(".dropdown-toggle.active").click(), $('[href="' + location.pathname.substr(1) + '"]').addClass('active')) : $('#admin-dashboard').addClass('active');

@@ -25,9 +25,10 @@ Route::get('/ciclo-o-periodo', function () {
     return view('ciclo_o_periodo');
 });
 
-Route::get('/fechas-importantes', function () {
-    return view('fechas_importantes');
-});
+
+Route::get('/fechas-importantes', 'Controller@getImportantDatesView');
+
+Route::get('/prueba', 'Controller@prueba');
 
 
 Route::get('/agregar_tareas', function () {

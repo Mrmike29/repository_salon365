@@ -7,7 +7,7 @@ is the file you need to edit to change the look of the
 theme.
 ---------------------------------------------------- */
 /*=====================================================================
-@Template Name: HostHub Construction 
+@Template Name: HostHub Construction
 @Developed By: Spondonit.com
 Author E-mail: info@spondonit.com
 
@@ -1812,22 +1812,22 @@ html[dir="rtl"] .to-do-list.up_buttom {
 
 /* line 188, /Applications/MAMP/htdocs/InfixEduTheme/public/backEnd/scss/1_default/admin/_component.scss */
 .modal-content .modal-header {
-  background: url(../../img/modal-header-bg.png) no-repeat center;
+  /*background: url(../../img/modal-header-bg.png) no-repeat center;*/
   background-size: cover;
   border-radius: 5px 5px 0px 0px;
   border: 0;
-  padding: 33px 40px;
+  /*padding: 33px 40px;*/
 }
 
 /* line 194, /Applications/MAMP/htdocs/InfixEduTheme/public/backEnd/scss/1_default/admin/_component.scss */
 .modal-content .modal-header .modal-title {
   font-size: 18px;
-  color: #ffffff;
+  color: #415094;
 }
 
 /* line 198, /Applications/MAMP/htdocs/InfixEduTheme/public/backEnd/scss/1_default/admin/_component.scss */
 .modal-content .modal-header .close {
-  color: #ffffff;
+  color: #415094;
   opacity: 1;
   margin: 0;
   padding: 0;
@@ -1844,7 +1844,7 @@ html[dir="rtl"] .to-do-list.up_buttom {
 
 /* line 209, /Applications/MAMP/htdocs/InfixEduTheme/public/backEnd/scss/1_default/admin/_component.scss */
 .modal-content .modal-body {
-  padding: 40px 50px;
+  padding: 25px 40px;
 }
 
 /* line 212, /Applications/MAMP/htdocs/InfixEduTheme/public/backEnd/scss/1_default/admin/_component.scss */

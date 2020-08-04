@@ -116,16 +116,19 @@
                                         <span class="badge">0</span>
                                         <span class="flaticon-notification"></span>
                                     </button>
-                                    <div class="dropdown-menu">
-                                        <div class="white-box">
-                                            <div class="p-h-20">
-                                                <p class="notification">You have                                                <span>0 new</span>
-                                                    notification</p>
+                                    <div class="dropdown-menu" >
+                                        <div id="notifications">
+                                            <div class="white-box">
+                                                <div class="p-h-20">
+                                                    <p class="notification">
+                                                        You have                                                <span>0 new</span>
+                                                        notification
+                                                    </p>
+                                                </div>
                                             </div>
-
-                                            <a href="view/all/notification/1" class="primary-btn text-center text-uppercase mark-all-as-read">
-                                                Mark All As Read                                            </a>
                                         </div>
+                                        <a href="view/all/notification/1" class="primary-btn text-center text-uppercase mark-all-as-read">
+                                                Mark All As Read                                            </a>
                                     </div>
                                 </div>
                             </li>
