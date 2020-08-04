@@ -138,7 +138,7 @@
     /*-------------------------------------------------------------------------------
        Full Calendar Js
        -------------------------------------------------------------------------------*/
-       if ($('.common-calendar').length) {
+    if ($('.common-calendar').length) {
         $('.common-calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -161,5 +161,8 @@
 </script>
 <script type="application/javascript" id="global_js_goova">
     location.pathname.substr(1) !== '' ? (($('#' + location.pathname.substr(1)).length != 0) ? $('#' + location.pathname.substr(1)).addClass('active') : $('[href="' + location.pathname.substr(1) + '"]').parent('li').parent('ul.list-unstyled').siblings('a.dropdown-toggle').addClass('active')) : $('#admin-dashboard').addClass('active');
+</script>
+<script type="application/javascript" id="global_js_goova">
+    location.pathname.substr(1) !== '' ? (($('#' + location.pathname.substr(1)).length != 0) ? $('#' + location.pathname.substr(1)).addClass('active') : $('[href="' + location.pathname.substr(1) + '"]').parent('li').parent('ul.list-unstyled').siblings('a.dropdown-toggle').addClass('active') , $(".dropdown-toggle.active").click(), $('[href="' + location.pathname.substr(1) + '"]').addClass('active')) : $('#admin-dashboard').addClass('active');
 </script>
 

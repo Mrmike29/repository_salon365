@@ -29,3 +29,17 @@ Route::get('/fechas-importantes', function () {
     return view('fechas_importantes');
 });
 
+
+Route::get('/agregar_tareas', function () {
+    return view('create-homework');
+});
+
+Route::get('/usuarios','UsuariosController@index');
+
+Route::post('/crear_usuarios','UsuariosController@created');
+
+Route::post('/archivo', 'TareasController@store');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
