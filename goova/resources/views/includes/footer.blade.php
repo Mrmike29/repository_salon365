@@ -207,9 +207,7 @@
 </script>
 <script type="application/javascript" id="global_js_goova">
     location.pathname.substr(1) !== '' ? (($('#' + location.pathname.substr(1)).length != 0) ? $('#' + location.pathname.substr(1)).addClass('active') : $('[href="' + location.pathname.substr(1) + '"]').parent('li').parent('ul.list-unstyled').siblings('a.dropdown-toggle').addClass('active') , $(".dropdown-toggle.active").click(), $('[href="' + location.pathname.substr(1) + '"]').addClass('active')) : $('#admin-dashboard').addClass('active');
-    // addMessage(response.data.usersNotificacion, response.data.nameNotificacion, response.data.descNotificacion);
-</script>
-<script type="application/javascript" id="global_js_goova">
-    location.pathname.substr(1) !== '' ? (($('#' + location.pathname.substr(1)).length != 0) ? $('#' + location.pathname.substr(1)).addClass('active') : $('[href="' + location.pathname.substr(1) + '"]').parent('li').parent('ul.list-unstyled').siblings('a.dropdown-toggle').addClass('active') , $(".dropdown-toggle.active").click(), $('[href="' + location.pathname.substr(1) + '"]').addClass('active')) : $('#admin-dashboard').addClass('active');
+    let elmts, uls = $('nav#sidebar').find($("ul.collapse.list-unstyled"));
+    for (let i = 0; i < uls.length; i++) { elmts = $('#' + uls[i].attributes["id"].nodeValue).find($('li').children('a.active')); if(elmts.length > 0){ $('[href="#' + uls[i].attributes["id"].nodeValue + '"]').addClass('active'); $(".dropdown-toggle.active").click(); $('#' + uls[i].attributes["id"].nodeValue).find('a.dropdown-toggle.collapsed').click(); i = uls.length; }}
 </script>
 

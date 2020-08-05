@@ -14,7 +14,6 @@ var io = require('socket.io')(server);
 io.set('origins', '*:*');
 
 io.on('connection', function(socket) {
-    console.log('akdl');
     socket.on('new-message', function(data) {
         io.sockets.emit('messages', data);
     });

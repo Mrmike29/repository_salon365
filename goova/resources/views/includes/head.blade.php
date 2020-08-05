@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 {{--    <link rel="icon" href="public/uploads/settings/favicon.png" type="image/png">--}}
-    <title>Goova  <?= ($_SERVER['REQUEST_URI'] != '/' ? '| ' . ucwords(preg_replace(["/[\/]/", "/[-]/"], ['', ' '], explode("/", "$_SERVER[REQUEST_URI]")[1])) : '') ?></title>
+    <title>Goova  <?= ($_SERVER['REQUEST_URI'] != '/' ? '| ' . ucwords(preg_replace(["/[\/]/", "/[-]/", "/[_]/"], ['', ' ', ' '], explode("/", "$_SERVER[REQUEST_URI]")[1])) : '') ?></title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">

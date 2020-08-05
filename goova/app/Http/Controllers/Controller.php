@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class Controller extends BaseController
 {
@@ -43,14 +44,20 @@ class Controller extends BaseController
         return view('fechas_importantes', ['dates' => $dates]);
     }
 
-    function prueba(){
-        DB::table('important_dates')
-            ->where('id', 1)
-            ->update([
-                'name' => "asdsaj"
-            ]);
+    function getEvent(Request $request){
+        $id = $request->id;
 
-        return false;
+        $event = DB::table('important_dates')->select('*')->where('id', $id)->first();
+
+        return [ 'event' => $event ];
     }
 
+    function putEditEvent(Request $request){
+        $id = $request->id;
+        $name = $request->name;
+        $description = $request->description;
+        $date = $request->date;
+
+        $event = DB::table('important_dates')->where('id', $id)->update(['name' => $name, 'description' => $description, 'date' => $date]);
+    }
 }

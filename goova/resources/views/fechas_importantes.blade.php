@@ -62,7 +62,7 @@
                                     </div>
                                     <div class="col-lg-6 text-right col-md-6 col-6">
 
-                                        <a href="#" data-toggle="modal" class="primary-btn small fix-gr-bg" data-target="#add_to_do" title="Add To Do" data-modal-size="modal-md">
+                                        <a href="#" class="primary-btn small fix-gr-bg" onclick="openModalCreateEvent()" title="Agregar Evento">
                                             <span class="ti-plus pr-2"></span>
                                             Agregar
                                         </a>
@@ -89,8 +89,8 @@
                                                     if (date('Y-m-d') < $date1) {
                                                 ?>
 
-                                                    <div class="single-to-do d-flex justify-content-between toDoList" id="to_do_list_div26">
-                                                        <div onclick="openModal(1)" style="cursor: pointer;">
+                                                    <div class="single-to-do d-flex justify-content-between toDoList" id="event_date_{{ $date->id }}">
+                                                        <div onclick="openModalEvent({{ $date->id }})" style="cursor: pointer;">
                                                             <h5 class="d-inline"><?= $date->name ?></h5>
                                                             <p>
                                                                 <?= $date1 ?>
@@ -130,27 +130,8 @@
         @include('includes.footer')
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                window.onbeforeunload = Call;
 
-                function Call() {
-                    return $.ajax({
-                        type: 'GET',
-                        async: false,
-                        url: '/prueba',
-                        data: 'id=1'
-                    });
-                }
-            });
-
-            function openModal(){
-
-                $.ajax({
-                    type: 'GET',
-                    async: false,
-                    url: '/prueba',
-                    data: 'id=1'
-                });
+            function openModalCreateEvent(){
                 let html =
                     '<div class="container-fluid">' +
                         '<div class="row">' +
@@ -158,9 +139,21 @@
                                 '<div class="row mt-25">' +
                                     '<div class="col-lg-12" id="sibling_class_div">' +
                                         '<div class="input-effect">' +
-                                            '<input class="primary-input form-control" type="text" name="todo_title" id="todo_title">' +
+                                            '<input class="primary-input form-control" type="text" name="name_create_event" id="name_create_event">' +
                                             '<label>' +
-                                                'To Do Title *<span></span> ' +
+                                                'Nombre *<span></span> ' +
+                                            '</label>' +
+                                            '<span class="focus-border"></span>' +
+                                            '<span class="modal_input_validation red_alert"></span>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="row mt-25">' +
+                                    '<div class="col-lg-12" id="sibling_class_div">' +
+                                        '<div class="input-effect">' +
+                                            '<textarea class="primary-input form-control" name="description_create_event" id="description_create_event" cols="30" rows="10"></textarea>' +
+                                            '<label>' +
+                                                'Descripción *<span></span> ' +
                                             '</label>' +
                                             '<span class="focus-border"></span>' +
                                             '<span class="modal_input_validation red_alert"></span>' +
@@ -172,7 +165,7 @@
                                         '<div class="no-gutters input-right-icon">' +
                                             '<div class="col">' +
                                                 '<div class="input-effect">' +
-                                                    '<input class="read-only-input primary-input date form-control" id="startDate" type="text" autocomplete="off" readonly="true" name="date" value="07/27/2020">' +
+                                                    '<input class="read-only-input primary-input date form-control" id="date_create_event" type="text" readonly="true" autocomplete="off" name="date_create_event" value="{{ date("Y/m/d") }}">' +
                                                     '<label>' +
                                                         'Date <span></span> ' +
                                                     '</label>' +
@@ -189,20 +182,121 @@
                                 '<div class="col-lg-12 text-center">' +
                                     '<div class="mt-40 d-flex justify-content-between">' +
                                         '<button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>' +
-                                        '<a class="primary-btn small fix-gr-bg" onclick="message()">' +
+                                        '<a href="#" class="primary-btn small fix-gr-bg" onclick="message()">' +
                                             '<span class="ti-plus pr-2"></span>' +
-                                            'ar' +
+                                            'Guardar' +
                                         '</a>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>' +
                         '</div>' +
                     '</div>';
-                universalModal('title', html)
+
+                universalModal('Crear Evento', html);
+                $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
+                $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
+                $('#start-date-icon').on('click', function () { $('#date_create_event').focus(); });
+                $('.primary-input.date').datepicker({ autoclose: true, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
+                $('.primary-input.time').datetimepicker({ format: 'LT' });
+            }
+
+            function openModalEvent(id){
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/get-event',
+                    data: { id },
+                    success: (data) => {
+                        let event = data.event;
+
+                        let html =
+                            '<div class="container-fluid">' +
+                                '<div class="row">' +
+                                    '<div class="col-lg-12">' +
+                                        '<div class="row mt-25">' +
+                                            '<div class="col-lg-12" id="sibling_class_div">' +
+                                                '<div class="input-effect">' +
+                                                    '<input class="primary-input form-control has-content" type="text" name="name_edit_event" id="name_edit_event" value="' + event.name + '">' +
+                                                    '<label>' +
+                                                        'Nombre *<span></span> ' +
+                                                    '</label>' +
+                                                    '<span class="focus-border"></span>' +
+                                                    '<span class="modal_input_validation red_alert"></span>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                        '<div class="row mt-25">' +
+                                            '<div class="col-lg-12" id="sibling_class_div">' +
+                                                '<div class="input-effect">' +
+                                                    '<textarea class="primary-input form-control has-content" name="description_edit_event" id="description_edit_event" cols="30" rows="10">' + event.description + '</textarea>' +
+                                                    '<label>' +
+                                                        'Descripción *<span></span> ' +
+                                                    '</label>' +
+                                                    '<span class="focus-border"></span>' +
+                                                    '<span class="modal_input_validation red_alert"></span>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                        '<div class="row mt-30">' +
+                                            '<div class="col-lg-12" id="">' +
+                                                '<div class="no-gutters input-right-icon">' +
+                                                    '<div class="col">' +
+                                                        '<div class="input-effect">' +
+                                                            '<input class="read-only-input primary-input date form-control has-content" id="date_edit_event" type="text" readonly="true" autocomplete="off" name="date_edit_event" value="' + event.date + '">' +
+                                                            '<label>' +
+                                                                'Date <span></span> ' +
+                                                            '</label>' +
+                                                        '</div>' +
+                                                    '</div>' +
+                                                    '<div class="col-auto">' +
+                                                        '<button class="" type="button">' +
+                                                            '<i class="ti-calendar" id="start-date-icon"></i>' +
+                                                        '</button>' +
+                                                    '</div>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                        '<div class="col-lg-12 text-center">' +
+                                            '<div class="mt-40 d-flex justify-content-between">' +
+                                                '<button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>' +
+                                                '<a href="#" class="primary-btn small fix-gr-bg" onclick="saveChangesEditEvent(' + event.id + ')">' +
+                                                    '<span class="ti-save pr-2"></span>' +
+                                                    'Guardar' +
+                                                '</a>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>';
+
+                        universalModal('Editar Evento', html);
+                        $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
+                        $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
+                        $('#name_edit_event').change(function (){ if($(this).val() !== ''){ $(this).focus() } })
+                        $('#start-date-icon').on('click', function () { $('#date_create_event').focus(); });
+                        $('.primary-input.date').datepicker({ autoclose: true, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
+                        $('.primary-input.time').datetimepicker({ format: 'LT' });
+                    }
+                });
+            }
+
+            function saveChangesEditEvent(id) {
+                let name = $('#name_edit_event').val(),
+                    description = $('#description_edit_event').val(),
+                    date = $('#date_edit_event').val();
+
+                $.ajax({
+                    type: 'PUT',
+                    url: '/put-edit-event',
+                    data: { "_token": "{{ csrf_token() }}", id, name, description, date},
+                    success: (data) => {
+                        $('.modal').modal('hide');
+                    }
+                });
             }
 
             function message() {
-                addMessage('', 'Titulo', $('#todo_title').val())
+                addMessage('', 'Titulo', 'Algo')
                 $('#add_to_do').modal('hide');
             }
         </script>
