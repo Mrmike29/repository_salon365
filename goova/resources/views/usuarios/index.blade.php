@@ -9,117 +9,161 @@
     		@include('includes.sidebar')
             <div id="main-content">
     		    @include('includes.header')
+                
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
-                            <h1>Agragar Tarea</h1>
+                            <h1>Usuarios</h1>
                         </div>
                     </div>
                 </section>
-                <section class="admin-visitor-area">
+                <section class="admin-visitor-area up_st_admin_visitor">
                     <div class="container-fluid p-0">
-                        <form method="POST" action="https://infixedu.com/save-homework-data" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="white-box">
-                                        <div class="">
-                                            <input type="hidden" name="url" id="url" value="https://infixedu.com">
-                                            <div class="row mb-30">
-                                                <div class="col-lg-6">
-                                                    <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <select class="niceSelect w-100 bb form-control" name="class_id" id="classSelectStudent">
-                                                            <option data-display="Seleccionar Clase *" value="">Select</option>
-                                                            <option value="1" >One 1</option>
-                                                            <option value="5" >Two 1</option>
-                                                            <option value="9" >Three 1</option>
-                                                            <option value="13" >Four 1</option>
-                                                            <option value="17" >Five 1</option>
-                                                            <option value="21" >Six 1</option>
-                                                            <option value="25" >Seven 1</option>
-                                                            <option value="29" >Eight 1</option>
-                                                            <option value="33" >Nine 1</option>
-                                                            <option value="37" >Ten 1</option>
-                                                        </select>
-                                                        <span class="focus-border"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="input-effect sm2_mb_20 md_mb_20" id="sectionStudentDiv">
-                                                        <select class="niceSelect w-100 bb form-control" name="section_id" id="sectionSelectStudent">
-                                                            <option data-display="Seleccionar Materia *" value="">Section *</option>
-                                                        </select>
-                                                        <span class="focus-border"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-30">
-                                                <div class="col-lg-6">
-                                                    <div class="no-gutters input-right-icon">
-                                                        <div class="col">
-                                                            <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input date form-control" id="homework_date" type="text" name="homework_date" value="{{date('m/d/Y')}}" readonly="true">
-                                                                <label>Fecha Inicio <span>*</span></label>
-                                                                <span class="focus-border"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <button class="" type="button">
-                                                                <i class="ti-calendar" id="homework_date_icon"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="no-gutters input-right-icon">
-                                                        <div class="col">
-                                                            <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input date form-control" id="submission_date" type="text" name="submission_date" value="08/03/2020" readonly="true">
-                                                                <label>Fecha Fin <span>*</span></label>
-                                                                <span class="focus-border"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <button class="" type="button">
-                                                                <i class="ti-calendar" id="submission_date_icon"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row md-20">
-                                                <div class="col-lg-12">
-                                                    <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <div class="dropzone dropzone-previews" id="my-awesome-dropzone"></div><br>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row md-20">
-                                                <div class="col-lg-12">
-                                                    <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <div class="form-group" id="textarea">
-                                                            <textarea id="texto" name="cotizacion"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-40">
-                                            <div class="col-lg-12 text-center">
-                                                <button class="primary-btn fix-gr-bg" data-toggle="tooltip" title="">
-                                                    <span class="ti-check"></span>
-                                                    Save Homework
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="white-box mt-10">
+                                    <table class="table" id="table_users" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo de Documento</th>
+                                                <th>No° Documento</th>
+                                                <th>Nombre</th>
+                                                <th>Correo</th>
+                                                <th>Rol</th>
+                                                <th>Telefono</th>
+                                                <th>Dirrección</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($usuarios as $key => $val)
+                                                <tr>
+                                                    <td>{{$val->type_document}}</td>
+                                                    <td>{{$val->document}}</td>
+                                                    <td>{{$val->name}} {{$val->last_name}}</td>
+                                                    <td>{{$val->email}}</td>
+                                                    <td>{{$val->rol}}</td>
+                                                    <td>{{$val->phone}}</td>
+                                                    <td>{{$val->address}}</td>
+                                                    <td></td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </section>
             </div>
-    	</div>
-    	@include('includes.footer')
+        </div>
+        @include('includes.footer')
+        <script>
+            $('#table_users').DataTable({
+                bLengthChange: true,
+                responsive: true,
+                paging: false,
+                "bDestroy": true,
+                language: {
+                    search: "<i class='ti-search'></i>",
+                    searchPlaceholder: 'Búsqueda rápida',
+                    decimal: ",",
+                    thousands: ".",
+                    info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    infoPostFix: "",
+                    infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                    loadingRecords: "Cargando...",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior"
+                    },
+                    processing: "Procesando...",
+                    zeroRecords: "No se encontraron resultados",
+                    emptyTable: "Ningún dato disponible en esta tabla",
+                    aria: {
+                        sortAscending:  ": Activar para ordenar la columna de manera ascendente",
+                        sortDescending: ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        text: '<i class="fa fa-files-o"></i>',
+                        titleAttr: 'Copiar',
+                        title : $("#logo_title").val(),
+                        exportOptions: {
+                            columns: ':visible',
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="fa fa-file-excel-o"></i>',
+                        titleAttr: 'Excel',
+                        title : $("#logo_title").val(),
+                        exportOptions: {
+                            columns: ':visible',
+                            order: 'applied'
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        text: '<i class="fa fa-file-text-o"></i>',
+                        titleAttr: 'CSV',
+                        title : $("#logo_title").val(),
+                        exportOptions: {
+                            columns: ':visible',
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fa fa-file-pdf-o"></i>',
+                        titleAttr: 'PDF',
+                        exportOptions: {
+                            columns: ':visible',
+                            order: 'applied',
+                            columnGap: 20
+                        },
+                        orientation: 'landscape',
+                        pageSize: 'A4',
+                        fontSize:10,
+                        alignment: 'center',
+                        header: true,
+                        customize: function ( doc ) {
+                            // doc.content.splice( 1, 0, {
+                            //     margin: [ 0, 0, 0, 12 ],
+                            //     alignment: 'center',
+                            //     image: 'data:image/png;base64,'+$("#logo_img").val()
+                            // } );
+                            doc.pageMargins = [10, 20, 10,20 ];
+                            doc.defaultStyle.fontSize = 6; 
+                            doc.styles.tableHeader.fontSize = 7; 
+                        },
+                        title : $("#logo_title").val(),
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="fa fa-print"></i>',
+                        titleAttr: 'Imprimir',
+                        title : $("#logo_title").val(),
+                        exportOptions: {
+                            columns: ':visible',
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: '<i class="fa fa-columns"></i>',
+                        postfixButtons: ['colvisRestore']
+                    }
+                ],
+                columnDefs: [{
+                    visible: false
+                }],
+            });
+        </script>
     </body>
 </html>

@@ -37,7 +37,7 @@ Route::get('/agregar_tareas', function () {
 
 Route::get('/usuarios','UsuariosController@index');
 
-Route::post('/crear_usuarios','UsuariosController@created');
+Route::get('/crear_usuarios','UsuariosController@created');
 
 Route::post('/archivo', 'TareasController@store');
 
