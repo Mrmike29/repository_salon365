@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+header {
+    top: 0;
+    z-index: 1;
+    display: flex;
+    padding: 0 30px;
+    position: sticky;
+    background: white;
+    box-sizing: border-box;
+}
+
+nav {
+    width: 100%;
+    height: 120px;
+    background: white;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+nav ul {
+    margin: 0;
+    width: 100%;
+    float: right;
+    height: 100%;
+    display: flex;
+}
+
+nav ul li {
+    list-style: none;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+}
+
+nav ul li a.vl {
+    height: 100%;
+    color: #808080;
+    display: block;
+    text-decoration: none;
+}
+
+nav ul li a.option {
+    height: 100%;
+    color: #808080;
+    padding: 0 30px;
+    display: block;
+    text-decoration: none;
+}
+
+nav ul li a p {
+    position: relative;
+    top: 55%;
+}
+
+.login {
+    color: #f3901e !important;
+}
+
+nav ul li a.option:hover,
+nav ul li a.option:focus {
+    color: white !important;
+    font-weight: bold;
+    background: linear-gradient(180deg, rgba(243,144,30,1) 75%, rgba(255,255,255,1) 25%);
+}
+
+.container {
+    width: 100%;
+    background: #fff;
+    /*height: 100vh;*/
+    /*display: flex;*/
+}
+
+.divider {
+    width: 100%;
+    height: 100px;
+}
+
+section {
+    width: 90%;
+    margin: auto;
+}
+
+section h1.title {
+    margin: auto;
+    font-size: 5vw;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-decoration-color: #f3901e;
+    font-family: 'Montserrat', sans-serif;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(0, 0, 0, .8);
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    margin-top: 50px;
+    min-height: 30vh;
+}
+
+.content div {
+    width: 100%;
+}
+
+.content div p {
+    margin: 0 20px;
+    color: #808080;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.content .content-img {
+    margin: 0 25px;
+    text-align: center;
+}
+
+.content .content-img h2 {
+    margin: 0 20px;
+    color: #002c38;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.h1-circular-img {
+    font-size: 2vw;
+    margin: 20px 20px !important;
+    color: #002c38 !important;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.content .content-img .circular-img {
+    width: 80%;
+}
+
+footer {
+    width: 100%;
+    display: flex;
+    padding: 20px 100px;
+    background: #002c38;
+    box-sizing: border-box;
+}
+
+footer .content-footer {
+    width: 100%;
+    display: flex;
+    padding: 30px 0;
+}
+
+footer .content-footer div {
+    color: white;
+    margin: 0 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+footer .content-footer div ul li {
+    list-style: none;
+}
+
+footer .content-footer div ul li a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+footer .img-footer {
+    width: 100%;
+    color: white;
+    text-align: right;
+}
+
+footer .img-footer img {
+    width: 60%;
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 8px;
+    right: 95px;
+    width: 30%;
+    color: #808080;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.button-banner {
+    position: absolute;
+    bottom: 10%;
+    right: 300px;
+    width: 30%;
+    color: #808080;
+    font-family: 'Montserrat', sans-serif;
+}
+.button-banner button {
+    color: #00114b;
+    background: transparent;
+    border: 1px solid gray;
+    padding: 5px 53px;
+}
+
+/*section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+}
+
+/*section .content {
+    width: 100%;
+    margin: 5px;
+    text-align: center;
+}
+
+.container section:nth-child(1) .content div.cover {
+    min-height: 75vh;
+    background-image: url("http://127.0.0.1:8000/img/front/3975410.jpg");
+    background-size: cover;
+}
+
+.container section:nth-child(2) .content div.cover {
+    min-height: 75vh;
+    background-image: url("http://127.0.0.1:8000/img/front/3781242.jpg");
+    background-size: cover;
+}
+
+.headerDivider {
+    background: #fff;
+    min-height: 75vh;
+    width: 10px;
+    margin: auto;
+}*/

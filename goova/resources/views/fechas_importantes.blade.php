@@ -274,8 +274,8 @@
                         $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
                         $('#name_edit_event').change(function (){ if($(this).val() !== ''){ $(this).focus() } })
                         $('#start-date-icon').on('click', function () { $('#date_create_event').focus(); });
-                        $('.primary-input.date').datepicker({ autoclose: true, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
-                        $('.primary-input.time').datetimepicker({ format: 'LT' });
+                        $('.primary-input.date').datepicker({ format: 'yyyy-mm-dd', autoclose: true, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
+                        $('.primary-input.time').datetimepicker({ format: 'yyyy-mm-dd' });
                     }
                 });
             }
