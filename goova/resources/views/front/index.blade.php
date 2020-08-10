@@ -22,7 +22,7 @@
                     <li><a class="vl"><p>|</p></a></li>
                     <li><a href="/ayuda" class="option"><p>ayuda</p></a></li>
                     <li><a class="vl"><p>|</p></a></li>
-                    <li><a href="" class="option login"><p>ingresar</p></a></li>
+                    <li><a href="/login" class="option login"><p>ingresar</p></a></li>
                 </ul>
             </nav>
         </header>

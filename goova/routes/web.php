@@ -13,38 +13,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/index', function () {
+Auth::routes();
+Route::get('/', function () {
     return view('front/index');
 });
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', function () {
+        return view('welcome');
+    });
+    Route::get('/agregar_tareas', function () {
+        return view('create-homework');
+    });
+    Route::get('/gestionar-rubricas', function () {
+        return view('rubricas');
+    });
+    Route::get('/usuarios','UsuariosController@index');
+    Route::get('/crear_usuarios','UsuariosController@create');
+    Route::post('/store_usuarios','UsuariosController@store');
+    Route::post('/archivo', 'TareasController@store');
+    Route::get('/rubricas', function () {
+        return view('rubricas');
+    });
+    Route::get('/ciclo-o-periodo', function () {
+        return view('ciclo_o_periodo');
+    });
+    Route::get('/fechas-importantes', 'Controller@getImportantDatesView');
+    Route::get('/prueba', 'Controller@prueba');
+    Route::get('/fechas-importantes', 'Controller@getImportantDatesView');
+    Route::get('/get-event', 'Controller@getEvent');
+    Route::put('/put-edit-event', 'Controller@putEditEvent');
 });
-
-Route::get('/gestionar-rubricas', function () {
-    return view('rubricas');
-});
-
-Route::get('/ciclo-o-periodo', function () {
-    return view('ciclo_o_periodo');
-});
-
-Route::get('/fechas-importantes', 'Controller@getImportantDatesView');
-
-Route::get('/get-event', 'Controller@getEvent');
-
-Route::put('/put-edit-event', 'Controller@putEditEvent');
-
-Route::get('/agregar_tareas', function () {
-    return view('create-homework');
-});
-
-Route::get('/usuarios','UsuariosController@index');
-
-Route::get('/crear_usuarios','UsuariosController@created');
-
-Route::post('/archivo', 'TareasController@store');
-
-Route::get('/home', 'HomeController@index')->name('home');
-Auth::routes();
-

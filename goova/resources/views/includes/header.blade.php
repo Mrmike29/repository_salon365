@@ -170,7 +170,7 @@
                                                 </li>
                                                 <li>
 
-                                                    <a href="logout" onclick="event.preventDefault();
+                                                    <a href="#!" onclick="event.preventDefault();
 
                                                      document.getElementById('logout-form').submit();">
                                                         <span class="ti-unlock"></span>
@@ -178,8 +178,8 @@
                                                     </a>
 
                                                     <form id="logout-form" action="logout" method="POST" style="display: none;">
-
-                                                        <input type="hidden" name="_token" value="6gTTeQoxHaLjsJkKDMwMIVLmrSOSs29Ye7YZ4Hhl">                                                    </form>
+                                                        @csrf
+                                                    </form>
                                                 </li>
                                             </ul>
                                         </div>

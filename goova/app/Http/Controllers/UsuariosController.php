@@ -21,12 +21,18 @@ class UsuariosController extends Controller
         return view('usuarios.index',array('usuarios'=>$usarios));
     }
 
-    public function created(Request $request)
+    public function create(Request $request)
     {
-        $roles = Rol::get();
+        $roles = Rol::where('id','<>',1)->get();
         $type_document = Type_document::get();
         // $entity = Entity::get();
 
         return view('usuarios.create',array('roles'=>$roles,'type_document'=>$type_document));
+    }
+
+    public function store(Request $request)
+    {
+        dd($request);
+        $usuario = new User($request->except(['c-password']));
     }
 }
