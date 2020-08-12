@@ -7,9 +7,13 @@
     outline: none;
 }
 
+body{
+    height: auto;
+}
+
 header {
     top: 0;
-    z-index: 1;
+    z-index: 100;
     display: flex;
     padding: 0 30px;
     position: sticky;
@@ -82,12 +86,7 @@ nav ul li a.option:focus {
     height: 100px;
 }
 
-section {
-    width: 90%;
-    margin: auto;
-}
-
-section h1.title {
+h1.title {
     margin: auto;
     font-size: 5vw;
     font-weight: bold;
@@ -122,11 +121,17 @@ section h1.title {
     text-align: center;
 }
 
-.content .content-img h2 {
+.column h2 {
     margin: 0 20px;
     color: #002c38;
     text-align: center;
     text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.general-letter-style {
+    color: #002c38;
+    font-size: 1.2em;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -185,7 +190,7 @@ footer .img-footer img {
 
 .bottom-right {
     position: absolute;
-    bottom: 8px;
+    bottom: 165px;
     right: 95px;
     width: 30%;
     color: #808080;
@@ -207,37 +212,53 @@ footer .img-footer img {
     padding: 5px 53px;
 }
 
-/*section {
-    position: relative;
+.card{
+    cursor: pointer;
+    width: 340px;
+    height: 480px;
+}
+.front,.back{
+    backface-visibility: hidden;
+    transition: transform .6s linear;
+}
+
+.front{
+    transform: perspective(600px) rotateY(0deg);
+}
+.back{
+    transform: perspective(600px) rotateY(180deg) translateY(-175%);
+}
+.back-content{
+    color: #2c3e50;
+    text-align: center;
     width: 100%;
-    min-height: 100vh;
-    display: flex;
+}
+.sm{
+    margin: 20px 0;
+}
+.sm a{
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
     justify-content: center;
     align-items: center;
-    padding: 50px 0;
+    color: #2c3e50;
+    font-size: 18px;
+    transition: 0.4s;
+    border-radius: 50%
+}
+.sm a:hover{
+    background: #2c3e50;
+    color: white;
+}
+.card:hover > .front{
+    transform: perspective(600px) rotateY(-180deg);
+}
+.card:hover > .back{
+    transform: perspective(600px) rotateY(0deg) translateY(-175%);
 }
 
-/*section .content {
-    width: 100%;
-    margin: 5px;
-    text-align: center;
+div.back-content.middle span {
+    font-size: x-large;
+    font-family: 'Montserrat', sans-serif;
 }
-
-.container section:nth-child(1) .content div.cover {
-    min-height: 75vh;
-    background-image: url("http://127.0.0.1:8000/img/front/3975410.jpg");
-    background-size: cover;
-}
-
-.container section:nth-child(2) .content div.cover {
-    min-height: 75vh;
-    background-image: url("http://127.0.0.1:8000/img/front/3781242.jpg");
-    background-size: cover;
-}
-
-.headerDivider {
-    background: #fff;
-    min-height: 75vh;
-    width: 10px;
-    margin: auto;
-}*/

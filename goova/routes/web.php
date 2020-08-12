@@ -38,9 +38,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ciclo-o-periodo', function () {
         return view('ciclo_o_periodo');
     });
+
+    /** FECHAS IMPORTANTES */
     Route::get('/fechas-importantes', 'Controller@getImportantDatesView');
-    Route::get('/prueba', 'Controller@prueba');
-    Route::get('/fechas-importantes', 'Controller@getImportantDatesView');
+    Route::get('/get-pending-events', 'Controller@getPendingEvents');
     Route::get('/get-event', 'Controller@getEvent');
+
+    Route::post('/post-save-event', 'Controller@postSaveEvent');
     Route::put('/put-edit-event', 'Controller@putEditEvent');
 });

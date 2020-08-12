@@ -32,9 +32,13 @@
 <script type="text/javascript" src="{{asset('js/morris.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/ckeditor.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/toastr.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/moment.min.js')}}"></script>
+{{--<script type="text/javascript" src="{{asset('js/moment.min.js')}}"></script>--}}
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+
 <script type="text/javascript" src="{{asset('js/ckeditor.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/bootstrap_datetimepicker.min.js')}}"></script>
+{{--<script type="text/javascript" src="{{asset('js/bootstrap_datetimepicker.min.js')}}"></script>--}}
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
 <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/fullcalendar.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/fullcalendar-lang-es.js')}}"></script>

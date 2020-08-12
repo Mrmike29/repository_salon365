@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -14,11 +15,6 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function getImportantDatesView(){
-
-//        if(Auth::user() == null){ return abort(403, 'Accion no autorizada');}
-//        if(Auth::user()->id_role != 1 && Auth::user()->id_role != 2){ return abort(403, 'Accion no autorizada'); }
-
-//        $id = Auth::user()->id;
 
         $dates = DB::table('important_dates')->select('*')->get();
 
@@ -44,12 +40,41 @@ class Controller extends BaseController
         return view('fechas_importantes', ['dates' => $dates]);
     }
 
+    function getPendingEvents(){
+        $idEntity = Auth::user()->id_info_entity;
+
+        $dates = DB::table('important_dates')
+            ->where('id_entity', $idEntity)
+            ->where('date', '>', date('Y-m-d H:i:s'))
+            ->select('*')
+            ->get();
+
+        return [ 'dates' => $dates ];
+    }
+
     function getEvent(Request $request){
         $id = $request->id;
 
         $event = DB::table('important_dates')->select('*')->where('id', $id)->first();
 
         return [ 'event' => $event ];
+    }
+
+    function postSaveEvent(Request $request) {
+        $idEntity = Auth::user()->id_info_entity;
+        $name = $request->name;
+        $description = $request->description;
+        $date = $request->dateStart . ' ' . $request->timeStart;
+        $end = $request->dateEnd . ' ' . $request->timeEnd;
+
+        $event = DB::table('important_dates')
+            ->insert([
+                'id_entity' => $idEntity,
+                'name' => $name,
+                'description' => $description,
+                'date' => $date,
+                'end' => $end
+            ]);
     }
 
     function putEditEvent(Request $request){
