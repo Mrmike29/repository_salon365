@@ -19,20 +19,21 @@
                 </section>
                 <section class="admin-visitor-area up_st_admin_visitor">
                     <div class="container-fluid p-0">
-                        <div class="row">
-                            <div class="col-lg-12">
+                        <div class="row m-0">
+                            <div class="p-0 col-md-11">
                                 <div class="white-box mt-10">
-                                    <table class="table" id="table_users" style="width: 100%;">
+                                    <table id="table_users" class="school-table">
                                         <thead>
                                             <tr>
                                                 <th>Tipo de Documento</th>
-                                                <th>No° Documento</th>
+                                                <th>Documento</th>
                                                 <th>Nombre</th>
                                                 <th>Correo</th>
                                                 <th>Rol</th>
+                                                <th>Estado</th>
                                                 <th>Telefono</th>
                                                 <th>Dirrección</th>
-                                                <th>Acciones</th>
+                                                <th class="noExport">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -43,9 +44,24 @@
                                                     <td>{{$val->name}} {{$val->last_name}}</td>
                                                     <td>{{$val->email}}</td>
                                                     <td>{{$val->rol}}</td>
+                                                    <td>{{$val->state}}</td>
                                                     <td>{{$val->phone}}</td>
                                                     <td>{{$val->address}}</td>
-                                                    <td></td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                                Seleccionar
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="/editar_usuario/{{$val->id}}">Editar</a>
+                                                                @if($val->state == "HABILITADO")
+                                                                    <a class="dropdown-item inhabilitar_user" data-id="{{$val->id}}" data-toggle="modal" data-target="#inhabilitarUserModal" href="#">Inhabilitar</a>
+                                                                @else
+                                                                    <a class="dropdown-item habilitar_user" data-id="{{$val->id}}" data-toggle="modal" data-target="#habilitarUserModal" href="#">Habilitar</a>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -57,12 +73,57 @@
                 </section>
             </div>
         </div>
+        <div class="modal fade admin-query" id="inhabilitarUserModal" >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">INHABILITAR USUARIO</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <h4>¿Estás segura de inhabilitar este usuario?</h4>
+                        </div>
+                        <div class="mt-40 d-flex justify-content-between">
+                            <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
+                            <form method="POST" action="/inhabilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="id" value="" id="student_inhabilitar">  
+                                <button class="primary-btn fix-gr-bg" type="submit">Aceptar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade admin-query" id="habilitarUserModal" >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">HABILITAR USUARIO</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <h4>¿Estás segura de habilitar este usuario?</h4>
+                        </div>
+                        <div class="mt-40 d-flex justify-content-between">
+                            <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
+                            <form method="POST" action="/habilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="id" value="" id="student_habilitar">  
+                                <button class="primary-btn fix-gr-bg" type="submit">Aceptar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @include('includes.footer')
         <script>
             $('#table_users').DataTable({
-                bLengthChange: true,
-                responsive: true,
-                paging: false,
+                bLengthChange: false,
+                // paging: true,
                 "bDestroy": true,
                 language: {
                     search: "<i class='ti-search'></i>",
@@ -124,25 +185,14 @@
                         text: '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',
                         exportOptions: {
-                            columns: ':visible',
+                            columns: "thead th:not(.noExport)",
                             order: 'applied',
                             columnGap: 20
                         },
-                        orientation: 'landscape',
                         pageSize: 'A4',
                         fontSize:10,
                         alignment: 'center',
                         header: true,
-                        customize: function ( doc ) {
-                            // doc.content.splice( 1, 0, {
-                            //     margin: [ 0, 0, 0, 12 ],
-                            //     alignment: 'center',
-                            //     image: 'data:image/png;base64,'+$("#logo_img").val()
-                            // } );
-                            doc.pageMargins = [10, 20, 10,20 ];
-                            doc.defaultStyle.fontSize = 6; 
-                            doc.styles.tableHeader.fontSize = 7; 
-                        },
                         title : $("#logo_title").val(),
                     },
                     {
@@ -163,7 +213,19 @@
                 columnDefs: [{
                     visible: false
                 }],
+                responsive: true,
             });
+            setTimeout( function() {
+                $('#table_users').parent().parent().parent().removeClass('col-md-11').addClass('col-md-12')
+            }, 80);
+            $('.inhabilitar_user').click(function(){
+                var id = $(this).data('id')
+                $('.modal#inhabilitarUserModal form input[name=id]').val(id)
+            })
+            $('.habilitar_user').click(function(){
+                var id = $(this).data('id')
+                $('.modal#habilitarUserModal form input[name=id]').val(id)
+            })
         </script>
     </body>
 </html>

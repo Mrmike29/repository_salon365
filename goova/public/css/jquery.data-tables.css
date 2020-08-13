@@ -345,11 +345,11 @@ table.dataTable td {
 	zoom: 1;
 }
 .dataTables_filter > label {
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 	position: absolute;
-	top: -30px;
-	left: 50%;
-	transform: translateX(-50%);
+	top: -20px;
+	/* left: 50%; */
+	/* transform: translateX(-50%); */
 	min-width: 280px;
 	border-bottom: 1px solid rgba(130, 139, 178, 0.40);
 }
@@ -393,9 +393,9 @@ table.dataTable td {
 .dataTables_wrapper .dataTables_length {
 	float: left;
 }
-.dataTables_wrapper .dataTables_filter {
-	text-align: center;
-}
+/* .dataTables_wrapper .dataTables_filter { */
+	/* text-align: center; */
+/* } */
 .dataTables_wrapper .dataTables_filter input {
 	margin-left: 0.5em;
 	border: 0;
@@ -432,7 +432,7 @@ table.dataTable td {
 	padding-top: 20px;
 }
 .dataTables_wrapper .dataTables_paginate {
-	text-align: center;
+	text-align: right;
 	padding-top: 20px;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -609,7 +609,7 @@ table.dataTable td {
 	.dataTables_wrapper .dataTables_length,
 	.dataTables_wrapper .dataTables_filter {
 		float: none;
-		text-align: center;
+		/* text-align: center; */
 	}
 	.dataTables_wrapper .dataTables_filter {
 		margin-top: 0.5em;

@@ -1812,22 +1812,21 @@ html[dir="rtl"] .to-do-list.up_buttom {
 
 /* line 188, /Applications/MAMP/htdocs/InfixEduTheme/public/backEnd/scss/1_default/admin/_component.scss */
 .modal-content .modal-header {
-  /*background: url(../../img/modal-header-bg.png) no-repeat center;*/
-  background-size: cover;
+  background: linear-gradient(90deg, #7c32ff 0%, #c738d8 51%, #7c32ff 100%);
   border-radius: 5px 5px 0px 0px;
   border: 0;
-  /*padding: 33px 40px;*/
+  padding: 33px 40px;
 }
 
 /* line 194, /Applications/MAMP/htdocs/InfixEduTheme/public/backEnd/scss/1_default/admin/_component.scss */
 .modal-content .modal-header .modal-title {
   font-size: 18px;
-  color: #415094;
+  color: #fff;
 }
 
 /* line 198, /Applications/MAMP/htdocs/InfixEduTheme/public/backEnd/scss/1_default/admin/_component.scss */
 .modal-content .modal-header .close {
-  color: #415094;
+  color: #fff;
   opacity: 1;
   margin: 0;
   padding: 0;

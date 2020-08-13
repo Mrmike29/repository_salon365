@@ -38,46 +38,36 @@
         .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
             background: #7c32ff !important;
         }
-
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
             background: #7c32ff  !important;
         }
-
         ::placeholder {
             color: #415094  !important;
         }
-
         .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-bottom{
             z-index: 99999999999 !important;
             background: #fff !important;
         }
-
         .input-effect {
             float: left;
             width: 100%;
         }
-
         #livesearch a {
             text-align: left;
             display: block;
         }
-
         .languageChange .list{
             padding-top: 40px !important;
         }
-
         .goova_theme_rtl .list{
             padding-top: 40px !important;
         }
-
         .goova_theme_style .list{
             padding-top: 40px !important;
         }
-
         p.date {
             font-size: 11px;
         }
-
         .mr-10.text-right.bell_time {
             text-align: right !important;
             margin-right: 0;
@@ -85,28 +75,23 @@
             position: relative;
             left: 22px;
         }
-
         .profile_single_notification i {
             margin-bottom: 20px;
         }
-
         .profile_single_notification span.ti-bell {
             font-size: 12px;
             margin-right: 5px;
             display: inline-block;
             overflow: hidden;
         }
-
         .dropdown-item:last-child .profile_single_notification {
             background: #000;
         }
-
         .profile_single_notification.d-flex.justify-content-between.align-items-center {
             /* background: red; */
             margin-bottom: 10px !important;
             margin-top: 10px !important;
         }
-
         .admin .navbar .right-navbar .dropdown .message.notification_msg {
             font-size: 12px;
             max-width: 127px;
@@ -119,7 +104,6 @@
             line-height: 1.4;
             white-space: normal;
         }
-
         .admin .navbar .right-navbar .dropdown .message {
             max-height: initial !important;
         }

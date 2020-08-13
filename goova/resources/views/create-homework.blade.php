@@ -76,7 +76,7 @@
                                                     <div class="no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input date form-control" id="homework_date" type="text" name="homework_date" value="{{date('m/d/Y')}}" readonly="true">
+                                                                <input class="primary-input date form-control" id="homework_date" type="text" name="homework_date" value="{{date('d/m/Y')}}" readonly="true">
                                                                 <label>Fecha Inicio <span>*</span></label>
                                                                 <span class="focus-border"></span>
                                                             </div>

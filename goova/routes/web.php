@@ -31,6 +31,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/usuarios','UsuariosController@index');
     Route::get('/crear_usuarios','UsuariosController@create');
     Route::post('/store_usuarios','UsuariosController@store');
+    Route::get('/editar_usuario/{id}','UsuariosController@edit');
+    Route::post('/post_usuario','UsuariosController@update');
+    Route::post('/inhabilitar_usuario','UsuariosController@inhabilitar');
+    Route::post('/habilitar_usuario','UsuariosController@habilitar');
     Route::post('/archivo', 'TareasController@store');
     Route::get('/rubricas', function () {
         return view('rubricas');

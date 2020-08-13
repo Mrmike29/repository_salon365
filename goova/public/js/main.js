@@ -235,7 +235,8 @@
 	
 	$('.primary-input.date').datepicker({
 		autoclose: true,
-		setDate: new Date()
+		setDate: new Date(),
+		format: 'dd/mm/yyyy'
 	});
 	$('.primary-input.date').on('changeDate', function (ev) {
 		// $(this).datepicker('hide');

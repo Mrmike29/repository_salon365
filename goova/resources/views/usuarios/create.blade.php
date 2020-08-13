@@ -26,10 +26,10 @@
                                     <div class="white-box">
                                         <div class="">
                                             <div class="row mb-30">
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_type_document" id="classSelectStudent" required>
-                                                            <option data-display="Typo de Documento *" value="">Select</option>
+                                                            <option data-display="Tipo de Documento *" value="">Select</option>
                                                             @foreach($type_document as $key => $val)
                                                                 <option value="{{$val->id}}">{{$val->name}}</option>
                                                             @endforeach
@@ -37,7 +37,7 @@
                                                         <span class="focus-border"></span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
@@ -48,9 +48,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row mb-30">
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
@@ -61,7 +59,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
@@ -72,9 +70,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row mb-30">
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_rol" id="classSelectStudent" required>
                                                             <option data-display="Tipo de Rol *" value="">Select</option>
@@ -85,7 +81,9 @@
                                                         <span class="focus-border"></span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="form-group" id="list_students">
+                                                </div>
+                                                <div class="form-group col-lg-6">
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
@@ -96,9 +94,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row mb-30">
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
@@ -109,7 +105,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
@@ -123,9 +119,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row mb-30">
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
@@ -136,7 +130,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
@@ -151,7 +145,7 @@
                                         </div>
                                         <div class="row mt-40">
                                             <div class="col-lg-12 text-center">
-                                                <button class="primary-btn fix-gr-bg" data-toggle="tooltip" title="">
+                                                <button type="submit" class="primary-btn fix-gr-bg" data-toggle="tooltip" title="">
                                                     <span class="ti-check"></span>
                                                     Guardar
                                                 </button>
@@ -169,17 +163,40 @@
         <script>
             var password = true
             $(document).on('change, keyup','input[name=password], input[name=c-password]',function(){
-                console.log('111')
-                if($('input[name=password]').val() !== $('input[name=c-password]')){
+                var pass = $('input[name=password]').val()
+                var c_pass = $('input[name=c-password]').val()
+                if(pass !== c_pass){
                     password = false
+                }else{
+                    password = true
                 }
             })
-            $(document).on('submit','form',function(){
-                if(password){
+            $('form.form-horizontal').submit(function(){
+                if(password == true){
                     return true
                 }else{
                     $('.invalid-feedback strong').html('Las contraseñas no coinciden')
-                    return false
+                    $('.invalid-feedback').removeAttr('style')
+                    $('input[name=c-password]').addClass('is-invalid')
+                }
+                return false
+            })
+            $(document).on('change','select[name=id_rol]',function(){
+                var id = $(this).val()
+                var html = `<div class="input-effect sm2_mb_20 md_mb_20">
+                                <select class="niceSelect w-100 bb form-control" name="id_list_students" id="classSelectStudent" required>
+                                    <option data-display="Seleccionar lista *" value="">Select</option>
+                                    @foreach($list_students as $key => $val)
+                                        <option value="{{$val->id}}">{{$val->name}}</option>
+                                    @endforeach
+                                </select>
+                                <span class="focus-border"></span>
+                            </div>`
+                if(id == 5){
+                    $('#list_students').html(html).addClass('col-md-6')
+                    $('select[name=id_list_students]').niceSelect();
+                }else{
+                    $('#list_students').removeClass('col-md-6').html("")
                 }
             })
         </script>
