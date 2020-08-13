@@ -50,4 +50,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/post-save-event', 'Controller@postSaveEvent');
     Route::put('/put-edit-event', 'Controller@putEditEvent');
+
+    /* VIDEOCHAT */
+    Route::get('/listar/sala','SalaController@index');
+    Route::get('/crear/sala','SalaController@index');
+    Route::post('/crear/sala','SalaController@index');
+    Route::get('/editar/sala','SalaController@index');
+    Route::post('/editar/sala','SalaController@index');
+    Route::get('/cambiar-estado/sala','SalaController@index');
+    Route::get('/ingresar/sala/{id}','SalaController@index');
+    
 });

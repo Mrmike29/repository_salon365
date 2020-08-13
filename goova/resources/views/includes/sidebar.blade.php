@@ -84,6 +84,20 @@ los menus que no contengan sub-menu deben tener id.
       <li>
          <a href="#subMenuUsuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <span class="flaticon-analytics"></span>
+            Audiovisual
+         </a>
+         <ul class="collapse list-unstyled" id="subMenuUsuarios">
+            <li>
+               <a href="/listar/sala">Listar</a>
+            </li>
+            <li>
+               <a href="/crear/sala">Crear</a>
+            </li>
+         </ul>
+      </li>
+      <li>
+         <a href="#subMenuUsuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <span class="flaticon-analytics"></span>
             Usuarios
          </a>
          <ul class="collapse list-unstyled" id="subMenuUsuarios">
