@@ -22,9 +22,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', function () {
         return view('welcome');
     });
-    Route::get('/agregar_tareas', function () {
-        return view('create-homework');
-    });
+    Route::get('/agregar_tareas','TareasController@create_homework');
+    Route::get('/materias_tereas/{id}','TareasController@subjetcs_homework');
     Route::get('/gestionar-rubricas', function () {
         return view('rubricas');
     });
@@ -35,7 +34,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/post_usuario','UsuariosController@update');
     Route::post('/inhabilitar_usuario','UsuariosController@inhabilitar');
     Route::post('/habilitar_usuario','UsuariosController@habilitar');
-    Route::post('/archivo', 'TareasController@store');
+    Route::post('/archivo', 'TareasController@archivos_store');
+    Route::get('/cursos','CursosController@index');
+    Route::get('/crear_cursos','CursosController@create');
+    Route::post('/store_cursos','CursosController@store');
+    Route::get('/editar_cursos/{id}','CursosController@edit');
+    Route::post('/update_cursos','CursosController@update');
+    Route::get('/view_students_course/{id}','CursosController@view_students');
+    Route::get('/view_teachers_course/{id}','CursosController@view_teachers');
     Route::get('/rubricas', function () {
         return view('rubricas');
     });

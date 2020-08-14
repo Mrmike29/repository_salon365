@@ -46,25 +46,18 @@
                                             <div class="row mb-30">
                                                 <div class="col-lg-6">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <select class="niceSelect w-100 bb form-control" name="class_id" id="classSelectStudent">
-                                                            <option data-display="Seleccionar Clase *" value="">Select</option>
-                                                            <option value="1" >One 1</option>
-                                                            <option value="5" >Two 1</option>
-                                                            <option value="9" >Three 1</option>
-                                                            <option value="13" >Four 1</option>
-                                                            <option value="17" >Five 1</option>
-                                                            <option value="21" >Six 1</option>
-                                                            <option value="25" >Seven 1</option>
-                                                            <option value="29" >Eight 1</option>
-                                                            <option value="33" >Nine 1</option>
-                                                            <option value="37" >Ten 1</option>
+                                                        <select class="niceSelect w-100 bb form-control" name="id_course">
+                                                            <option data-display="Seleccionar Curso *" value="">Select</option>
+                                                            @foreach($cursos as $key => $val)
+                                                                <option value="{{$val->id}}">{{$val->name}}</option>
+                                                            @endforeach
                                                         </select>
                                                         <span class="focus-border"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="input-effect sm2_mb_20 md_mb_20" id="sectionStudentDiv">
-                                                        <select class="niceSelect w-100 bb form-control" name="section_id" id="sectionSelectStudent">
+                                                        <select class="niceSelect w-100 bb form-control" name="id_subjects" id="sectionSelectStudent">
                                                             <option data-display="Seleccionar Materia *" value="">Section *</option>
                                                         </select>
                                                         <span class="focus-border"></span>
@@ -179,6 +172,20 @@
                     "'Century Gothic', Futura, sans-serif": 'Century Gothic'
                 }
             } );
+            $(document).on('change','select[name=id_course]',function(){
+                var id = $(this).val()
+                $.ajax({
+                    url: '/materias_tereas/'+id,
+                    type: 'get',
+                    success:function(dato){
+                        var html = ''
+                        $(dato).each(function(k,v){
+                            html += `<option value="${v.id}">${v.subjects} - ${v.teacher} ${v.last_name}</option>`
+                        })
+                        console.log(html)
+                    }
+                })
+            })
         </script>
     </body>
 </html>

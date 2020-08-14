@@ -13,7 +13,7 @@
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
-                            <h1>Usuarios</h1>
+                            <h1>Crear Usuario</h1>
                         </div>
                     </div>
                 </section>
@@ -185,7 +185,7 @@
                 var id = $(this).val()
                 var html = `<div class="input-effect sm2_mb_20 md_mb_20">
                                 <select class="niceSelect w-100 bb form-control" name="id_list_students" id="classSelectStudent" required>
-                                    <option data-display="Seleccionar lista *" value="">Select</option>
+                                    <option data-display="Seleccionar Curso *" value="">Select</option>
                                     @foreach($list_students as $key => $val)
                                         <option value="{{$val->id}}">{{$val->name}}</option>
                                     @endforeach
