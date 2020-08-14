@@ -34,13 +34,13 @@ los menus que no contengan sub-menu deben tener id.
            </a>
            <ul class="collapse list-unstyled" id="subMenuProgramaticContent">
                <li>
-                   <a href="gestionar-rubricas">Gestionar Rúbricas</a>
+                   <a href="/gestionar-rubricas">Gestionar Rúbricas</a>
                </li>
                <li>
-                   <a href="ciclo-o-periodo"> Ciclo o Periodo</a>
+                   <a href="/ciclo-o-periodo"> Ciclo o Periodo</a>
                </li>
                <li>
-                   <a href="fechas-importantes"> Fechas Importantes</a>
+                   <a href="/fechas-importantes"> Fechas Importantes</a>
                </li>
            </ul>
        </li>

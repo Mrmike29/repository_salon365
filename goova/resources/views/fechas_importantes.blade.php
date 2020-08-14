@@ -42,12 +42,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="white-box">
-                                            <div class="common-calendar fc fc-unthemed fc-ltr">
-                                                <div class="fc-toolbar fc-header-toolbar">
+                                        <div class="white-box" id="container_calendar">
 
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -87,20 +83,8 @@
 
                                             </div>
 
-                                            <div class="toDoListsCompleted" style="display: none;">
-                                                <?php foreach ($dates as $date){
-                                                    $date1 = new DateTime($date->date); $date1 = $date1->format('Y-m-d');
-                                                    if (date('Y-m-d') > $date1) {
-                                                ?>
-                                                    <div class="single-to-do d-flex justify-content-between" id="to_do_list_div1">
-                                                        <div>
-                                                            <h5 class="d-inline"><?= $date->name ?></h5>
-                                                            <p class="">
-                                                                <?= $date1 ?>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                <?php } } ?>
+                                            <div class="toDoListsCompleted" id="listHeldEvents" style="display: none;">
+
                                             </div>
                                         </div>
                                     </div>
@@ -116,31 +100,180 @@
 
         <script type="text/javascript">
 
-            const getPendingEvents = () => {
+            /** Mi función, la utilizo para hacer mis validaciones y la voy a patentar */
+            (function( $ ){
+                $.fn.mValid = function(data) {
+                    data.text = $.trim($(this).val()) === ''? data.text : '';
+                    $(this).parents('div.input-effect').siblings('span').text(data.text)
+                    return ($.trim($(this).val()) === '');
+                };
+            })( jQuery );
+
+            const
+                getPendingEvents = () => {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/get-pending-events',
+                        success: (data) => {
+                            let html = '',
+                                dates = data.dates
+
+                            dates.forEach((item) => {
+                                html +=
+                                    '<div class="single-to-do d-flex justify-content-between toDoList" id="event_date_' + item.id + '">' +
+                                        '<div onclick="openModalEvent(' + item.id + ')" style="cursor: pointer;">' +
+                                            '<h5 class="d-inline">' + item.name + '</h5>' +
+                                            '<p>' +
+                                                item.date.slice(0, -3) + ' - ' + item.end.slice(0, -3) +
+                                            '</p>' +
+                                        '</div>' +
+                                    '</div>'
+                            })
+
+                            $('#listPendingEvent').html(html);
+                        }
+                    });
+                },
+                getHeldEvents = () => {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/get-held-events',
+                        success: (data) => {
+                            let html = '',
+                                dates = data.dates
+
+                            dates.forEach((item) => {
+                                html +=
+                                    '<div class="single-to-do d-flex justify-content-between toDoList" id="event_held_date_' + item.id + '">' +
+                                        '<div style="cursor: pointer;">' +
+                                            '<h5 class="d-inline">' + item.name + '</h5>' +
+                                            '<p>' +
+                                                item.date.slice(0, -3) + ' - ' + item.end.slice(0, -3) +
+                                            '</p>' +
+                                        '</div>' +
+                                    '</div>'
+                            })
+
+                            $('#listHeldEvents').html(html);
+                        }
+                    });
+                },
+                getCalendarEvents = () => {
+
                 $.ajax({
                     type: 'GET',
-                    url: '/get-pending-events',
+                    url: '/get-calendar-events',
                     success: (data) => {
-                        let html = '',
-                            dates = data.dates
+                        let dates = data.dates;
 
-                        dates.forEach((item) => {
-                            item.date = item.date.split(" ")[0];
-                            html +=
-                                '<div class="single-to-do d-flex justify-content-between toDoList" id="event_date_' + item.id + '">' +
-                                    '<div onclick="openModalEvent(' + item.id + ')" style="cursor: pointer;">' +
-                                        '<h5 class="d-inline">' + item.name + '</h5>' +
-                                        '<p>' +
-                                            item.date +
-                                        '</p>' +
-                                    '</div>' +
-                                '</div>'
-                        })
+                        $('#container_calendar').html(
+                            '<div class="common-calendar fc fc-unthemed fc-ltr">' +
+                                '<div class="fc-toolbar fc-header-toolbar">' +
+                                '</div>' +
+                            '</div>'
+                        )
 
-                        $('#listPendingEvent').html(html);
+                        $('.common-calendar').fullCalendar({
+                            lang: 'es',
+                            header: {
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'month,agendaWeek,agendaDay'
+                            },
+                            eventClick: function (event, jsEvent, view) {
+                                let id = event.id;
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/get-event',
+                                    data: {id},
+                                    success: (data) => {
+                                        let dateTimeStart,
+                                            dateTimeEnd,
+                                            event = data.event;
+
+                                        dateTimeStart = event.date.split(" ")[1];
+                                        event.date = event.date.split(" ")[0];
+                                        dateTimeEnd = event.end.split(" ")[1];
+                                        event.end = event.end.split(" ")[0];
+
+                                        let html =
+                                            '<div class="container-fluid">' +
+                                                '<div class="row">' +
+                                                    '<div class="col-lg-12">' +
+                                                        '<div class="row mt-25">' +
+                                                            '<div class="col-lg-12">' +
+                                                                '<div class="input-effect">' +
+                                                                    '<input class="primary-input form-control has-content" readonly type="text" value="' + event.name + '">' +
+                                                                    '<label>' +
+                                                                        'Nombre *<span></span> ' +
+                                                                    '</label>' +
+                                                                    '<span class="focus-border"></span>' +
+                                                                '</div>' +
+                                                            '</div>' +
+                                                        '</div>' +
+                                                        '<div class="row mt-25">' +
+                                                            '<div class="col-lg-12" id="sibling_class_div">' +
+                                                                '<div class="input-effect">' +
+                                                                    '<textarea class="primary-input form-control has-content" readonly cols="30" rows="10">' + event.description + '</textarea>' +
+                                                                    '<label>' +
+                                                                        'Descripción *<span></span> ' +
+                                                                    '</label>' +
+                                                                    '<span class="focus-border"></span>' +
+                                                                '</div>' +
+                                                            '</div>' +
+                                                        '</div>' +
+                                                        '<div class="row mt-30">' +
+                                                            '<div class="col-lg-6" id="">' +
+                                                                '<div class="no-gutters input-right-icon">' +
+                                                                    '<div class="col">' +
+                                                                        '<div class="input-effect date">' +
+                                                                            '<div class="input-group">' +
+                                                                                '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + event.date + '">' +
+                                                                                '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + dateTimeStart + '">' +
+                                                                                '<label>' +
+                                                                                    'Inicio <span></span> ' +
+                                                                                '</label>' +
+                                                                            '</div>' +
+                                                                        '</div>' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                            '</div>' +
+                                                            '<div class="col-lg-6" id="">' +
+                                                                '<div class="no-gutters input-right-icon">' +
+                                                                    '<div class="col">' +
+                                                                        '<div class="input-effect date">' +
+                                                                            '<div class="input-group">' +
+                                                                                '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + event.end + '">' +
+                                                                                '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + dateTimeEnd + '">' +
+                                                                                '<label>' +
+                                                                                    'Fin <span></span> ' +
+                                                                                '</label>' +
+                                                                            '</div>' +
+                                                                        '</div>' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                            '</div>' +
+                                                        '</div>' +
+                                                        '<div class="col-lg-12 text-center">' +
+                                                            '<div class="mt-40 d-flex justify-content-between">' +
+                                                                '<button style="background: transparent;border: transparent;"></button>' +
+                                                                '<button type="button" class="primary-btn small fix-gr-bg" data-dismiss="modal">Ok</button>' +
+                                                            '</div>' +
+                                                        '</div>' +
+                                                    '</div>' +
+                                                '</div>' +
+                                            '</div>';
+
+                                        universalModal('Crear Evento', html);
+                                    }
+                                });
+                                return false;
+                            },
+                            height: 650,
+                            events: dates,
+                        });
                     }
                 });
-
             }
 
             function openModalCreateEvent(){
@@ -156,8 +289,8 @@
                                                 'Nombre *<span></span> ' +
                                             '</label>' +
                                             '<span class="focus-border"></span>' +
-                                            '<span class="modal_input_validation red_alert"></span>' +
                                         '</div>' +
+                                        '<span class="modal_input_validation red_alert"></span>' +
                                     '</div>' +
                                 '</div>' +
                                 '<div class="row mt-25">' +
@@ -168,8 +301,8 @@
                                                 'Descripción *<span></span> ' +
                                             '</label>' +
                                             '<span class="focus-border"></span>' +
-                                            '<span class="modal_input_validation red_alert"></span>' +
                                         '</div>' +
+                                        '<span class="modal_input_validation red_alert"></span>' +
                                     '</div>' +
                                 '</div>' +
                                 '<div class="row mt-30">' +
@@ -185,6 +318,7 @@
                                                         '</label>' +
                                                     '</div>' +
                                                 '</div>' +
+                                                '<span class="modal_input_validation red_alert"></span>' +
                                             '</div>' +
                                         '</div>' +
                                     '</div>' +
@@ -200,6 +334,7 @@
                                                         '</label>' +
                                                     '</div>' +
                                                 '</div>' +
+                                                '<span class="modal_input_validation red_alert"></span>' +
                                             '</div>' +
                                         '</div>' +
                                     '</div>' +
@@ -227,22 +362,47 @@
             }
 
             function saveNewEvent() {
-                let name = $('#name_create_event').val(),
-                    description = $('#description_create_event').val(),
-                    dateStart = $('#date_create_event').val(),
-                    timeStart = $('#datetime_create_event').val(),
-                    dateEnd = $('#date_end_create_event').val(),
-                    timeEnd = $('#datetime_end_create_event').val();
+                let pass = true,
+                    empty = false,
+                    name = $.trim($('#name_create_event').val()),
+                    description = $.trim($('#description_create_event').val()),
+                    dateStart = $.trim($('#date_create_event').val()),
+                    timeStart = $.trim($('#datetime_create_event').val()),
+                    dateEnd = $.trim($('#date_end_create_event').val()),
+                    timeEnd = $.trim($('#datetime_end_create_event').val());
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/post-save-event',
-                    data: { "_token": "{{ csrf_token() }}", name, description, dateStart, timeStart, dateEnd, timeEnd},
-                    success: (data) => {
-                        getPendingEvents();
-                        $('.modal').modal('hide');
-                    }
-                });
+                empty = $('#name_create_event').mValid({text: 'Nombre no debe quedar vacío.'}); if(empty){ pass = false}
+                empty = $('#description_create_event').mValid({text: 'Descripción no debe quedar vacía.'}); if(empty){ pass = false}
+                empty = $('#date_create_event').mValid({text: 'Fecha de inicio no debe quedar vacía.'}); if(empty){ pass = false}
+                empty = $('#datetime_create_event').mValid({text: 'Fecha de inicio no debe quedar vacía.'}); if(empty){ pass = false}
+                empty = $('#date_end_create_event').mValid({text: 'Fecha de finalización no debe quedar vacía.'}); if(empty){ pass = false}
+                empty = $('#datetime_end_create_event').mValid({text: 'Fecha de finalización no debe quedar vacía.'}); if(empty){ pass = false}
+
+                if (pass) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/post-save-event',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            name,
+                            description,
+                            dateStart,
+                            timeStart,
+                            dateEnd,
+                            timeEnd
+                        },
+                        success: (data) => {
+                            getCalendarEvents();
+                            getPendingEvents();
+                            getHeldEvents();
+                            $('.modal').modal('hide');
+                            $("body").overhang({
+                                type: "success",
+                                message: "Exito! Se creó el evento exitosamente!"
+                            });
+                        }
+                    });
+                }
             }
 
             function openModalEvent(id){
@@ -252,9 +412,14 @@
                     url: '/get-event',
                     data: { id },
                     success: (data) => {
-                        let event = data.event;
+                        let dateTimeStart,
+                            dateTimeEnd,
+                            event = data.event;
 
+                        dateTimeStart = event.date.split(" ")[1];
                         event.date = event.date.split(" ")[0];
+                        dateTimeEnd = event.end.split(" ")[1];
+                        event.end = event.end.split(" ")[0];
 
                         let html =
                             '<div class="container-fluid">' +
@@ -268,8 +433,8 @@
                                                         'Nombre *<span></span> ' +
                                                     '</label>' +
                                                     '<span class="focus-border"></span>' +
-                                                    '<span class="modal_input_validation red_alert"></span>' +
                                                 '</div>' +
+                                                '<span class="modal_input_validation red_alert"></span>' +
                                             '</div>' +
                                         '</div>' +
                                         '<div class="row mt-25">' +
@@ -280,25 +445,40 @@
                                                         'Descripción *<span></span> ' +
                                                     '</label>' +
                                                     '<span class="focus-border"></span>' +
-                                                    '<span class="modal_input_validation red_alert"></span>' +
                                                 '</div>' +
+                                                '<span class="modal_input_validation red_alert"></span>' +
                                             '</div>' +
                                         '</div>' +
                                         '<div class="row mt-30">' +
-                                            '<div class="col-lg-12" id="">' +
+                                            '<div class="col-lg-6" id="">' +
                                                 '<div class="no-gutters input-right-icon">' +
                                                     '<div class="col">' +
-                                                        '<div class="input-effect">' +
-                                                            '<input class="read-only-input primary-input date form-control has-content" id="date_edit_event" type="text" readonly="true" autocomplete="off" name="date_edit_event" value="' + event.date + '">' +
-                                                            '<label>' +
-                                                                'Date <span></span> ' +
-                                                            '</label>' +
+                                                        '<div class="input-effect date">' +
+                                                            '<div class="input-group">' +
+                                                                '<input class="read-only-input primary-input date form-control" id="date_edit_event" type="text" readonly="true" autocomplete="off" name="date_edit_event" value="' + event.date + '">' +
+                                                                '<input class="read-only-input primary-input date form-control" id="datetime_edit_event" type="text" autocomplete="off" name="datetime_edit_event" value="' + dateTimeStart + '">' +
+                                                                '<label>' +
+                                                                    'Inicio <span></span> ' +
+                                                                '</label>' +
+                                                            '</div>' +
                                                         '</div>' +
+                                                        '<span class="modal_input_validation red_alert"></span>' +
                                                     '</div>' +
-                                                    '<div class="col-auto">' +
-                                                        '<button class="" type="button">' +
-                                                            '<i class="ti-calendar" id="start-date-icon"></i>' +
-                                                        '</button>' +
+                                                '</div>' +
+                                            '</div>' +
+                                            '<div class="col-lg-6" id="">' +
+                                                '<div class="no-gutters input-right-icon">' +
+                                                    '<div class="col">' +
+                                                        '<div class="input-effect date">' +
+                                                            '<div class="input-group">' +
+                                                                '<input class="read-only-input primary-input date form-control" id="date_end_edit_event" type="text" readonly="true" autocomplete="off" name="date_end_edit_event" value="' + event.end + '">' +
+                                                                '<input class="read-only-input primary-input date form-control" id="datetime_end_edit_event" type="text" autocomplete="off" name="datetime_end_edit_event" value="' + dateTimeEnd + '">' +
+                                                                '<label>' +
+                                                                    'Fin <span></span> ' +
+                                                                '</label>' +
+                                                            '</div>' +
+                                                        '</div>' +
+                                                        '<span class="modal_input_validation red_alert"></span>' +
                                                     '</div>' +
                                                 '</div>' +
                                             '</div>' +
@@ -322,25 +502,55 @@
                         $('#name_edit_event').change(function (){ if($(this).val() !== ''){ $(this).focus() } })
                         $('#start-date-icon').on('click', function () { $('#date_edit_event').focus(); });
                         $('#date_edit_event').datepicker({ format: 'yyyy-mm-dd', autoclose: false, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
-                        $('.primary-input.time').datetimepicker({ format: 'LT' });
+                        $("#datetime_edit_event").datetimepicker({format: 'HH:mm' });
+                        $("#datetime_end_edit_event").datetimepicker({format: 'HH:mm' });
                     }
                 });
             }
 
             function saveChangesEditEvent(id) {
-                let name = $('#name_edit_event').val(),
-                    description = $('#description_edit_event').val(),
-                    date = $('#date_edit_event').val();
+                let pass = true,
+                    empty = false,
+                    name = $.trim($('#name_edit_event').val()),
+                    description = $.trim($('#description_edit_event').val()),
+                    dateStart = $.trim($('#date_edit_event').val()),
+                    timeStart = $.trim($('#datetime_edit_event').val()),
+                    dateEnd = $.trim($('#date_end_edit_event').val()),
+                    timeEnd = $.trim($('#datetime_end_edit_event').val());
 
-                $.ajax({
-                    type: 'PUT',
-                    url: '/put-edit-event',
-                    data: { "_token": "{{ csrf_token() }}", id, name, description, date},
-                    success: (data) => {
-                        getPendingEvents();
-                        $('.modal').modal('hide');
-                    }
-                });
+                empty = $('#name_edit_event').mValid({text: 'Nombre no debe quedar vacío.'}); if(empty){ pass = false}
+                empty = $('#description_edit_event').mValid({text: 'Descripción no debe quedar vacía.'}); if(empty){ pass = false}
+                empty = $('#date_edit_event').mValid({text: 'Fecha de inicio no debe quedar vacía.'}); if(empty){ pass = false}
+                empty = $('#datetime_edit_event').mValid({text: 'Fecha de inicio no debe quedar vacía.'}); if(empty){ pass = false}
+                empty = $('#date_end_edit_event').mValid({text: 'Fecha de finalización no debe quedar vacía.'}); if(empty){ pass = false}
+                empty = $('#datetime_end_edit_event').mValid({text: 'Fecha de finalización no debe quedar vacía.'}); if(empty){ pass = false}
+
+                if (pass) {
+                    $.ajax({
+                        type: 'PUT',
+                        url: '/put-edit-event',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            id,
+                            name,
+                            description,
+                            dateStart,
+                            timeStart,
+                            dateEnd,
+                            timeEnd
+                        },
+                        success: (data) => {
+                            getCalendarEvents();
+                            getPendingEvents();
+                            getHeldEvents();
+                            $('.modal').modal('hide');
+                            $("body").overhang({
+                                type: "success",
+                                message: "Exito! Se editó el evento exitosamente!"
+                            });
+                        }
+                    });
+                }
             }
 
             function message() {
@@ -348,7 +558,15 @@
                 $('#add_to_do').modal('hide');
             }
 
+            getCalendarEvents();
             getPendingEvents();
+            getHeldEvents();
+
+            setTimeout(() => {
+                getPendingEvents(); getHeldEvents()
+                setInterval(() => { getPendingEvents(); getHeldEvents() }, 60000)
+            }, 60000 - (new Date().getSeconds() * 1000));
+
         </script>
     </body>
 </html>

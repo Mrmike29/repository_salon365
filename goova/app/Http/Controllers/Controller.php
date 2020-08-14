@@ -45,7 +45,19 @@ class Controller extends BaseController
 
         $dates = DB::table('important_dates')
             ->where('id_entity', $idEntity)
-            ->where('date', '>', date('Y-m-d H:i:s'))
+            ->where('end', '>', date('Y-m-d H:i:s'))
+            ->select('*')
+            ->get();
+
+        return [ 'dates' => $dates ];
+    }
+
+    function getHeldEvents(){
+        $idEntity = Auth::user()->id_info_entity;
+
+        $dates = DB::table('important_dates')
+            ->where('id_entity', $idEntity)
+            ->where('end', '<', date('Y-m-d H:i:s'))
             ->select('*')
             ->get();
 
@@ -81,8 +93,27 @@ class Controller extends BaseController
         $id = $request->id;
         $name = $request->name;
         $description = $request->description;
-        $date = $request->date;
+        $date = $request->dateStart . ' ' . $request->timeStart;
+        $end = $request->dateEnd . ' ' . $request->timeEnd;
 
-        $event = DB::table('important_dates')->where('id', $id)->update(['name' => $name, 'description' => $description, 'date' => $date]);
+        $event = DB::table('important_dates')
+            ->where('id', $id)
+            ->update([
+                'name' => $name,
+                'description' => $description,
+                'date' => $date,
+                'end' => $end
+            ]);
+    }
+
+    function getCalendarEvents(Request $request) {
+        $idEntity = Auth::user()->id_info_entity;
+
+        $dates = DB::table('important_dates')
+            ->where('id_entity', $idEntity)
+            ->select('id', 'name AS title', 'date AS start', 'end', 'description')
+            ->get();
+
+        return [ 'dates' => $dates ];
     }
 }

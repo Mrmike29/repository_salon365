@@ -32,13 +32,9 @@
 <script type="text/javascript" src="{{asset('js/morris.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/ckeditor.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/toastr.min.js')}}"></script>
-{{--<script type="text/javascript" src="{{asset('js/moment.min.js')}}"></script>--}}
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
-
+<script type="text/javascript" src="{{asset('js/moment.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/ckeditor.js')}}"></script>
-{{--<script type="text/javascript" src="{{asset('js/bootstrap_datetimepicker.min.js')}}"></script>--}}
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-
+<script type="text/javascript" src="{{asset('js/bootstrap_datetimepicker.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/fullcalendar.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/fullcalendar-lang-es.js')}}"></script>
@@ -48,6 +44,7 @@
 <script type="text/javascript" src="{{asset('js/custom.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/registration_custom.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/developer.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/overhang.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/socket.io.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/message.js')}}"></script>
 <script type="text/javascript">
@@ -60,10 +57,10 @@
                         '<h4 class="modal-title">' + title + '</h4>' +
                         '<button type="button" class="close" data-dismiss="modal">×</button>' +
                     '</div>' +
-                    '<div class="modal-body">\n' +
+                    '<div class="modal-body">' +
                         body +
-                    '</div>\n' +
-                '</div>\n' +
+                    '</div>' +
+                '</div>' +
             '</div>'
         $('#universal_modal').html(html).modal('show');
     }
@@ -159,58 +156,8 @@
     }
 
 </script>
-<script type="text/javascript">
-    /*-------------------------------------------------------------------------------
-       Full Calendar Js
-       -------------------------------------------------------------------------------*/
-    if ($('.common-calendar').length) {
-        $('.common-calendar').fullCalendar({
-            lang: 'es',
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            eventClick:  function(event, jsEvent, view) {
-                    $('#modalTitle').html(event.title);
-                    $('#modalBody').html(event.description);
-                    $('#image').attr('src',event.url);
-                    $('#fullCalModal').modal();
-                    return false;
-                },
-            height: 650,
-            events: [{
-                "title":"Winter Vacation",
-                "start":"2019-01-22",
-                "end":"2019-01-28",
-                "description":null,
-                "url":null
-            },
-            {"title":"Summer Vacation",
-                "start":"2019-05-02",
-                "end":"2019-05-08",
-                "description":null,
-                "url":null
-            },
-            {"title":"Public Holiday",
-                "start":"2019-05-10",
-                "end":"2019-05-11",
-                "description":null,
-                "url":null
-            },
-            {"title":"asas",
-                "start":"2020-07-26",
-                "end":"2020-07-30",
-                "description":"asasa",
-                "url":"public\/uploads\/holidays\/6cbe47ef8980c008e523a55dccf72820.png"
-            }] ,
-        });
-    }
-
-
-</script>
 <script type="application/javascript" id="global_js_goova">
-    location.pathname.substr(1) !== '' ? (($('#' + location.pathname.substr(1)).length != 0) ? $('#' + location.pathname.substr(1)).addClass('active') : $('[href="' + location.pathname.substr(1) + '"]').parent('li').parent('ul.list-unstyled').siblings('a.dropdown-toggle').addClass('active') , $(".dropdown-toggle.active").click(), $('[href="' + location.pathname.substr(1) + '"]').addClass('active')) : $('#admin-dashboard').addClass('active');
+    location.pathname.substr(1) !== '' ? (($('#' + location.pathname.substr(1)).length != 0) ? $('#' + location.pathname.substr(1)).addClass('active') : $('[href="/' + location.pathname.substr(1) + '"]').parent('li').parent('ul.list-unstyled').siblings('a.dropdown-toggle').addClass('active') , $(".dropdown-toggle.active").click(), $('[href="/' + location.pathname.substr(1) + '"]').addClass('active')) : $('#admin-dashboard').addClass('active');
     let elmts, uls = $('nav#sidebar').find($("ul.collapse.list-unstyled"));
     for (let i = 0; i < uls.length; i++) { elmts = $('#' + uls[i].attributes["id"].nodeValue).find($('li').children('a.active')); if(elmts.length > 0){ $('[href="#' + uls[i].attributes["id"].nodeValue + '"]').addClass('active'); $(".dropdown-toggle.active").click(); $('#' + uls[i].attributes["id"].nodeValue).find('a.dropdown-toggle.collapsed').click(); i = uls.length; }}
 </script>

@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="{{asset('css/toastr.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/select2.css')}}">
     <link rel="stylesheet" href="{{asset('css/fullcalendar.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/overhang.min.css')}}">
 
     <link rel="stylesheet" href="{{asset('css/loade.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
@@ -106,6 +107,10 @@
         }
         .admin .navbar .right-navbar .dropdown .message {
             max-height: initial !important;
+        }
+
+        .modal_input_validation.red_alert {
+            color: red !important;
         }
     </style>
 

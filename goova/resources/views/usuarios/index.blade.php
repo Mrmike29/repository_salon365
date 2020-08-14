@@ -9,7 +9,7 @@
     		@include('includes.sidebar')
             <div id="main-content">
     		    @include('includes.header')
-                
+
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
@@ -88,7 +88,7 @@
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
                             <form method="POST" action="/inhabilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="id" value="" id="student_inhabilitar">  
+                                <input type="hidden" name="id" value="" id="student_inhabilitar">
                                 <button class="primary-btn fix-gr-bg" type="submit">Aceptar</button>
                             </form>
                         </div>
@@ -111,7 +111,7 @@
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
                             <form method="POST" action="/habilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="id" value="" id="student_habilitar">  
+                                <input type="hidden" name="id" value="" id="student_habilitar">
                                 <button class="primary-btn fix-gr-bg" type="submit">Aceptar</button>
                             </form>
                         </div>

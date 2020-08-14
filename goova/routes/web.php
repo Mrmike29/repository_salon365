@@ -46,7 +46,9 @@ Route::middleware(['auth'])->group(function () {
     /** FECHAS IMPORTANTES */
     Route::get('/fechas-importantes', 'Controller@getImportantDatesView');
     Route::get('/get-pending-events', 'Controller@getPendingEvents');
+    Route::get('/get-held-events', 'Controller@getHeldEvents');
     Route::get('/get-event', 'Controller@getEvent');
+    Route::get('/get-calendar-events', 'Controller@getCalendarEvents');
 
     Route::post('/post-save-event', 'Controller@postSaveEvent');
     Route::put('/put-edit-event', 'Controller@putEditEvent');
@@ -59,5 +61,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/editar/sala','SalaController@index');
     Route::get('/cambiar-estado/sala','SalaController@index');
     Route::get('/ingresar/sala/{id}','SalaController@index');
-    
+
 });
