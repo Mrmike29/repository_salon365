@@ -160,121 +160,121 @@
                 },
                 getCalendarEvents = () => {
 
-                $.ajax({
-                    type: 'GET',
-                    url: '/get-calendar-events',
-                    success: (data) => {
-                        let dates = data.dates;
+                    $.ajax({
+                        type: 'GET',
+                        url: '/get-calendar-events',
+                        success: (data) => {
+                            let dates = data.dates;
 
-                        $('#container_calendar').html(
-                            '<div class="common-calendar fc fc-unthemed fc-ltr">' +
-                                '<div class="fc-toolbar fc-header-toolbar">' +
-                                '</div>' +
-                            '</div>'
-                        )
+                            $('#container_calendar').html(
+                                '<div class="common-calendar fc fc-unthemed fc-ltr">' +
+                                    '<div class="fc-toolbar fc-header-toolbar">' +
+                                    '</div>' +
+                                '</div>'
+                            )
 
-                        $('.common-calendar').fullCalendar({
-                            lang: 'es',
-                            header: {
-                                left: 'prev,next today',
-                                center: 'title',
-                                right: 'month,agendaWeek,agendaDay'
-                            },
-                            eventClick: function (event, jsEvent, view) {
-                                let id = event.id;
-                                $.ajax({
-                                    type: 'GET',
-                                    url: '/get-event',
-                                    data: {id},
-                                    success: (data) => {
-                                        let dateTimeStart,
-                                            dateTimeEnd,
-                                            event = data.event;
+                            $('.common-calendar').fullCalendar({
+                                lang: 'es',
+                                header: {
+                                    left: 'prev,next today',
+                                    center: 'title',
+                                    right: 'month,agendaWeek,agendaDay'
+                                },
+                                eventClick: function (event, jsEvent, view) {
+                                    let id = event.id;
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '/get-event',
+                                        data: {id},
+                                        success: (data) => {
+                                            let dateTimeStart,
+                                                dateTimeEnd,
+                                                event = data.event;
 
-                                        dateTimeStart = event.date.split(" ")[1];
-                                        event.date = event.date.split(" ")[0];
-                                        dateTimeEnd = event.end.split(" ")[1];
-                                        event.end = event.end.split(" ")[0];
+                                            dateTimeStart = event.date.split(" ")[1];
+                                            event.date = event.date.split(" ")[0];
+                                            dateTimeEnd = event.end.split(" ")[1];
+                                            event.end = event.end.split(" ")[0];
 
-                                        let html =
-                                            '<div class="container-fluid">' +
-                                                '<div class="row">' +
-                                                    '<div class="col-lg-12">' +
-                                                        '<div class="row mt-25">' +
-                                                            '<div class="col-lg-12">' +
-                                                                '<div class="input-effect">' +
-                                                                    '<input class="primary-input form-control has-content" readonly type="text" value="' + event.name + '">' +
-                                                                    '<label>' +
-                                                                        'Nombre *<span></span> ' +
-                                                                    '</label>' +
-                                                                    '<span class="focus-border"></span>' +
+                                            let html =
+                                                '<div class="container-fluid">' +
+                                                    '<div class="row">' +
+                                                        '<div class="col-lg-12">' +
+                                                            '<div class="row mt-25">' +
+                                                                '<div class="col-lg-12">' +
+                                                                    '<div class="input-effect">' +
+                                                                        '<input class="primary-input form-control has-content" readonly type="text" value="' + event.name + '">' +
+                                                                        '<label>' +
+                                                                            'Nombre *<span></span> ' +
+                                                                        '</label>' +
+                                                                        '<span class="focus-border"></span>' +
+                                                                    '</div>' +
                                                                 '</div>' +
                                                             '</div>' +
-                                                        '</div>' +
-                                                        '<div class="row mt-25">' +
-                                                            '<div class="col-lg-12" id="sibling_class_div">' +
-                                                                '<div class="input-effect">' +
-                                                                    '<textarea class="primary-input form-control has-content" readonly cols="30" rows="10">' + event.description + '</textarea>' +
-                                                                    '<label>' +
-                                                                        'Descripción *<span></span> ' +
-                                                                    '</label>' +
-                                                                    '<span class="focus-border"></span>' +
+                                                            '<div class="row mt-25">' +
+                                                                '<div class="col-lg-12" id="sibling_class_div">' +
+                                                                    '<div class="input-effect">' +
+                                                                        '<textarea class="primary-input form-control has-content" readonly cols="30" rows="10">' + event.description + '</textarea>' +
+                                                                        '<label>' +
+                                                                            'Descripción *<span></span> ' +
+                                                                        '</label>' +
+                                                                        '<span class="focus-border"></span>' +
+                                                                    '</div>' +
                                                                 '</div>' +
                                                             '</div>' +
-                                                        '</div>' +
-                                                        '<div class="row mt-30">' +
-                                                            '<div class="col-lg-6" id="">' +
-                                                                '<div class="no-gutters input-right-icon">' +
-                                                                    '<div class="col">' +
-                                                                        '<div class="input-effect date">' +
-                                                                            '<div class="input-group">' +
-                                                                                '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + event.date + '">' +
-                                                                                '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + dateTimeStart + '">' +
-                                                                                '<label>' +
-                                                                                    'Inicio <span></span> ' +
-                                                                                '</label>' +
+                                                            '<div class="row mt-30">' +
+                                                                '<div class="col-lg-6" id="">' +
+                                                                    '<div class="no-gutters input-right-icon">' +
+                                                                        '<div class="col">' +
+                                                                            '<div class="input-effect date">' +
+                                                                                '<div class="input-group">' +
+                                                                                    '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + event.date + '">' +
+                                                                                    '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + dateTimeStart + '">' +
+                                                                                    '<label>' +
+                                                                                        'Inicio <span></span> ' +
+                                                                                    '</label>' +
+                                                                                '</div>' +
+                                                                            '</div>' +
+                                                                        '</div>' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<div class="col-lg-6" id="">' +
+                                                                    '<div class="no-gutters input-right-icon">' +
+                                                                        '<div class="col">' +
+                                                                            '<div class="input-effect date">' +
+                                                                                '<div class="input-group">' +
+                                                                                    '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + event.end + '">' +
+                                                                                    '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + dateTimeEnd + '">' +
+                                                                                    '<label>' +
+                                                                                        'Fin <span></span> ' +
+                                                                                    '</label>' +
+                                                                                '</div>' +
                                                                             '</div>' +
                                                                         '</div>' +
                                                                     '</div>' +
                                                                 '</div>' +
                                                             '</div>' +
-                                                            '<div class="col-lg-6" id="">' +
-                                                                '<div class="no-gutters input-right-icon">' +
-                                                                    '<div class="col">' +
-                                                                        '<div class="input-effect date">' +
-                                                                            '<div class="input-group">' +
-                                                                                '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + event.end + '">' +
-                                                                                '<input class="read-only-input primary-input date form-control" type="text" readonly="true" value="' + dateTimeEnd + '">' +
-                                                                                '<label>' +
-                                                                                    'Fin <span></span> ' +
-                                                                                '</label>' +
-                                                                            '</div>' +
-                                                                        '</div>' +
-                                                                    '</div>' +
+                                                            '<div class="col-lg-12 text-center">' +
+                                                                '<div class="mt-40 d-flex justify-content-between">' +
+                                                                    '<button style="background: transparent;border: transparent;"></button>' +
+                                                                    '<button type="button" class="primary-btn small fix-gr-bg" data-dismiss="modal">Ok</button>' +
                                                                 '</div>' +
-                                                            '</div>' +
-                                                        '</div>' +
-                                                        '<div class="col-lg-12 text-center">' +
-                                                            '<div class="mt-40 d-flex justify-content-between">' +
-                                                                '<button style="background: transparent;border: transparent;"></button>' +
-                                                                '<button type="button" class="primary-btn small fix-gr-bg" data-dismiss="modal">Ok</button>' +
                                                             '</div>' +
                                                         '</div>' +
                                                     '</div>' +
-                                                '</div>' +
-                                            '</div>';
+                                                '</div>';
 
-                                        universalModal('Crear Evento', html);
-                                    }
-                                });
-                                return false;
-                            },
-                            height: 650,
-                            events: dates,
-                        });
-                    }
-                });
-            }
+                                            universalModal('Crear Evento', html);
+                                        }
+                                    });
+                                    return false;
+                                },
+                                height: 650,
+                                events: dates,
+                            });
+                        }
+                    });
+                }
 
             function openModalCreateEvent(){
                 let html =
