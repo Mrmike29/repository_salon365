@@ -19,32 +19,6 @@
       </a>
    </div>
    <ul class="list-unstyled components">
-<<<<<<< Updated upstream
-       <li>
-            <a href="/" id="admin-dashboard">
-                <span class="flaticon-speedometer"></span>
-                Inicio
-            </a>
-        </li>
-       <li>
-           <a href="#subMenuProgramaticContent" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-               <span class="flaticon-inventory"></span>
-               Organizar Curso
-           </a>
-           <ul class="collapse list-unstyled" id="subMenuProgramaticContent">
-               <li>
-                   <a href="/gestionar-rubricas">Gestionar Rúbricas</a>
-               </li>
-               <li>
-                   <a href="/ciclo-o-periodo"> Ciclo o Periodo</a>
-               </li>
-               <li>
-                   <a href="/fechas-importantes"> Fechas Importantes</a>
-               </li>
-           </ul>
-       </li>
-
-=======
       <li>
          <a href="/" id="admin-dashboard">
             <span class="flaticon-speedometer"></span>
@@ -61,7 +35,17 @@
                <a href="/gestionar-rubricas">Gestionar Rúbricas</a>
             </li>
             <li>
-               <a href="/ciclo-o-periodo"> Ciclo o Periodo</a>
+               <a href="#subMenuProgramaticContentTimes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                  Tiempos y Temas
+               </a>
+               <ul class="collapse list-unstyled" id="subMenuProgramaticContentTimes">
+                  <li>
+                     <a href="/ciclo-o-periodo"> Ciclo o Periodo</a>
+                  </li>
+                  <li>
+                     <a href="/temas"> Gestionar Temas</a>
+                  </li>
+               </ul>
             </li>
             <li>
                <a href="/fechas-importantes"> Fechas Importantes</a>
@@ -82,7 +66,6 @@
             </li>
          </ul>
       </li>
->>>>>>> Stashed changes
       <li>
          <a href="#subMenuRepositorio" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <span class="flaticon-analytics"></span>

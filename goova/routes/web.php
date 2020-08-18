@@ -24,9 +24,6 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::get('/agregar_tareas','TareasController@create_homework');
     Route::get('/materias_tereas/{id}','TareasController@subjetcs_homework');
-    Route::get('/gestionar-rubricas', function () {
-        return view('rubricas');
-    });
     Route::get('/usuarios','UsuariosController@index');
     Route::get('/crear_usuarios','UsuariosController@create');
     Route::post('/store_usuarios','UsuariosController@store');
@@ -42,12 +39,26 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update_cursos','CursosController@update');
     Route::get('/view_students_course/{id}','CursosController@view_students');
     Route::get('/view_teachers_course/{id}','CursosController@view_teachers');
-    Route::get('/rubricas', function () {
-        return view('rubricas');
-    });
-    Route::get('/ciclo-o-periodo', function () {
-        return view('ciclo_o_periodo');
-    });
+
+
+    /** RÚBRICAS */
+    Route::get('/gestionar-rubricas', function () { return view('rubricas'); });
+    Route::get('/rubricas', function () { return view('rubricas'); });
+
+
+    /** CICLO O PERIODO */
+    Route::get('/ciclo-o-periodo', function () {return view('ciclo_o_periodo');});
+    Route::get('/get-times-list', 'TimesController@getTimesList');
+
+    Route::post('/post-save-time', 'TimesController@postSaveTime');
+
+
+    /** TEMAS */
+    Route::get('/temas', function () {return view('temas');});
+    Route::get('/get-themes-list', 'ThemesController@getThemesList');
+
+    Route::post('/post-save-theme', 'ThemesController@postSaveTheme');
+
 
     /** FECHAS IMPORTANTES */
     Route::get('/fechas-importantes', 'Controller@getImportantDatesView');
@@ -58,6 +69,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/post-save-event', 'Controller@postSaveEvent');
     Route::put('/put-edit-event', 'Controller@putEditEvent');
+
 
     /* VIDEOCHAT */
     Route::get('/listar/sala','SalaController@index');

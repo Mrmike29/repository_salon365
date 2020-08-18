@@ -50,6 +50,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="white-box" id="container_filter" style="border-radius: 10px 10px 0 0;">
+                                    @if(1 === 1)
                                     <div class="row mt-25">
                                         <div class="col-lg-4" id="sibling_class_div">
                                             <div class="input-effect">
@@ -61,30 +62,8 @@
                                             </div>
                                             <span class="modal_input_validation red_alert"></span>
                                         </div>
-                                        <div class="col-lg-4" id="sibling_class_div">
-                                            <div class="input-effect">
-                                                <select class="niceSelect w-100 bb form-control" name="id_course" style="display: none;">
-                                                    <option data-display="Seleccionar Estado" value="">Select</option>
-                                                    <option value="3">11-1</option>
-                                                    <option value="4">11-2</option>
-                                                    <option value="5">11-3</option>
-                                                </select>
-                                                <span class="focus-border"></span>
-                                            </div>
-                                            <span class="modal_input_validation red_alert"></span>
-                                        </div>
-
-                                        <div class="col-lg-4" id="sibling_class_div">
-                                            <div class="input-effect">
-                                                <input class="primary-input form-control" type="text" name="name_create_event" id="name_create_event">
-                                                <label>
-                                                    Nombre *<span></span>
-                                                </label>
-                                                <span class="focus-border"></span>
-                                            </div>
-                                            <span class="modal_input_validation red_alert"></span>
-                                        </div>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -97,29 +76,10 @@
                                                 <th>Fecha Fin</th>
                                                 <th>Duración</th>
                                                 @if(1 === 1) <th>Institución</th> @endif
-                                                <th class="noExport">Acciones</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>d</td>
-                                            <td>ds</td>
-                                            <td>ds</td>
-                                            <td>ds</td>
-                                            <td>ds</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                                                        Seleccionar
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="/editar_usuario/">Editar</a>
-                                                        <a class="dropdown-item inhabilitar_user" data-id="" data-toggle="modal" data-target="#inhabilitarUserModal" href="#">Inhabilitar</a>
-                                                        <a class="dropdown-item habilitar_user" data-id="" data-toggle="modal" data-target="#habilitarUserModal" href="#">Habilitar</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        <tbody id="tbody_times">
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -137,9 +97,49 @@
         @include('includes.footer')
 
         <script type="text/javascript">
-            const filterTimes = () => {
+            /** Mi función, la utilizo para hacer mis validaciones y la voy a patentar */
+            (function( $ ){
+                $.fn.mValid = function(data) {
+                    data.text = $.trim($(this).val()) === ''? data.text : '';
+                    $(this).parents('div.input-effect').siblings('span').text(data.text);
+                    console.log($(this).val());
+                    return ($.trim($(this).val()) === '');
+                };
+            })( jQuery );
 
-            }
+            const filterTimes = () => {
+                $.ajax({
+                    type: 'GET',
+                    url: '/get-times-list',
+                    success: (data) => {
+                        let html = '',
+                            times = data.times;
+
+                        times.forEach((item) => {
+                            html +=
+                                '<tr>' +
+                                    '<td>' +
+                                        item.name +
+                                    '</td>' +
+                                    '<td>' +
+                                        item.time_start +
+                                    '</td>' +
+                                    '<td>' +
+                                        item.time_end +
+                                    '</td>' +
+                                    '<td>' +
+                                        item.duration +
+                                    '</td>' +
+                                    '<td>' +
+                                        item.id_entity +
+                                    '</td>' +
+                                '</tr>'
+                        });
+
+                        $('#tbody_times').html(html);
+                    }
+                });
+            };
 
             function openModalCreateTime() {
                 let html =
@@ -209,11 +209,49 @@
                     '</div>';
 
                 universalModal('Crear Ciclo/Periodo', html);
-                $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
-                $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
-                $('#date_create_event').datepicker({ format: 'yyyy-mm-dd', autoclose: false, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
-                $('#date_end_create_event').datepicker({ format: 'yyyy-mm-dd', autoclose: false, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
+                $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } });
+                $('#date_create_time').datepicker({ format: 'yyyy-mm-dd', autoclose: false, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
+                $('#date_end_create_time').datepicker({ format: 'yyyy-mm-dd', autoclose: false, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
             }
+
+            function saveNewTime() {
+                let pass = true,
+                    empty = false,
+                    name = $.trim($('#name_create_time').val()),
+                    dateStart = $.trim($('#date_create_time').val()),
+                    dateStartD =  new Date(dateStart),
+                    dateEnd = $.trim($('#date_end_create_time').val()),
+                    dateEndD =  new Date(dateEnd),
+                    duration = (dateEndD.getTime() - dateStartD.getTime()) / (1000 * 3600 * 24);
+
+                empty = $('#name_create_time').mValid({text: 'Nombre no debe quedar vacío.'}); if(empty){ pass = false}
+                empty = $('#date_create_time').mValid({text: 'Fecha de inicio no debe quedar vacía.'}); if(empty){ pass = false}
+                empty = $('#date_end_create_time').mValid({text: 'Fecha de finalización no debe quedar vacía.'}); if(empty){ pass = false}
+
+                if(pass){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/post-save-time',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            name,
+                            dateStart,
+                            dateEnd,
+                            duration
+                        },
+                        success: (data) => {
+                            filterTimes();
+                            $('.modal').modal('hide');
+                            $("body").overhang({
+                                type: "success",
+                                message: "Exito! Se creó el Ciclo/Periodo exitosamente!"
+                            });
+                        }
+                    });
+                }
+            }
+
+            filterTimes();
         </script>
     </body>
 </html>

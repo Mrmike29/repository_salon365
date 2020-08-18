@@ -104,7 +104,7 @@
             (function( $ ){
                 $.fn.mValid = function(data) {
                     data.text = $.trim($(this).val()) === ''? data.text : '';
-                    $(this).parents('div.input-effect').siblings('span').text(data.text)
+                    $(this).parents('div.input-effect').siblings('span').text(data.text);
                     return ($.trim($(this).val()) === '');
                 };
             })( jQuery );
@@ -171,7 +171,7 @@
                                     '<div class="fc-toolbar fc-header-toolbar">' +
                                     '</div>' +
                                 '</div>'
-                            )
+                            );
 
                             $('.common-calendar').fullCalendar({
                                 lang: 'es',
@@ -274,7 +274,7 @@
                             });
                         }
                     });
-                }
+                };
 
             function openModalCreateEvent(){
                 let html =
