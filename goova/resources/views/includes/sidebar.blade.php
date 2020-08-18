@@ -103,11 +103,11 @@
          </ul>
       </li>
       <li>
-         <a href="#subMenuAudiovisual" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+         <a href="#subMenuSalas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <span class="flaticon-analytics"></span>
             Audiovisual
          </a>
-         <ul class="collapse list-unstyled" id="subMenuAudiovisual">
+         <ul class="collapse list-unstyled" id="subMenuSalas">
             <li>
                <a href="/listar/sala">Listar</a>
             </li>

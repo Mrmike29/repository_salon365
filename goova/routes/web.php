@@ -73,11 +73,11 @@ Route::middleware(['auth'])->group(function () {
 
     /* VIDEOCHAT */
     Route::get('/listar/sala','SalaController@index');
-    Route::get('/crear/sala','SalaController@index');
-    Route::post('/crear/sala','SalaController@index');
-    Route::get('/editar/sala','SalaController@index');
-    Route::post('/editar/sala','SalaController@index');
-    Route::get('/cambiar-estado/sala','SalaController@index');
-    Route::get('/ingresar/sala/{id}','SalaController@index');
+    Route::get('/crear/sala','SalaController@getCrearSala');
+    Route::post('/crear/sala','SalaController@crearSala')->name('crearSala');
+    Route::get('/editar/sala/{id}','SalaController@getEditarSala');
+    Route::post('/editar/sala','SalaController@editarSala');
+    Route::post('/cambiar-estado/sala','SalaController@cambiarEstado');
+    Route::get('/ingresar/sala/{id}','SalaController@ingresarSala');
 
 });
