@@ -62,21 +62,28 @@ Route::middleware(['auth'])->group(function () {
 
 
     /** TEMAS */
-    Route::get('/temas', function () {return view('temas');});
+    Route::get('/temas', 'ThemesController@getThemesView');
+    Route::get('/get-subject-filter', 'ThemesController@getSubjectFilter');
+    Route::get('/get-times-filter', 'ThemesController@getTimesFilter');
     Route::get('/get-themes-list', 'ThemesController@getThemesList');
+    Route::get('/get-data-create-theme', 'ThemesController@getDataCreateTheme');
+    Route::get('/get-data-edit-theme', 'ThemesController@getDataEditTheme');
 
     Route::post('/post-save-theme', 'ThemesController@postSaveTheme');
 
+    Route::put('/put-edit-theme', 'ThemesController@putEditTheme');
+
 
     /** FECHAS IMPORTANTES */
-    Route::get('/fechas-importantes', 'Controller@getImportantDatesView');
-    Route::get('/get-pending-events', 'Controller@getPendingEvents');
-    Route::get('/get-held-events', 'Controller@getHeldEvents');
-    Route::get('/get-event', 'Controller@getEvent');
-    Route::get('/get-calendar-events', 'Controller@getCalendarEvents');
+    Route::get('/fechas-importantes', 'ImportantDatesController@getImportantDatesView');
+    Route::get('/get-pending-events', 'ImportantDatesController@getPendingEvents');
+    Route::get('/get-held-events', 'ImportantDatesController@getHeldEvents');
+    Route::get('/get-event', 'ImportantDatesController@getEvent');
+    Route::get('/get-calendar-events', 'ImportantDatesController@getCalendarEvents');
 
-    Route::post('/post-save-event', 'Controller@postSaveEvent');
-    Route::put('/put-edit-event', 'Controller@putEditEvent');
+    Route::post('/post-save-event', 'ImportantDatesController@postSaveEvent');
+
+    Route::put('/put-edit-event', 'ImportantDatesController@putEditEvent');
 
 
     /* VIDEOCHAT */

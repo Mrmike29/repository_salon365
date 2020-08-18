@@ -3,11 +3,6 @@
 
 namespace App\Http\Controllers;
 
-
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -17,10 +12,10 @@ class TimesController
 
     function postSaveTime(Request $request){
         $idEntity = Auth::user()->id_info_entity;
-        $name = $request->name;
-        $date = $request->dateStart;
-        $end = $request->dateEnd;
-        $duration = $request->duration;
+        $name = $request->get('name');
+        $date = $request->get('dateStart');
+        $end = $request->get('dateEnd');
+        $duration = $request->get('duration');
 
         $time = DB::table('times')
             ->insert([
