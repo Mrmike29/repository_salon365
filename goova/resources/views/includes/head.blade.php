@@ -112,6 +112,15 @@
         .modal_input_validation.red_alert {
             color: red !important;
         }
+
+        .dropzone .dz-preview .dz-error-message {
+            top: -115px !important;
+        }
+
+        .dropzone .dz-preview .dz-error-message:after {
+            top: 109px !important;
+            transform: rotate(180deg) !important;
+        }
     </style>
 
     <script type="text/javascript">

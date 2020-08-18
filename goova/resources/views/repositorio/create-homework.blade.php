@@ -36,17 +36,16 @@
                 </section>
                 <section class="admin-visitor-area">
                     <div class="container-fluid p-0">
-                        <form method="POST" action="https://infixedu.com/save-homework-data" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="POST" action="/crear_tarea" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="white-box">
                                         <div class="">
-                                            <input type="hidden" name="url" id="url" value="https://infixedu.com">
                                             <div class="row mb-30">
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <select class="niceSelect w-100 bb form-control" name="id_course">
+                                                        <select class="niceSelect w-100 bb form-control" name="id_course" id="id_course">
                                                             <option data-display="Seleccionar Curso *" value="">Select</option>
                                                             @foreach($cursos as $key => $val)
                                                                 <option value="{{$val->id}}">{{$val->name}}</option>
@@ -55,21 +54,38 @@
                                                         <span class="focus-border"></span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="input-effect sm2_mb_20 md_mb_20" id="sectionStudentDiv">
-                                                        <select class="niceSelect w-100 bb form-control" name="id_subjects" id="sectionSelectStudent">
+                                                        <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects" id="sectionSelectStudent">
                                                             <option data-display="Seleccionar Materia *" value="">Section *</option>
                                                         </select>
                                                         <span class="focus-border"></span>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row mb-30">
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
+                                                    <div class="input-effect sm2_mb_20 md_mb_20" id="sectionStudentDiv">
+                                                        <select class="niceSelect w-100 bb form-control" name="id_theme_time" id="id_theme_time" id="sectionSelectStudent">
+                                                            <option data-display="Seleccionar Tema *" value="">Section *</option>
+                                                        </select>
+                                                        <span class="focus-border"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <div class="input-effect sm2_mb_20 md_mb_20">
+                                                        <select class="niceSelect w-100 bb form-control" name="id_rubrics" id="id_rubrics">
+                                                            <option data-display="Seleccionar Rubrica *" value="">Select</option>
+                                                            @foreach($rubricas as $key => $val)
+                                                                <option value="{{$val->id}}">{{$val->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span class="focus-border"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-lg-6">
                                                     <div class="no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input date form-control" id="homework_date" type="text" name="homework_date" value="{{date('d/m/Y')}}" readonly="true">
+                                                                <input class="primary-input date form-control" type="text" name="start_time" id="start_time" value="{{date('Y-m-d')}}" readonly="true">
                                                                 <label>Fecha Inicio <span>*</span></label>
                                                                 <span class="focus-border"></span>
                                                             </div>
@@ -81,11 +97,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="form-group col-lg-6">
                                                     <div class="no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input date form-control" id="submission_date" type="text" name="submission_date" value="08/03/2020" readonly="true">
+                                                                <input class="primary-input date form-control" type="text" name="limit_time" id="limit_time" value="{{date('Y-m-d')}}" readonly="true">
                                                                 <label>Fecha Fin <span>*</span></label>
                                                                 <span class="focus-border"></span>
                                                             </div>
@@ -97,30 +113,15 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{-- <div class="col-lg-3">
-                                                    <div class="row no-gutters input-right-icon">
-                                                        <div class="col">
-                                                            <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input form-control" type="text" name="marks" value="">
-                                                                <label>Marks <span>*</span></label>
-                                                                <span class="focus-border"></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> --}}
-                                            </div>
-                                            <div class="row md-20">
-                                                <div class="col-lg-12">
+                                                <div class="form-group col-lg-12">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <div class="dropzone dropzone-previews" id="my-awesome-dropzone"></div><br>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row md-20">
-                                                <div class="col-lg-12">
+                                                <div class="form-group col-lg-12">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <div class="form-group" id="textarea">
-                                                            <textarea id="texto" name="cotizacion"></textarea>
+                                                            <textarea id="texto" name="description" id="description"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -128,9 +129,9 @@
                                         </div>
                                         <div class="row mt-40">
                                             <div class="col-lg-12 text-center">
-                                                <button class="primary-btn fix-gr-bg" data-toggle="tooltip" title="">
+                                                <button type="submit" class="primary-btn fix-gr-bg" id="submit-all" data-toggle="tooltip" title="">
                                                     <span class="ti-check"></span>
-                                                    Save Homework
+                                                    Guardar
                                                 </button>
                                             </div>
                                         </div>
@@ -149,13 +150,50 @@
         <script>
             Dropzone.autoDiscover = false;
             jQuery(document).ready(function() {
+                var uploadedDocumentMap = {}
                 $("div#my-awesome-dropzone").dropzone({
-                    url: "{{URL::asset('archivo')}}",
+                    url: "/archivo",
                     dictDefaultMessage: "Agrege los archivos de la tarea",
                     addRemoveLinks: true,
                     dictRemoveFile: "Eliminar archivo",
-                    maxfilesexceeded: 5024,
-                    dictFileTooBig: "El tamaño maximo de archivos es de 5MB."
+                    // maxfilesexceeded: 5024,
+                    maxFilesize: 5,
+                    dictFileTooBig: "El tamaño maximo de archivos es de 5MB.",
+                    // autoProcessQueue: false,
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    success: function (file, response) {
+                        $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
+                        uploadedDocumentMap[file.name] = response.name
+                    },
+                    removedfile: function (file) {
+
+                        var name = ''
+                        if (typeof file.file_name !== 'undefined') {
+                            name = file.file_name
+                        } else {
+                            name = uploadedDocumentMap[file.name]
+                        }
+
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                            },
+                            type: 'POST',
+                            url: '/delete_archivo',
+                            data: {filename: name},
+                            success: function (data){
+                                console.log("File deleted successfully!!");
+                            },
+                            error: function(e) {
+                                console.log(e);
+                            }
+                        });
+                        file.previewElement.remove()
+
+                        $('form').find('input[name="document[]"][value="' + name + '"]').remove()
+                    }
                 });
             });
             var editor = new FroalaEditor('#textarea textarea', {
@@ -178,11 +216,28 @@
                     url: '/materias_tereas/'+id,
                     type: 'get',
                     success:function(dato){
-                        var html = ''
+                        var html = '<option data-display="Seleccionar Materia *" value="">Section *</option>'
                         $(dato).each(function(k,v){
                             html += `<option value="${v.id}">${v.subjects} - ${v.teacher} ${v.last_name}</option>`
                         })
-                        console.log(html)
+                        $('select[name=id_subjects]').html(html)
+                        $('select[name=id_subjects]').niceSelect('update');
+                    }
+                })
+            })
+            $(document).on('change','select[name=id_subjects]',function(){
+                var id = $(this).val()
+                var con = $('select[name=id_course]').val()
+                $.ajax({
+                    url: '/temas_tereas/'+id+'/'+con,
+                    type: 'get',
+                    success:function(dato){
+                        var html = '<option data-display="Seleccionar Tema *" value="">Section *</option>'
+                        $(dato).each(function(k,v){
+                            html += `<option value="${v.id}">${v.name}</option>`
+                        })
+                        $('select[name=id_theme_time]').html(html)
+                        $('select[name=id_theme_time]').niceSelect('update');
                     }
                 })
             })

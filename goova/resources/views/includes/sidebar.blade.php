@@ -73,7 +73,10 @@
          </a>
          <ul class="collapse list-unstyled" id="subMenuRepositorio">
             <li>
-               <a href="/agregar_tareas">Crear Repositorio</a>
+               <a href="/tareas">Ver tareas</a>
+            </li>
+            <li>
+               <a href="/agregar_tareas">Crear tarea</a>
             </li>
          </ul>
       </li>

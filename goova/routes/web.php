@@ -22,8 +22,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', function () {
         return view('welcome');
     });
-    Route::get('/agregar_tareas','TareasController@create_homework');
-    Route::get('/materias_tereas/{id}','TareasController@subjetcs_homework');
+    Route::get('/tareas','RepositorioController@index_homework');
+    Route::get('/temas_materias/{id}','RepositorioController@themes_subjects');
+    Route::get('/agregar_tareas','RepositorioController@create_homework');
+    Route::get('/materias_tereas/{id}','RepositorioController@subjetcs_homework');
+    Route::get('/temas_tereas/{id}/{con}','RepositorioController@themes_homework');
+    Route::post('/crear_tarea','RepositorioController@store_homework');
+    Route::get('/gestionar-rubricas', function () {
+        return view('rubricas');
+    });
     Route::get('/usuarios','UsuariosController@index');
     Route::get('/crear_usuarios','UsuariosController@create');
     Route::post('/store_usuarios','UsuariosController@store');
@@ -31,7 +38,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/post_usuario','UsuariosController@update');
     Route::post('/inhabilitar_usuario','UsuariosController@inhabilitar');
     Route::post('/habilitar_usuario','UsuariosController@habilitar');
-    Route::post('/archivo', 'TareasController@archivos_store');
+    Route::post('/archivo', 'RepositorioController@archivos_store');
+    Route::post('/delete_archivo', 'RepositorioController@archivos_delete');
     Route::get('/cursos','CursosController@index');
     Route::get('/crear_cursos','CursosController@create');
     Route::post('/store_cursos','CursosController@store');

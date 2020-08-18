@@ -147,8 +147,8 @@
                                                         <img class="client_img" src="https://media-exp1.licdn.com/dms/image/C560BAQHMnA03XDdf3w/company-logo_200_200/0?e=2159024400&v=beta&t=C7KMOtnrJwGrMXmgIk2u1B8a7VRfgxMwXng9cdP9kZk " alt="">
                                                         <div class="d-flex ml-10">
                                                             <div class="">
-                                                                <h5 class="name text-uppercase">admin</h5>
-                                                                <p class="message">admin@infixedu.com</p>
+                                                                <h5 class="name text-uppercase">{{Auth::user()->name}} {{Auth::user()->last_name}}</h5>
+                                                                <p class="message">{{Auth::user()->email}}</p>
                                                             </div>
                                                         </div>
                                                     </div>
