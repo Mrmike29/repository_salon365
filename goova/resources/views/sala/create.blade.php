@@ -26,7 +26,20 @@
                                     <div class="white-box">
                                         <div class="">
                                             <div class="row mb-30">
-                                                <div class="form-group col-lg-6">
+                                                <div class="form-group col-lg-6 ">
+                                                    <div class="input-effect sm2_mb_20 md_mb_20">
+                                                        <input class="read-only-input primary-input date form-control" type="text" readonly="true" value="{{date('Y-m-d')}}" min="{{date('Y-m-d')}}" id="datetime_create_event" name="start_date">
+                                                        <span class="focus-border"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-lg-6 ">
+                                                    <div class="input-effect sm2_mb_20 md_mb_20">
+                                                        <input class=" primary-input  form-control" type="time"  name="hora">
+                                                        <label>Hora Inicio </label>
+                                                        <span class="focus-border"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-lg-6 ">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_list_students" id="classSelectStudent" required>
                                                             <option data-display="Escoger listado *" value="">Select</option>
@@ -48,11 +61,11 @@
                                                         <span class="focus-border"></span>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-lg-6">
+                                                <div class="form-group col-lg-12">
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input form-control" type="text" name="description" value="" required>
+                                                                <textarea class="primary-input form-control" rows="4" name="description" value="" required=""></textarea>
                                                                 <label>Descripción <span>*</span></label>
                                                                 <span class="focus-border"></span>
                                                             </div>

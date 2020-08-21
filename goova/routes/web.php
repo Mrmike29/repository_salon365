@@ -91,7 +91,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/crear/sala','SalaController@getCrearSala');
     Route::post('/crear/sala','SalaController@crearSala')->name('crearSala');
     Route::get('/editar/sala/{id}','SalaController@getEditarSala');
-    Route::post('/editar/sala','SalaController@editarSala');
+    Route::post('/editar/sala','SalaController@editarSala')->name('editarSala');
     Route::post('/cambiar-estado/sala','SalaController@cambiarEstado');
     Route::get('/ingresar/sala/{id}','SalaController@ingresarSala');
 
