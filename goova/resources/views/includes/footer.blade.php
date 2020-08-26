@@ -47,6 +47,9 @@
 <script type="text/javascript" src="{{asset('js/overhang.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/socket.io.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/message.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.js"></script>
+<script src="{{asset('js/froala_editor.pkgd.min.js')}}"></script>
+<script src="{{asset('js/application-18caf78ea729799d396faaacacecde7c.js')}}"></script>
 <script type="text/javascript">
 
     function universalModal(title, body) {

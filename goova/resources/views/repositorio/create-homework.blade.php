@@ -2,23 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('includes.head')
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.css" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css">
         <style>
-            .dropzone {
-                border: 2px dashed rgba(0, 0, 0, 0.3) !important;
-            }
-            .fr-wrapper > div:first-child a {
-                background-color: #fff !important;
-                height: 0 !important;
-                display: none !important;
-            }
-            #insertVideo-1, #insertFile-1 {
-                display: none !important;
-            }
-            .dropzone .dz-message {
-                margin: 3em 0 !important;
-            }
+            
         </style>
     </head>
     <body class="admin">
@@ -144,9 +129,6 @@
             </div>
     	</div>
     	@include('includes.footer')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.js"></script>
-        <script src="https://soporte.stratecsa.com/assets/js/froala_editor.pkgd.min.js"></script>
-        <script src="https://soporte.stratecsa.com/assets/js/application-18caf78ea729799d396faaacacecde7c.js"></script>
         <script>
             Dropzone.autoDiscover = false;
             jQuery(document).ready(function() {

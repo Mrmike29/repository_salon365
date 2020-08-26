@@ -23,10 +23,15 @@ Route::middleware(['auth'])->group(function () {
         return view('welcome');
     });
     Route::get('/tareas','RepositorioController@index_homework');
-    Route::get('/temas_materias/{id}','RepositorioController@themes_subjects');
+    Route::get('/temas_materias/{id}/{teacher}','RepositorioController@themes_subjects');
+    Route::get('/materias_profesores/{id}','RepositorioController@subjects_teacher');
+    Route::get('/buscar_tema/{subject}/{theme}/{teacher}','RepositorioController@search_themes');
     Route::get('/agregar_tareas','RepositorioController@create_homework');
     Route::get('/materias_tereas/{id}','RepositorioController@subjetcs_homework');
     Route::get('/temas_tereas/{id}/{con}','RepositorioController@themes_homework');
+    Route::get('/buscar_tarea/{id}','RepositorioController@search_homework');
+    Route::get('/buscar_tarea_curso/{id}','RepositorioController@search_homework_course');
+    Route::post('/subir_tarea','RepositorioController@go_up_homework');
     Route::post('/crear_tarea','RepositorioController@store_homework');
     Route::get('/gestionar-rubricas', function () {
         return view('rubricas');

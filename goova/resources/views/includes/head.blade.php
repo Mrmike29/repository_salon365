@@ -34,6 +34,9 @@
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <link rel="stylesheet" href="{{asset('css/goova.css')}}">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css">
+
     <style>
         .dataTables_wrapper .dataTables_paginate .paginate_button.current,
         .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
@@ -108,18 +111,29 @@
         .admin .navbar .right-navbar .dropdown .message {
             max-height: initial !important;
         }
-
         .modal_input_validation.red_alert {
             color: red !important;
         }
-
         .dropzone .dz-preview .dz-error-message {
             top: -115px !important;
         }
-
         .dropzone .dz-preview .dz-error-message:after {
             top: 109px !important;
             transform: rotate(180deg) !important;
+        }
+        .dropzone {
+            border: 2px dashed rgba(0, 0, 0, 0.3) !important;
+        }
+        .fr-wrapper > div:first-child a {
+            background-color: #fff !important;
+            height: 0 !important;
+            display: none !important;
+        }
+        #insertVideo-1, #insertFile-1 {
+            display: none !important;
+        }
+        .dropzone .dz-message {
+            margin: 3em 0 !important;
         }
     </style>
 
