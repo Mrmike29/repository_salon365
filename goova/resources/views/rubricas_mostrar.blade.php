@@ -14,7 +14,16 @@
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
-                            <h1>Rúbricas</h1>
+                            <div class="col-lg-6">
+                                <div class="main-title">
+                                    <h1>Rúbricas</h1>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <a href="#" class="primary-btn small fix-gr-bg" data-toggle="tooltip" onclick="openModalCreateRubric()" title="Crear Rúbrica">
+                                    <span class="ti-plus"></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </section>

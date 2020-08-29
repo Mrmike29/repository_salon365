@@ -134,7 +134,6 @@
 
             const
                 filterThemes = (search, subject, time) => {
-                    console.log(search, subject, time);
                     $.ajax({
                         type: 'GET',
                         url: '/get-themes-list',
@@ -302,7 +301,7 @@
                         universalModal('Crear Tema', html);
                         $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } });
                         $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
-                        $('.niceSelect').niceSelect();
+                        $('#subject').niceSelect(); $('#course').niceSelect(); $('#time').niceSelect();
                     }
                 });
             }
@@ -445,7 +444,7 @@
                         universalModal('Editar Tema', html);
                         $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } });
                         $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
-                        $('.niceSelect').niceSelect();
+                        $('#subject').niceSelect(); $('#course').niceSelect(); $('#time').niceSelect();
                     }
                 });
             }

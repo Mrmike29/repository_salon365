@@ -52,7 +52,7 @@
 <script src="{{asset('js/application-18caf78ea729799d396faaacacecde7c.js')}}"></script>
 <script type="text/javascript">
 
-    function universalModal(title, body) {
+    function universalModal(title, body, footer = "") {
         let html =
             '<div class="modal-dialog modal-dialog-centered">' +
                 '<div class="modal-content">' +
@@ -60,8 +60,11 @@
                         '<h4 class="modal-title">' + title + '</h4>' +
                         '<button type="button" class="close" data-dismiss="modal">×</button>' +
                     '</div>' +
-                    '<div class="modal-body">' +
+                    '<div class="modal-body" style="height: 355px; overflow-y: auto;">' +
                         body +
+                    '</div>' +
+                    '<div class="modal-footer">' +
+                        footer +
                     '</div>' +
                 '</div>' +
             '</div>'

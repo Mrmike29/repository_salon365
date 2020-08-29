@@ -36,9 +36,8 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 text-right">
-                                <a href="#" class="primary-btn small fix-gr-bg" onclick="openModalCreateTime()" title="Agregar Ciclo/Periodo">
-                                    <span class="ti-plus pr-2"></span>
-                                    Agregar
+                                <a href="#" class="primary-btn small fix-gr-bg" data-toggle="tooltip" onclick="openModalCreateTime()" title="Agregar Ciclo/Periodo">
+                                    <span class="ti-plus"></span>
                                 </a>
                             </div>
                         </div>

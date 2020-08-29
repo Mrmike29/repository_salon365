@@ -58,9 +58,8 @@
                                     </div>
                                     <div class="col-lg-6 text-right col-md-6 col-6">
 
-                                        <a href="#" class="primary-btn small fix-gr-bg" onclick="openModalCreateEvent()" title="Agregar Evento">
-                                            <span class="ti-plus pr-2"></span>
-                                            Agregar
+                                        <a href="#" class="primary-btn small fix-gr-bg" data-toggle="tooltip" onclick="openModalCreateEvent()" title="Agregar Evento">
+                                            <span class="ti-plus"></span>
                                         </a>
                                     </div>
                                 </div>

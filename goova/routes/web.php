@@ -57,6 +57,10 @@ Route::middleware(['auth'])->group(function () {
     /** RÚBRICAS */
     Route::get('/gestionar-rubricas', function () { return view('rubricas'); });
     Route::get('/rubricas', function () { return view('rubricas'); });
+    Route::get('/get-rubrics-list', 'RubricsController@getRubricsList');
+    Route::get('/get-data-edit-rubric', 'RubricsController@getDataEditRubric');
+
+    Route::post('/post-save-rubric', 'RubricsController@postSaveRubric');
 
 
     /** CICLO O PERIODO */
