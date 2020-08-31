@@ -4,11 +4,11 @@
         @include('includes.head')
     </head>
     <body class="admin">
-		<div class="main-wrapper">
-    		<!-- Sidebar  -->
-    		@include('includes.sidebar')
+        <div class="main-wrapper">
+            <!-- Sidebar  -->
+            @include('includes.sidebar')
             <div id="main-content">
-    		    @include('includes.header')
+                @include('includes.header')
                 
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
@@ -53,12 +53,16 @@
                                                                     Seleccionar
                                                                 </button>
                                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                                    <a href="/editar/sala/{{encrypt($val->id)}}" class="dropdown-item">Editar</button>
-                                                                    <a href="/ingresar/sala/{{encrypt($val->id)}}" class="dropdown-item">Ingresar</button>
                                                                     @if($val->status == "HABILITADO")
-                                                                        <a class="dropdown-item inhabilitar_sala" data-id="{{encrypt($val->id)}}" data-toggle="modal" data-target="#inhabilitarSalaModal" href="#">Inhabilitar</a>
-                                                                    @else
-                                                                        <a class="dropdown-item habilitar_sala" data-id="{{encrypt($val->id)}}" data-toggle="modal" data-target="#habilitarSalaModal" href="#">Habilitar</a>
+                                                                        <a href="/ingresar/sala/{{encrypt($val->id)}}" target="_blank" class="dropdown-item">Ingresar</button>
+                                                                    @endif
+                                                                    @if($tipo=="Administrador" || $tipo=="Profesor")
+                                                                        <a href="/editar/sala/{{encrypt($val->id)}}" class="dropdown-item">Editar</button>
+                                                                        @if($val->status == "HABILITADO")
+                                                                            <a class="dropdown-item inhabilitar_sala" data-id="{{encrypt($val->id)}}" data-toggle="modal" data-target="#inhabilitarSalaModal" href="#">Inhabilitar</a>
+                                                                        @else
+                                                                            <a class="dropdown-item habilitar_sala" data-id="{{encrypt($val->id)}}" data-toggle="modal" data-target="#habilitarSalaModal" href="#">Habilitar</a>
+                                                                        @endif
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -124,6 +128,7 @@
         
         @include('includes.footer')
         <script>
+            
             $('#table_users').DataTable({
                 bLengthChange: false,
                 // paging: true,

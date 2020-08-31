@@ -142,6 +142,9 @@
                             </div>
                             <form method="POST" class="loginForm" action="{{ route('login') }}" id="infix_form">
                                 @csrf
+                                @if(!empty($_GET['sala']))
+                                    <input type="hidden" name="sala" value="{{$_GET['sala']}}">
+                                @endif
                                 <div class="in_single_input">
                                     <input type="text" placeholder="Correo Electronico" name="email" class="" value="admin@stratecsa.com" id="email-address">
                                     <span class="addon_icon">

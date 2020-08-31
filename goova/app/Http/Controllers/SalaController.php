@@ -13,12 +13,18 @@ class SalaController extends Controller
     public function index()
     {
         $tipo=DB::table('users')->join('rol','users.id_rol','rol.id')->where('users.id',Auth::user()->id)->first()->name;
+        if ($tipo=="Estudiante") {
+            $users_list_students=DB::table('users')->join('rol','users.id_rol','rol.id')->join('users_list_students','users.id','users_list_students.id_users')->where('users.id',Auth::user()->id)->select('users_list_students.id_list_students')->first()->id_list_students ;
+        }
         $room=DB::table('room')
         ->join('list_students as ls','ls.id','room.id_list_students')
         ->join('users as u','u.id','room.id_teacher')
         ->join('subjects as s','s.id','room.id_subject')
-        ->join('video_chat as vc','vc.id','room.id_video_chat')
-        ->select('u.name as nombre','u.last_name as apellido','ls.name as listado','s.name as asignatura','vc.code',DB::raw('IF(vc.status=1,"HABILITADO","INHABILITADO") as status'),'vc.start_date as fecha','room.id')
+        ->join('video_chat as vc','vc.id','room.id_video_chat');
+        if ($tipo=="Estudiante") {
+            $room=$room->where('room.id_list_students',$users_list_students);
+        }
+        $room=$room->select('u.name as nombre','u.last_name as apellido','ls.name as listado','s.name as asignatura','vc.code',DB::raw('IF(vc.status=1,"HABILITADO","INHABILITADO") as status'),'vc.start_date as fecha','room.id')
         ->get();
         return view('sala.index',compact('room','tipo'));
     }
@@ -38,12 +44,12 @@ class SalaController extends Controller
         $code=  md5(sha1(date('Y-m-d H:i:s')."-".Auth::user()->id));
         $id_video_chat=DB::table('video_chat')
         ->insertGetId([
+            'id_teacher'=>Auth::user()->id,
             'code'=>$code,
             'start_date'=>$start_date." ".$hora,
             'time_stop'=>40,
             'status'=>1
         ]);
-
         DB::table('room')
         ->insert([
             'id_teacher'=>Auth::user()->id,
@@ -67,17 +73,16 @@ class SalaController extends Controller
         ->join('subjects as s','s.id','room.id_subject')
         ->join('video_chat as vc','vc.id','room.id_video_chat')
         ->where('room.id',$id)
-        ->select('room.*','vc.start_date')
+        ->select('room.*','vc.start_date','vc.code')
         ->first();
-
-
+        $code=$room->code;
         if (date('Y-m-d',strtotime($room->start_date)) < date('Y-m-d') ) {
             return redirect()->back();
         }
 
 
         $tipo=DB::table('users')->join('rol','users.id_rol','rol.id')->where('users.id',Auth::user()->id)->first()->name;
-        return view('sala.enter',compact('id','tipo','room'));
+        return view('sala.enter',compact('id','tipo','room','code'));
     }
 
     public function cambiarEstado(){

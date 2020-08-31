@@ -84,7 +84,9 @@
             $("#selectStaffss").trigger("change");
         }
     });
-
+    @if(!empty($_SESSION['sala']))
+        window.location.href = "https://goova.co/ingresar/sala/{{$_SESSION['sala']}}";
+    @endif
 
     // for select2 multiple dropdown in send email/Sms in Class tab
     $("#selectSectionss").select2();
