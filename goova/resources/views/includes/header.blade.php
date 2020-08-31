@@ -6,7 +6,6 @@
                     <button type="button" id="sidebarCollapse" class="btn d-lg-none nav_icon">
                         <i class="ti-more"></i>
                     </button>
-
                     <ul class="nav navbar-nav mr-auto search-bar">
                         <li class="">
                             <div class="input-group" id="serching">
@@ -19,37 +18,27 @@
                             <div id="livesearch" style="display: none;"></div>
                         </li>
                     </ul>
-
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto nav_icon" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-
                         <div class="client_thumb_btn"></div>
                         <img class="client_img" src="https://media-exp1.licdn.com/dms/image/C560BAQHMnA03XDdf3w/company-logo_200_200/0?e=2159024400&v=beta&t=C7KMOtnrJwGrMXmgIk2u1B8a7VRfgxMwXng9cdP9kZk" alt="">
                     </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                        <ul class="nav navbar-nav mr-auto nav-buttons flex-sm-row">
-
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: flex-end;">
+                        {{-- <ul class="nav navbar-nav mr-auto nav-buttons flex-sm-row">
                             <li class="nav-item">
                                 <a class="primary-btn white mr-10" href="home">Website</a>
                             </li>
-
-
-
                             <li class="nav-item">
                                 <a class="primary-btn white mr-10" href="admin-dashboard">Dashboard</a>
                             </li>
                             <li class="nav-item">
                                 <a class="primary-btn white" href="student-report">Reports</a>
                             </li>
-
-
-                        </ul>
+                        </ul> --}}
                         <style>
                             .nice-select.open .list { min-width: 200px;  left: 0;  padding: 5px; }
                             .nice-select .nice-select-search { min-width: 190px; }
                         </style>
-                        <ul class="nav navbar-nav mr-auto nav-setting flex-sm-row d-none d-lg-block colortheme">
+                        {{-- <ul class="nav navbar-nav mr-auto nav-setting flex-sm-row d-none d-lg-block colortheme">
                             <li class="nav-item active">
                                 <select class="niceSelect infix_theme_style" id="infix_theme_style">
                                     <option data-display="Select Style" value="0">Select Style</option>
@@ -77,13 +66,10 @@
                                     <option value="1">RTL</option>
                                 </select><div class="nice-select niceSelect infix_theme_rtl" tabindex="0"><span class="current">LTL</span><div class="nice-select-search-box"><input type="text" class="nice-select-search" placeholder="Search..."></div><ul class="list"><li data-value="0" data-display="Select Alignment" class="option">Select Alignment</li><li data-value="2" class="option selected">LTL</li><li data-value="1" class="option">RTL</li></ul></div>
                             </li>
-                        </ul>
-
+                        </ul> --}}
                         <!-- Start Right Navbar -->
                         <ul class="nav navbar-nav right-navbar">
-
-
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <select class="niceSelect languageChange" name="languageChange" id="languageChange" style="display: none;">
                                     <option data-display="Select Language" value="0">Select Language</option>
                                     <option data-display="English" value="en" selected="">English</option>
@@ -107,8 +93,37 @@
                                     <option data-display="Español" value="es">Español</option>
                                     <option data-display="Türkçe" value="tr">Türkçe</option>
                                     <option data-display="Türkçe" value="tr">Türkçe</option>
-
-                                </select><div class="nice-select niceSelect languageChange" tabindex="0"><span class="current">English</span><div class="nice-select-search-box"><input type="text" class="nice-select-search" placeholder="Search..."></div><ul class="list"><li data-value="0" data-display="Select Language" class="option">Select Language</li><li data-value="en" data-display="English" class="option selected">English</li><li data-value="es" data-display="Español" class="option">Español</li><li data-value="fr" data-display="Français" class="option">Français</li><li data-value="ar" data-display="العربية" class="option">العربية</li><li data-value="tr" data-display="Türkçe" class="option">Türkçe</li><li data-value="my" data-display="မြန်မာစာ" class="option">မြန်မာစာ</li><li data-value="es" data-display="Español" class="option">Español</li><li data-value="zh" data-display="中文" class="option">中文</li><li data-value="fr" data-display="Français" class="option">Français</li><li data-value="pt" data-display="Português" class="option">Português</li><li data-value="ru" data-display="Русский" class="option">Русский</li><li data-value="indo" data-display="Bahasa Indonesia" class="option">Bahasa Indonesia</li><li data-value="fr" data-display="Français" class="option">Français</li><li data-value="fa" data-display="فارسی" class="option">فارسی</li><li data-value="am" data-display="አማርኛ" class="option">አማርኛ</li><li data-value="indo" data-display="Bahasa Indonesia" class="option">Bahasa Indonesia</li><li data-value="vi" data-display="Tiếng Việt" class="option">Tiếng Việt</li><li data-value="it" data-display="Italiano" class="option">Italiano</li><li data-value="es" data-display="Español" class="option">Español</li><li data-value="tr" data-display="Türkçe" class="option">Türkçe</li><li data-value="tr" data-display="Türkçe" class="option">Türkçe</li></ul></div>
+                                </select>
+                                <div class="nice-select niceSelect languageChange" tabindex="0">
+                                    <span class="current">English</span>
+                                    <div class="nice-select-search-box">
+                                        <input type="text" class="nice-select-search" placeholder="Search...">
+                                    </div>
+                                    <ul class="list">
+                                        <li data-value="0" data-display="Select Language" class="option">Select Language</li>
+                                        <li data-value="en" data-display="English" class="option selected">English</li>
+                                        <li data-value="es" data-display="Español" class="option">Español</li>
+                                        <li data-value="fr" data-display="Français" class="option">Français</li>
+                                        <li data-value="ar" data-display="العربية" class="option">العربية</li>
+                                        <li data-value="tr" data-display="Türkçe" class="option">Türkçe</li>
+                                        <li data-value="my" data-display="မြန်မာစာ" class="option">မြန်မာစာ</li>
+                                        <li data-value="es" data-display="Español" class="option">Español</li>
+                                        <li data-value="zh" data-display="中文" class="option">中文</li>
+                                        <li data-value="fr" data-display="Français" class="option">Français</li>
+                                        <li data-value="pt" data-display="Português" class="option">Português</li>
+                                        <li data-value="ru" data-display="Русский" class="option">Русский</li>
+                                        <li data-value="indo" data-display="Bahasa Indonesia" class="option">Bahasa Indonesia</li>
+                                        <li data-value="fr" data-display="Français" class="option">Français</li>
+                                        <li data-value="fa" data-display="فارسی" class="option">فارسی</li>
+                                        <li data-value="am" data-display="አማርኛ" class="option">አማርኛ</li>
+                                        <li data-value="indo" data-display="Bahasa Indonesia" class="option">Bahasa Indonesia</li>
+                                        <li data-value="vi" data-display="Tiếng Việt" class="option">Tiếng Việt</li>
+                                        <li data-value="it" data-display="Italiano" class="option">Italiano</li>
+                                        <li data-value="es" data-display="Español" class="option">Español</li>
+                                        <li data-value="tr" data-display="Türkçe" class="option">Türkçe</li>
+                                        <li data-value="tr" data-display="Türkçe" class="option">Türkçe</li>
+                                    </ul>
+                                </div>
                             </li>
                             <li class="nav-item notification-area  d-none d-lg-block">
                                 <div class="dropdown">
@@ -121,18 +136,18 @@
                                             <div class="white-box">
                                                 <div class="p-h-20">
                                                     <p class="notification">
-                                                        You have                                                <span>0 new</span>
+                                                        You have <span>0 new</span>
                                                         notification
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                         <a href="view/all/notification/1" class="primary-btn text-center text-uppercase mark-all-as-read">
-                                                Mark All As Read                                            </a>
+                                            Mark All As Read
+                                        </a>
                                     </div>
                                 </div>
-                            </li>
-
+                            </li> --}}
                             <li class="nav-item setting-area">
                                 <div class="dropdown">
                                     <button type="button" class="dropdown-toggle" data-toggle="dropdown">
@@ -143,7 +158,6 @@
                                             <a class="dropdown-item" href="#">
                                                 <div class="">
                                                     <div class="d-flex">
-
                                                         <img class="client_img" src="https://media-exp1.licdn.com/dms/image/C560BAQHMnA03XDdf3w/company-logo_200_200/0?e=2159024400&v=beta&t=C7KMOtnrJwGrMXmgIk2u1B8a7VRfgxMwXng9cdP9kZk " alt="">
                                                         <div class="d-flex ml-10">
                                                             <div class="">
@@ -154,30 +168,25 @@
                                                     </div>
                                                 </div>
                                             </a>
-
                                             <ul class="list-unstyled">
                                                 <li>
                                                     <a href="view-staff/1">
                                                         <span class="ti-user"></span>
-                                                        view profile                                                        </a>
+                                                        view profile
+                                                    </a>
                                                 </li>
-
-
                                                 <li>
                                                     <a href="change-password">
                                                         <span class="ti-key"></span>
-                                                        Password                                                    </a>
+                                                        Password
+                                                    </a>
                                                 </li>
                                                 <li>
-
-                                                    <a href="#!" onclick="event.preventDefault();
-
-                                                     document.getElementById('logout-form').submit();">
+                                                    <a href="#!" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                         <span class="ti-unlock"></span>
                                                         logout
                                                     </a>
-
-                                                    <form id="logout-form" action="logout" method="POST" style="display: none;">
+                                                    <form id="logout-form" action="/logout" method="POST" style="display: none;">
                                                         @csrf
                                                     </form>
                                                 </li>

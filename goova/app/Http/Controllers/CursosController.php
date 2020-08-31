@@ -35,12 +35,15 @@ class CursosController extends Controller
 
     public function store(Request $request)
     {
+        $entity_user = Auth::user()->id_info_entity;
+
         $list = new List_students();
         $list->name = $request->name;
         $list->save();
 
         $course = new Course();
         $course->id_list_students = $list->id;
+        $course->id_entity = $entity_user;
         $course->save();
 
         if(isset($request->id_subjects) && !empty($request->id_subjects)){

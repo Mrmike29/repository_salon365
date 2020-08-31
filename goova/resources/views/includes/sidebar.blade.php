@@ -78,6 +78,12 @@
             <li>
                <a href="/agregar_tareas">Crear tarea</a>
             </li>
+            <li>
+               <a href="/foros">Ver foros</a>
+            </li>
+            <li>
+               <a href="/agregar_foro">Crear foros</a>
+            </li>
          </ul>
       </li>
       <li>

@@ -91,6 +91,41 @@
         </div>
         @include('includes.footer')
         <script>
+            function subjects(id){
+                var data = []
+                var id_subjects = []
+                $('select[name^=id_subjects]').each(function(k, v){
+                    id_subjects[k] = $(v).val()
+                })
+                var i = 0
+                @foreach($subjects as $key => $val)
+                    if(id_subjects.indexOf("{{$val->id}}") < 0){
+                        data[i] = [{{$val->id}}, '{{$val->name}}']
+                        i++
+                    }
+                @endforeach
+                var html = `<option data-display="Seleccionar Materia *" value="">Select</option>`
+                $(data).each(function(k, v){
+                    html += `<option value="${v[0]}">${v[1]}</option>` 
+                })
+                $('select[name^=id_subjects]').each(function(k, v){
+                    if(!$(v).val()){
+                        $(this).html(html)
+                    }
+                    if(id == $(v).val()){
+                        $(this).html(html)
+                    }
+                })
+                $('select.niceSelect').niceSelect('update');
+            }
+            $(document).on('change','select[name^=id_subjects]',function(){
+                var id = $(this).val()
+                var html = $(this).html()
+                subjects($(this).val())
+                $(this).html(html).val(id)
+                $('select.niceSelect').niceSelect('update');
+
+            })
             $(document).on('click','.plus',function(){
                 var html = `<div class="row mb-30">
                                 <div class="form-group col-lg-5">
@@ -122,6 +157,7 @@
                                 </div>
                             </div>`
                 $('#append_campos').append(html)
+                subjects(0)
                 $('select.niceSelect').niceSelect();
             })
             $(document).on('click','.minus',function(){
