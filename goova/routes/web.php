@@ -102,4 +102,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/editar/sala','SalaController@editarSala')->name('editarSala');
     Route::post('/cambiar-estado/sala','SalaController@cambiarEstado');
     Route::get('/ingresar/sala/{id}','SalaController@ingresarSala');
+    Route::get('/room_filter','SalaController@room_filter');
+
 });

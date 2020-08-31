@@ -7,11 +7,12 @@ use DB;
 use Hash;
 use Auth;
 use Mail;
-
 class SalaController extends Controller
 {
     public function index()
     {
+
+
         $tipo=DB::table('users')->join('rol','users.id_rol','rol.id')->where('users.id',Auth::user()->id)->first()->name;
         if ($tipo=="Estudiante") {
             $users_list_students=DB::table('users')->join('rol','users.id_rol','rol.id')->join('users_list_students','users.id','users_list_students.id_users')->where('users.id',Auth::user()->id)->select('users_list_students.id_list_students')->first()->id_list_students ;
@@ -21,12 +22,17 @@ class SalaController extends Controller
         ->join('users as u','u.id','room.id_teacher')
         ->join('subjects as s','s.id','room.id_subject')
         ->join('video_chat as vc','vc.id','room.id_video_chat');
+       
         if ($tipo=="Estudiante") {
+            $teacher=DB::table('room')->where('room.id_list_students',$users_list_students)->get();
+            dd($teacher);
             $room=$room->where('room.id_list_students',$users_list_students);
         }
+        $asignatura=DB::table('subjects')->get();
+        $curso=DB::table('list_students')->get();
         $room=$room->select('u.name as nombre','u.last_name as apellido','ls.name as listado','s.name as asignatura','vc.code',DB::raw('IF(vc.status=1,"HABILITADO","INHABILITADO") as status'),'vc.start_date as fecha','room.id')
         ->get();
-        return view('sala.index',compact('room','tipo'));
+        return view('sala.index',compact('room','tipo','asignatura','curso'));
     }
 
     public function getCrearSala(){
@@ -41,10 +47,11 @@ class SalaController extends Controller
 
     public function crearSala(){
         extract($_POST);
-        $code=  md5(sha1(date('Y-m-d H:i:s')."-".Auth::user()->id));
+        $code= md5(sha1(date('Y-m-d H:i:s')."-".Auth::user()->id));
+        $fecha_videochat=date('Y-m-d H:i:s',strtotime($start_date." ".$hora));
+        
         $id_video_chat=DB::table('video_chat')
         ->insertGetId([
-            'id_teacher'=>Auth::user()->id,
             'code'=>$code,
             'start_date'=>$start_date." ".$hora,
             'time_stop'=>40,
@@ -63,10 +70,39 @@ class SalaController extends Controller
         return redirect()->back();
     }
 
+    public function room_filter(){
+        extract($_GET);
+        $tipo=DB::table('users')->join('rol','users.id_rol','rol.id')->where('users.id',Auth::user()->id)->first()->name;
+        if ($tipo=="Estudiante") {
+            $users_list_students=DB::table('users')->join('rol','users.id_rol','rol.id')->join('users_list_students','users.id','users_list_students.id_users')->where('users.id',Auth::user()->id)->select('users_list_students.id_list_students')->first()->id_list_students ;
+        }
+        $room=DB::table('room')
+        ->join('list_students as ls','ls.id','room.id_list_students')
+        ->join('users as u','u.id','room.id_teacher')
+        ->join('subjects as s','s.id','room.id_subject')
+        ->join('video_chat as vc','vc.id','room.id_video_chat');
+        if (!empty($id_teacher)) {
+            $room=$room->where('room.id_teacher',$id_teacher);
+        }
+        if (!empty($id_curso)) {
+            $room=$room->where('room.id_list_students',$id_curso);
+        }
+        if (!empty($id_subjects)) {
+            $room=$room->where('room.id_subject',$id_subjects);
+        }
+        if ($tipo=="Estudiante") {
+            // $teacher=DB::table('room')->where('room.id_list_students',$users_list_students)->get();
+            $room=$room->where('room.id_list_students',$users_list_students);
+        }
+        $room=$room->select('u.name as nombre','u.last_name as apellido','ls.name as listado','s.name as asignatura','vc.code',DB::raw('IF(vc.status=1,"HABILITADO","INHABILITADO") as status'),'vc.start_date as fecha','room.id')
+        ->get();
+        return view('sala.filter_room',compact('room','tipo'));
+    }
+
     public function ingresarSala($id){
         extract($_POST);
         $id=decrypt($id);
-
+        unset($_SESSION['sala']);
         $room=DB::table('room')
         ->join('list_students as ls','ls.id','room.id_list_students')
         ->join('users as u','u.id','room.id_teacher')
