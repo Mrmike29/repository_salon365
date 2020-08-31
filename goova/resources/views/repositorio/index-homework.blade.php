@@ -12,7 +12,7 @@
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
-                            <h1>Agragar Tarea</h1>
+                            <h1>Ver Tareas</h1>
                         </div>
                     </div>
                 </section>
@@ -221,10 +221,10 @@
                                 { data: "name_theme" },
                                 @if(Auth::user()->id_rol <> 5)
                                     { data: "name_subject" },
-                                @endif
-                                { data: "name_students" },
-                                @if(Auth::user()->id_rol <> 5)
+                                    { data: "name_students" },
                                     { data: "name_list" },
+                                @else
+                                    { data: "name_teacher" },
                                 @endif
                                 { 
                                     data: "id_homework",

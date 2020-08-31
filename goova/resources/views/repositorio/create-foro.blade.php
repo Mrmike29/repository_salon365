@@ -12,13 +12,13 @@
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
-                            <h1>Agragar Tarea</h1>
+                            <h1>Agragar Foro</h1>
                         </div>
                     </div>
                 </section>
                 <section class="admin-visitor-area">
                     <div class="container-fluid p-0">
-                        <form method="POST" action="/crear_tarea" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="POST" action="/crear_foro" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-12">
@@ -37,37 +37,25 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-lg-6">
-                                                    <div class="input-effect sm2_mb_20 md_mb_20" id="sectionStudentDiv">
-                                                        <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects" id="sectionSelectStudent">
-                                                            <option data-display="Seleccionar Materia *" value="">Section *</option>
-                                                        </select>
-                                                        <span class="focus-border"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-lg-6">
-                                                    <div class="input-effect sm2_mb_20 md_mb_20" id="sectionStudentDiv">
-                                                        <select class="niceSelect w-100 bb form-control" name="id_theme_time" id="id_theme_time" id="sectionSelectStudent">
-                                                            <option data-display="Seleccionar Tema *" value="">Section *</option>
-                                                        </select>
-                                                        <span class="focus-border"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-lg-6">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <select class="niceSelect w-100 bb form-control" name="id_rubrics" id="id_rubrics">
-                                                            <option data-display="Seleccionar Rubrica *" value="">Select</option>
-                                                            @foreach($rubricas as $key => $val)
-                                                                <option value="{{$val->id}}">{{$val->name}}</option>
-                                                            @endforeach
+                                                        <select class="niceSelect w-100 bb form-control" name="id_subject" id="id_subject">
+                                                            <option data-display="Seleccionar Materia *" value="">Select</option>
                                                         </select>
                                                         <span class="focus-border"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-lg-12">
+                                                    <div class="input-effect sm2_mb_20 md_mb_20">
+                                                        <textarea class="primary-input form-control" cols="0" rows="3" name="description" id="guardians_address"></textarea>
+                                                        <label>Nombre <span></span> </label>
+                                                        <span class="focus-border textarea"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <div class="no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input date form-control" type="text" name="start_time" id="start_time" value="{{date('Y-m-d')}}" readonly="true">
+                                                                <input class="primary-input date form-control" type="text" name="date_start" id="start_time" value="{{date('Y-m-d')}}" readonly="true">
                                                                 <label>Fecha Inicio <span>*</span></label>
                                                                 <span class="focus-border"></span>
                                                             </div>
@@ -83,7 +71,7 @@
                                                     <div class="no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input date form-control" type="text" name="limit_time" id="limit_time" value="{{date('Y-m-d')}}" readonly="true">
+                                                                <input class="primary-input date form-control" type="text" name="date_end" id="limit_time" value="{{date('Y-m-d')}}" readonly="true">
                                                                 <label>Fecha Fin <span>*</span></label>
                                                                 <span class="focus-border"></span>
                                                             </div>
@@ -103,7 +91,7 @@
                                                 <div class="form-group col-lg-12">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <div class="form-group" id="textarea">
-                                                            <textarea id="texto" name="description" id="description"></textarea>
+                                                            <textarea id="texto" name="descriptions" id="description"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,31 +186,15 @@
             $(document).on('change','select[name=id_course]',function(){
                 var id = $(this).val()
                 $.ajax({
-                    url: '/materias_tereas/'+id,
+                    url: '/materias_curso/'+id,
                     type: 'get',
                     success:function(dato){
                         var html = '<option data-display="Seleccionar Materia *" value="">Section *</option>'
                         $(dato).each(function(k,v){
-                            html += `<option value="${v.id}">${v.subjects} - ${v.teacher} ${v.last_name}</option>`
-                        })
-                        $('select[name=id_subjects]').html(html)
-                        $('select[name=id_subjects]').niceSelect('update');
-                    }
-                })
-            })
-            $(document).on('change','select[name=id_subjects]',function(){
-                var id = $(this).val()
-                var con = $('select[name=id_course]').val()
-                $.ajax({
-                    url: '/temas_tereas/'+id+'/'+con,
-                    type: 'get',
-                    success:function(dato){
-                        var html = '<option data-display="Seleccionar Tema *" value="">Section *</option>'
-                        $(dato).each(function(k,v){
                             html += `<option value="${v.id}">${v.name}</option>`
                         })
-                        $('select[name=id_theme_time]').html(html)
-                        $('select[name=id_theme_time]').niceSelect('update');
+                        $('select[name=id_subject]').html(html)
+                        $('select[name=id_subject]').niceSelect('update');
                     }
                 })
             })

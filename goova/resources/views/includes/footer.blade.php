@@ -1,6 +1,6 @@
 
 <div class="modal fade admin-query" id="universal_modal"></div>
-<footer class="footer-area">
+{{-- <footer class="footer-area">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -8,7 +8,7 @@
             </div>
         </div>
     </div>
-</footer>
+</footer> --}}
 <!-- ================End Footer Area ================= -->
 <script type="text/javascript" src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery-ui.js')}}"></script>
@@ -84,7 +84,9 @@
             $("#selectStaffss").trigger("change");
         }
     });
-
+    @if(!empty($_SESSION['sala']))
+        window.location.href = "https://goova.co/ingresar/sala/{{$_SESSION['sala']}}";
+    @endif
 
     // for select2 multiple dropdown in send email/Sms in Class tab
     $("#selectSectionss").select2();

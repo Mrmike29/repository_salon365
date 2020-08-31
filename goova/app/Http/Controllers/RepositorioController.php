@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Course;
 use App\Teacher_course;
 use App\Themes_time;
@@ -11,7 +12,9 @@ use App\Homework;
 use App\Homework_course;
 use App\Archives_homework;
 use App\Archives_homework_course;
-use App\User;
+use App\Foro;
+use App\Content_foro;
+use App\Archives_content_foro;
 use Auth;
 use Mail;
 use DateTime;
@@ -277,17 +280,157 @@ class RepositorioController extends Controller
         return redirect('/agregar_tareas');
     }
 
+    public function index_foro()
+    {
+        $id_user = Auth::user()->id;
+        if(Auth::user()->id_rol == 5){
+            $foros = Foro::join('teacher_course','teacher_course.id','foro.id_teacher_course')
+                            ->join('course','course.id','teacher_course.id_course')
+                            ->join('list_students','list_students.id','course.id_list_students')
+                            ->join('users_list_students','users_list_students.id_list_students','list_students.id')
+                            ->select('foro.id','list_students.name as course','foro.description as name','foro.date_start','foro.date_end')
+                            ->where('users_list_students.id_users',$id_user)
+                            ->groupBy('foro.id')
+                            ->get();
+        }else{
+            $foros = Foro::join('teacher_course','teacher_course.id','foro.id_teacher_course')
+                            ->join('course','course.id','teacher_course.id_course')
+                            ->join('list_students','list_students.id','course.id_list_students')
+                            ->select('foro.id','list_students.name as course','foro.description as name','foro.date_start','foro.date_end')
+                            ->where('teacher_course.id_users',$id_user)
+                            ->groupBy('foro.id')
+                            ->get();
+        }
+
+        return view('repositorio.index-foro',array('foros'=>$foros));
+    }
+
+    public function info_foro($id)
+    {
+        $contenido = Content_foro::join('users','users.id','content_foro.id_user')
+                                ->join('rol','rol.id','users.id_rol')
+                                ->leftJoin('users as answer','answer.id','content_foro.answer_to')
+                                ->select('users.*', 'content_foro.id as id_content_foro', 'rol.name as rol', 'content_foro.description as content', 'content_foro.id as id_content', 'answer.name as answer_name', 'answer.last_name as answer_last_name', 'answer.id as id_answer', 'users.id as id_users')
+                                ->where('id_foro',$id)
+                                ->get();
+        $archivos = Archives_content_foro::get();
+
+
+        return view('repositorio.info_foro',array('contenido'=>$contenido, 'archivos'=>$archivos));
+    }
+
+    public function info_foro_answer($id)
+    {
+        $contenido = Content_foro::find($id);
+
+        return view('repositorio.info_foro_answer', array('contenido'=>$contenido));
+    }
+
+    public function store_info_foro_answer(Request $request)
+    {
+        $remove = '<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>';
+
+        $id_user = Auth::user()->id;
+        // if($request->has('descriptions')){
+            $contenido = new Content_foro();
+            $contenido->id_foro = $request->id_foro;
+            $contenido->id_user = $id_user;
+            $contenido->answer_to = $request->user_answer;
+            $contenido->description = str_replace($remove,'',$request->descriptions);
+            $contenido->save();
+        // }
+
+        if($request->has('document')){
+            foreach ($request->document as $key => $val) {
+                $archivos = new Archives_content_foro();
+                $archivos->id_content_foro = $contenido->id;
+                $archivos->description = $val;
+                $archivos->save();
+            }
+        }
+
+        return redirect('/info_foro/'.$request->id_foro);
+    }
+
+    public function create_foro()
+    {
+        $id_user = Auth::user()->id;
+        $cursos = Course::join('teacher_course','teacher_course.id_course','course.id')
+                        ->join('list_students','list_students.id','course.id_list_students')
+                        ->join('subjects','subjects.id','teacher_course.id_subjects')
+                        ->select('course.id','list_students.name')
+                        ->where('teacher_course.id_users',$id_user)
+                        ->groupBy('course.id')
+                        ->get();
+
+        return view('repositorio.create-foro',array('cursos'=>$cursos));
+    }
+
+    public function subjects_course($id)
+    {
+        $id_user = Auth::user()->id;
+        $materias = Course::join('teacher_course','teacher_course.id_course','course.id')
+                            ->join('list_students','list_students.id','course.id_list_students')
+                            ->join('subjects','subjects.id','teacher_course.id_subjects')
+                            ->select('subjects.id','subjects.name')
+                            ->where('teacher_course.id_users',$id_user)
+                            ->where('teacher_course.id_course',$id)
+                            ->get();
+        
+        return $materias;
+    }
+
+    public function store_foro(Request $request)
+    {
+        $remove = '<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>';
+
+        $id_user = Auth::user()->id;
+        $foro = new Foro($request->except('descriptions','document'));
+        $foro->save();
+
+        if($request->has('descriptions')){
+            $contenido = new Content_foro();
+            $contenido->id_foro = $foro->id;
+            $contenido->id_user = $id_user;
+            $contenido->answer_to = $id_user;
+            $contenido->description = str_replace($remove,'',$request->descriptions);
+            $contenido->save();
+        }
+
+        if($request->has('document')){
+            foreach ($request->document as $key => $val) {
+                $archivos = new Archives_content_foro();
+                $archivos->id_content_foro = $contenido->id;
+                $archivos->description = $val;
+                $archivos->save();
+            }
+        }
+
+        return redirect('/foros');
+    }
+
     public function archivos_store(Request $request)
     {
         $path = public_path().'/archives/';
         $file = $request->file('file');
-        $fileName = uniqid().trim($file->getClientOriginalName());
+        $fileName = uniqid().$file->getClientOriginalName();
         $file->move($path, $fileName);
 
         return response()->json([
             'name'          => $fileName,
             'original_name' => $file->getClientOriginalName(),
         ]);
+    }
+
+    public function upload_image(Request $request)
+    {
+        $path = public_path().'/froala_img/';
+        $file = $request->file('file');
+        $fileName = uniqid().$file->getClientOriginalName();
+        $file->move($path, $fileName);
+
+        $res = array('link'=>'/froala_img/'.$fileName);
+        return json_encode($res);
     }
 
     public function archivos_delete(Request $request)
