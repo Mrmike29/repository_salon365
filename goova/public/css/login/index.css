@@ -1,1 +1,98 @@
-/** Yo me encargo Att: Mike **/
+html, body{ margin: 0; padding: 0; overflow: hidden; }
+
+.row{ height: 100vh; display: flex; background: #fff; }
+
+.liquid, .login { padding: 10% 0; }
+
+.liquid{
+    width: 65%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(../../img/login/Wave.png);
+}
+
+.liquid h4{
+    padding: 0 2rem;
+    text-align: left;
+    color: whitesmoke;
+}
+
+.login-img{
+    width: 520px;
+    height: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 3rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.login { width: 35%; }
+
+.btn{
+    border: none;
+    cursor: pointer;
+    font-size: .7rem;
+    color: whitesmoke;
+    background: #2b5876;
+    border-radius: 4rem;
+    padding: .5rem 1.5rem;
+    box-shadow: 3px 4px 7px rgba(27, 27, 27, 0.534);
+}
+
+.login .btn-signup,
+form .btn-login {
+    float: right;
+    margin: 1rem;
+    background: linear-gradient(to right, var(--g-first), var(--g-third));
+}
+
+.titles{ margin-right: 2rem; margin-bottom: 2.2rem; }
+
+.addon_icon { text-align: right; }
+
+form{
+    height: 55%;
+    max-height: 280px;
+    text-align: center;
+    margin-top: 5.5rem;
+}
+
+form h3, form h6{ margin: 0; padding: 0; color: var(--g-fourth); }
+
+form h6{ color: #444444d2; padding-left: 4.5rem; }
+
+form .form-group{
+    text-align: left;
+    margin-top: .9rem;
+    margin-right: 2rem;
+    border-radius: 3rem;
+    border: 1px solid rgba(0,0,0,0.329);
+}
+
+form .form-group .form-input{
+    width: 85%;
+    border: none;
+    overflow: hidden;
+    font-size: .9rem;
+    background: transparent;
+    padding: .5rem 0 .5rem 1rem;
+}
+
+form input:focus{ outline: none; }
+
+form .input-icon{ display: inline; color: rgba(0,0,0,0.329); }
+
+form .btn-login{ float: none; margin-left: 2rem; padding: .8rem 5rem; }
+
+@media (max-width: 768px) {
+    html { overflow-y: scroll; background: #FF7F27; }
+    .row { height: auto; display: block; }
+    .liquid { padding: 0; width: 100%; background: #FF7F27; }
+    .login { width: 80%; margin: auto; }
+    form .form-group { margin-right: 0; }
+}
+
+@media (max-width: 520px) {  .login-img { width: 350px; }  }
+

@@ -6,6 +6,7 @@
         <title>Goova</title>
 
         <link rel="stylesheet" type="text/css" href="{{asset('css/front/semantic.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('css/overhang.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('css/front/index.css')}}">
     </head>
     <body>
@@ -23,7 +24,7 @@
                     <li><a class="vl"><p>|</p></a></li>
                     <li><a href="/ayuda" class="option"><p>ayuda</p></a></li>
                     <li><a class="vl"><p>|</p></a></li>
-                    <li><a href="/login" class="option login"><p>ingresar</p></a></li>
+                    <li><a onclick="openModal()" style="cursor: pointer" class="option login"><p>ingresar</p></a></li>
                 </ul>
             </nav>
         </header>
@@ -60,22 +61,6 @@
                         <img class="ui centered Large image" src="{{asset('img/front/B.svg')}}">
                     </div>
                 </div>
-                <!--<div class="content">
-                    <div>
-                        <p>
-                            * Plataforma disponible 24/7 - Manejo completo en la Nube
-                            <br>
-                            <br>
-                            * Con los reportes Goova, podrás tener el conocimiento de notas, información importante y mucho más
-                            <br>
-                            <br>
-                            * Goova es Completamente Administrable
-                        </p>
-                    </div>
-                    <div>
-                        <img src="{{asset('img/front/B.svg')}}">
-                    </div>
-                </div>-->
             </div>
 
             <div class="divider"></div>
@@ -147,7 +132,7 @@
                         <li><a href="/caracteristicas"><p>Caracteristicas</p></a></li>
                         <li><a href="/beneficios"><p>Beneficios</p></a></li>
                         <li><a href="/ayuda"><p>Ayuda</p></a></li>
-                        <li><a href=""><p>Ingresar</p></a></li>
+                        <li><a onclick="openModal()"><p>Ingresar</p></a></li>
                     </ul>
                 </div>
                 <div>
@@ -162,8 +147,102 @@
                 <p>Copyright 2020 Goova, un producto Stratecsa.</p>
             </div>
         </footer>
+
+        <div class="ui longer modal">
+            <div class="header">
+                Selecciona la Institución
+            </div>
+            <div class="scrolling content content-modal">
+                <div class="ui search">
+                    <div class="ui icon input">
+                        <input class="prompt" type="text" name="search" id="search" placeholder="Buscar...">
+                        <i class="search icon"></i>
+                    </div>
+                    <div class="results"></div>
+                </div>
+                <div class="ui placeholder segment" id="segment_entities" style="min-height: 150px;">
+                    <div class="ui four special cards " id="content_modal_entities">
+
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui negative button">
+                    Cerrar
+                </div>
+            </div>
+        </div>
     </body>
+    <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/front/semantic.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/overhang.min.js')}}"></script>
+    <script type="text/javascript">
+        const ASSET = '{{ URL::asset('/') }}';
+
+        $(document).ready(() => {
+            $('#search').keyup(function() { filterEntities($.trim( $(this).val() )) });
+        })
+
+        function openModal() {
+            filterEntities('');
+            $('.ui.longer.modal').modal('show');
+        }
+
+        function filterEntities(s) {
+            if (s.length > 0 && s.length < 4) return false;
+
+            $.ajax({
+                type: 'GET',
+                url: '/get-entities',
+                data: { s },
+                beforeSend: function(){
+                    $('#segment_entities').toggleClass('loading');
+                },
+            }).done(function(data) {
+                const entities = data.entities;
+                let html = '';
+
+                entities.forEach((item) => {
+                    html +=
+                        `<div class="card">` +
+                            `<div class="blurring dimmable image">` +
+                                `<div class="ui dimmer">` +
+                                    `<div class="content content-modal">` +
+                                        `<div class="center">` +
+                                            `<div class="ui inverted button" onclick="goPage('${item.subdomain}')">Ir</div>` +
+                                        `</div>` +
+                                    `</div>` +
+                                `</div>` +
+                                `<img src="${ASSET + item.image}">` +
+                            `</div>` +
+                            `<div class="content content-modal">` +
+                                `<a class="header text-entity">${item.name}</a>` +
+                            `</div>` +
+                        `</div>`;
+                })
+
+                if(html.length === 0){
+                    html +=
+                        '<div class="ui icon header">' +
+                            '<i class="search icon"></i>' +
+                            'No se encontraron resultados para su búsqueda.' +
+                        '</div>';
+                }
+
+                $('#content_modal_entities').html(html);
+                $('.special.cards .image').dimmer({ on: 'hover'});
+                $('#segment_entities').toggleClass('loading');
+            }).fail( function(data) {
+                $("body").overhang({
+                    type: "error",
+                    message: data.responseJSON.error,
+                    closeConfirm: true
+                });
+            });
+        }
+
+        function goPage(e) { if($.trim(e) === '') return false; window.location.href = e + '/login'; }
+    </script>
 </html>
 
 

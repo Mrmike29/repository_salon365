@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('/', function () {
-    return view('front/index');
-});
+Route::get('/', function () { return view('front/index'); });
+
+/** FRONT */
+Route::get('/get-entities', 'FrontController@getEntities');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', function () {

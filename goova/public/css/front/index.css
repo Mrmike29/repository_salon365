@@ -77,8 +77,6 @@ nav ul li a.option:focus {
 .container {
     width: 100%;
     background: #fff;
-    /*height: 100vh;*/
-    /*display: flex;*/
 }
 
 .divider {
@@ -212,11 +210,6 @@ footer .img-footer img {
     padding: 5px 53px;
 }
 
-.card{
-    cursor: pointer;
-    width: 340px;
-    height: 480px;
-}
 .front,.back{
     backface-visibility: hidden;
     transition: transform .6s linear;
@@ -251,14 +244,13 @@ footer .img-footer img {
     background: #2c3e50;
     color: white;
 }
-.card:hover > .front{
-    transform: perspective(600px) rotateY(-180deg);
-}
-.card:hover > .back{
-    transform: perspective(600px) rotateY(0deg) translateY(-175%);
-}
 
 div.back-content.middle span {
     font-size: x-large;
     font-family: 'Montserrat', sans-serif;
 }
+
+.content-modal { margin-top: 0; min-height: auto; }
+
+.text-entity { cursor: default !important; }
+.text-entity:hover { color: rgba(0,0,0,.87) !important; }
