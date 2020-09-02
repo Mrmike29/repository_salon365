@@ -1,4 +1,4 @@
-var socket = io.connect('https://goova.co:8009', {
+var socket =  io.connect('127.0.0.1:2083', {
     'forceNew': true
 });
 

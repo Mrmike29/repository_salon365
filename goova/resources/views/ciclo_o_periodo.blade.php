@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 text-right">
-                                <a href="#" class="primary-btn small fix-gr-bg" data-toggle="tooltip" onclick="openModalCreateTime()" title="Agregar Ciclo/Periodo">
+                                <a href="#" class="primary-btn small goova-bt" data-toggle="tooltip" onclick="openModalCreateTime()" title="Agregar Ciclo/Periodo">
                                     <span class="ti-plus"></span>
                                 </a>
                             </div>
@@ -197,7 +197,7 @@
                                 '<div class="col-lg-12 text-center">' +
                                     '<div class="mt-40 d-flex justify-content-between">' +
                                         '<button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>' +
-                                        '<a href="#" class="primary-btn small fix-gr-bg" onclick="saveNewTime()">' +
+                                        '<a href="#" class="primary-btn small goova-bt" onclick="saveNewTime()">' +
                                             '<span class="ti-plus pr-2"></span>' +
                                             'Guardar' +
                                         '</a>' +

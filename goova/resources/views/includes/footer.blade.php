@@ -50,6 +50,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.js"></script>
 <script src="{{asset('js/froala_editor.pkgd.min.js')}}"></script>
 <script src="{{asset('js/application-18caf78ea729799d396faaacacecde7c.js')}}"></script>
+<script src="{{asset('js/goova-template.js')}}"></script>
 <script type="text/javascript">
 
     function universalModal(title, body, footer = "") {
@@ -130,7 +131,7 @@
             barColors: ['#8a33f8', '#f25278'],
             resize: true,
             redraw: true,
-            gridTextColor: '#415094',
+            gridTextColor: 'var(--g-second)',
             gridTextSize: 12,
             gridTextFamily: '"Poppins", sans-serif',
             barGap: 4,

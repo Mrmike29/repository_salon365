@@ -31,10 +31,10 @@ table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child:b
 	font-family: 'Courier New', Courier, monospace;
 	line-height: 18px;
 	content: '+';
-	background: -webkit-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: -moz-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: -o-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
+	background: -webkit-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: -moz-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: -o-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
 	-webkit-transition: all 0.4s ease 0s;
 	-moz-transition: all 0.4s ease 0s;
 	-o-transition: all 0.4s ease 0s;
@@ -122,7 +122,7 @@ table.dataTable > tbody > tr.child span.dtr-title {
 	min-width: 75px;
 	text-transform: uppercase;
 	font-size: 12px;
-	color: #415094;
+	color: var(--g-second);
 	font-weight: 600;
 	padding: 10px 18px 10px 0px;
 	border-bottom: 1px solid rgba(130, 139, 178, 0.3);

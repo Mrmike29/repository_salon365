@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="col-lg-6 text-right col-md-6 col-6">
 
-                                        <a href="#" class="primary-btn small fix-gr-bg" data-toggle="tooltip" onclick="openModalCreateEvent()" title="Agregar Evento">
+                                        <a href="#" class="primary-btn small goova-bt" data-toggle="tooltip" onclick="openModalCreateEvent()" title="Agregar Evento">
                                             <span class="ti-plus"></span>
                                         </a>
                                     </div>
@@ -69,7 +69,7 @@
                                         <div class="white-box school-table">
                                             <div class="row to-do-list mb-20">
                                                 <div class="col-md-6 col-6">
-                                                    <button class="primary-btn small fix-gr-bg" id="toDoList">Pendientes</button>
+                                                    <button class="primary-btn small goova-bt" id="toDoList">Pendientes</button>
                                                 </div>
                                                 <div class="col-md-6 col-6">
                                                     <button class="primary-btn small tr-bg" id="toDoListsCompleted">Realizadas</button>
@@ -256,7 +256,7 @@
                                                             '<div class="col-lg-12 text-center">' +
                                                                 '<div class="mt-40 d-flex justify-content-between">' +
                                                                     '<button style="background: transparent;border: transparent;"></button>' +
-                                                                    '<button type="button" class="primary-btn small fix-gr-bg" data-dismiss="modal">Ok</button>' +
+                                                                    '<button type="button" class="primary-btn small goova-bt" data-dismiss="modal">Ok</button>' +
                                                                 '</div>' +
                                                             '</div>' +
                                                         '</div>' +
@@ -341,7 +341,7 @@
                                 '<div class="col-lg-12 text-center">' +
                                     '<div class="mt-40 d-flex justify-content-between">' +
                                         '<button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>' +
-                                        '<a href="#" class="primary-btn small fix-gr-bg" onclick="saveNewEvent()">' +
+                                        '<a href="#" class="primary-btn small goova-bt" onclick="saveNewEvent()">' +
                                             '<span class="ti-plus pr-2"></span>' +
                                             'Guardar' +
                                         '</a>' +
@@ -485,7 +485,7 @@
                                         '<div class="col-lg-12 text-center">' +
                                             '<div class="mt-40 d-flex justify-content-between">' +
                                                 '<button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>' +
-                                                '<a href="#" class="primary-btn small fix-gr-bg" onclick="saveChangesEditEvent(' + event.id + ')">' +
+                                                '<a href="#" class="primary-btn small goova-bt" onclick="saveChangesEditEvent(' + event.id + ')">' +
                                                     '<span class="ti-save pr-2"></span>' +
                                                     'Guardar' +
                                                 '</a>' +

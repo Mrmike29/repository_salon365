@@ -89,7 +89,7 @@
                             <form method="POST" action="/inhabilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="" id="student_inhabilitar">
-                                <button class="primary-btn fix-gr-bg" type="submit">Aceptar</button>
+                                <button class="primary-btn goova-bt" type="submit">Aceptar</button>
                             </form>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                             <form method="POST" action="/habilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="" id="student_habilitar">
-                                <button class="primary-btn fix-gr-bg" type="submit">Aceptar</button>
+                                <button class="primary-btn goova-bt" type="submit">Aceptar</button>
                             </form>
                         </div>
                     </div>

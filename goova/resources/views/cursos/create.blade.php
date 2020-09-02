@@ -9,7 +9,7 @@
     		@include('includes.sidebar')
             <div id="main-content">
     		    @include('includes.header')
-                
+
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
@@ -75,7 +75,7 @@
                                         </div>
                                         <div class="row mt-40">
                                             <div class="col-lg-12 text-center">
-                                                <button type="submit" class="primary-btn fix-gr-bg" data-toggle="tooltip" title="">
+                                                <button type="submit" class="primary-btn goova-bt" data-toggle="tooltip" title="">
                                                     <span class="ti-check"></span>
                                                     Guardar
                                                 </button>
@@ -106,7 +106,7 @@
                 @endforeach
                 var html = `<option data-display="Seleccionar Materia *" value="">Select</option>`
                 $(data).each(function(k, v){
-                    html += `<option value="${v[0]}">${v[1]}</option>` 
+                    html += `<option value="${v[0]}">${v[1]}</option>`
                 })
                 $('select[name^=id_subjects]').each(function(k, v){
                     if(!$(v).val()){

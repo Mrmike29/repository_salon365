@@ -1585,7 +1585,7 @@
                     subject_teacher += "</div>";
                     subject_teacher += "<div class='col-lg-2'>";
                     subject_teacher +=
-                        "<button class='primary-btn icon-only fix-gr-bg' type='button'>";
+                        "<button class='primary-btn icon-only goova-bt' type='button'>";
                     subject_teacher +=
                         "<span class='ti-trash' id='removeSubject' onclick='deleteSubject(" +
                         divCount +
@@ -2010,7 +2010,7 @@
                     appendRow += "</div>";
                     appendRow += "</td>";
                     appendRow += "<td class='text-right'>";
-                    appendRow += "<button class='primary-btn icon-only fix-gr-bg'>";
+                    appendRow += "<button class='primary-btn icon-only goova-bt'>";
                     appendRow +=
                         "<span class='ti-trash text-white' onclick='deleteExamRow(" +
                         rowCount +
@@ -3291,11 +3291,11 @@
 
             if ($(this).hasClass("tr-bg")) {
                 $(this).removeClass("tr-bg");
-                $(this).addClass("fix-gr-bg");
+                $(this).addClass("goova-bt");
             }
 
-            if ($("#toDoListsCompleted").hasClass("fix-gr-bg")) {
-                $("#toDoListsCompleted").removeClass("fix-gr-bg");
+            if ($("#toDoListsCompleted").hasClass("goova-bt")) {
+                $("#toDoListsCompleted").removeClass("goova-bt");
                 $("#toDoListsCompleted").addClass("tr-bg");
             }
 
@@ -3310,11 +3310,11 @@
 
             if ($(this).hasClass("tr-bg")) {
                 $(this).removeClass("tr-bg");
-                $(this).addClass("fix-gr-bg");
+                $(this).addClass("goova-bt");
             }
 
-            if ($("#toDoList").hasClass("fix-gr-bg")) {
-                $("#toDoList").removeClass("fix-gr-bg");
+            if ($("#toDoList").hasClass("goova-bt")) {
+                $("#toDoList").removeClass("goova-bt");
                 $("#toDoList").addClass("tr-bg");
             }
 
@@ -3849,7 +3849,7 @@
                   var role = $(this).closest('tr').siblings().find('#role').val();
                   console.log($(this).parents('tr').attr("id"));
                   console.log(role);
-                  
+
 
                   if ($(this).is(':checked')) {
 
@@ -3901,7 +3901,7 @@
               });
           });
 
-      })(); 
+      })();
 
     (function() {
         $(document).ready(function() {
@@ -4421,12 +4421,12 @@
                                     </div>
                                     <div class="mt-40 d-flex justify-content-between">
                                         <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>
-                                        <a href="${url}" class="text-light">                            
-                                        <button class="primary-btn fix-gr-bg" type="submit">delete</button>
+                                        <a href="${url}" class="text-light">
+                                        <button class="primary-btn goova-bt" type="submit">delete</button>
                                             </a>
                                     </div>
                                 </div>
-                
+
                             </div>
                         </div>
                     </div>`;

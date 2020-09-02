@@ -1,5 +1,5 @@
 (function ($) {
-    
+
 
 // for date picker icon click
 $('#apply_date_icon').on('click', function () {
@@ -47,7 +47,7 @@ if (fileInput) {
         document.getElementById('placeholderAttachFile').placeholder = fileName;
     }
 }
-// for global modal 
+// for global modal
 // $('body').on('click', '.nom_epi', function() { alert("hello"); })
 $(document).ready(function () {
     $('body').on("click", ".modalLink", function (e) {
@@ -274,7 +274,7 @@ addMoreEarnings = () => {
     var table = document.getElementById("tableID");
     var table_len = (table.rows.length);
     var id = parseInt(table_len);
-    var row = table.insertRow(table_len).outerHTML = "<tr id='row" + id + "'><td width='70%' class='pr-30'><div class='input-effect mt-10'><input class='primary-input form-control' type='text' id='earningsType" + id + "' name='earningsType[]'><label for='earningsType" + id + "'>Type</label><span class='focus-border'></span></div></td><td width='20%' class='pr-30'><div class='input-effect mt-10'><input class='primary-input form-control' type='number' oninput='this.value = Math.abs(this.value)' id='earningsValue" + id + "' name='earningsValue[]'><label for='earningsValue" + id + "'>Value</label><span class='focus-border'></span></div></td><td width='10%' class='pt-30'><button class='primary-btn icon-only fix-gr-bg close-deductions' onclick='delete_earings(" + id + ")'><span class='ti-close'></span></button></td></tr>";
+    var row = table.insertRow(table_len).outerHTML = "<tr id='row" + id + "'><td width='70%' class='pr-30'><div class='input-effect mt-10'><input class='primary-input form-control' type='text' id='earningsType" + id + "' name='earningsType[]'><label for='earningsType" + id + "'>Type</label><span class='focus-border'></span></div></td><td width='20%' class='pr-30'><div class='input-effect mt-10'><input class='primary-input form-control' type='number' oninput='this.value = Math.abs(this.value)' id='earningsValue" + id + "' name='earningsValue[]'><label for='earningsValue" + id + "'>Value</label><span class='focus-border'></span></div></td><td width='10%' class='pt-30'><button class='primary-btn icon-only goova-bt close-deductions' onclick='delete_earings(" + id + ")'><span class='ti-close'></span></button></td></tr>";
 }
 
 delete_earings = (id) => {
@@ -288,7 +288,7 @@ delete_earings = (id) => {
     var table = document.getElementById("tableDeduction");
     var table_len = (table.rows.length);
     var id = parseInt(table_len);
-    var row = table.insertRow(table_len).outerHTML = "<tr id='DeductionRow" + id + "'><td width='70%' class='pr-30'><div class='input-effect mt-10'><input class='primary-input form-control' type='text' id='deductionstype" + id + "' name='deductionstype[]'><label for='deductionstype" + id + "'>Type</label><span class='focus-border'></span></div></td><td width='20%' class='pr-30'><div class='input-effect mt-10'><input class='primary-input form-control' oninput='this.value = Math.abs(this.value)' type='number' id='deductionsValue" + id + "' name='deductionsValue[]'><label for='deductionsValue" + id + "'>Value</label><span class='focus-border'></span></div></td><td width='10%' class='pt-30'><button class='primary-btn icon-only fix-gr-bg close-deductions' onclick='delete_deduction(" + id + ")'><span class='ti-close'></span></button></td></tr>";
+    var row = table.insertRow(table_len).outerHTML = "<tr id='DeductionRow" + id + "'><td width='70%' class='pr-30'><div class='input-effect mt-10'><input class='primary-input form-control' type='text' id='deductionstype" + id + "' name='deductionstype[]'><label for='deductionstype" + id + "'>Type</label><span class='focus-border'></span></div></td><td width='20%' class='pr-30'><div class='input-effect mt-10'><input class='primary-input form-control' oninput='this.value = Math.abs(this.value)' type='number' id='deductionsValue" + id + "' name='deductionsValue[]'><label for='deductionsValue" + id + "'>Value</label><span class='focus-border'></span></div></td><td width='10%' class='pt-30'><button class='primary-btn icon-only goova-bt close-deductions' onclick='delete_deduction(" + id + ")'><span class='ti-close'></span></button></td></tr>";
 }
 
  delete_deduction = (id) => {
@@ -397,7 +397,7 @@ $(document).ready(function () {
                 console.log(data);
                 var a = '';
                 $.each(data, function (i, item) {
-                    
+
                     if (item.length) {
                         $('#subjectSelect').find('option').not(':first').remove();
                         $('#subjectSelecttDiv ul').find('li').not(':first').remove();
@@ -613,7 +613,7 @@ $(document).ready(function () {
             tr += "</ul>";
 
 
-            tr += '</div></td>' + '<td class="border-top-0" width=""><div class="input-effect">' + '<input type="text" name="unit_price[]" onkeyup="getTotalByPrice(' + count + ')" id="unit_price' + count + '"  autocomplete="off" class="primary-input form-control"  min="1" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><div class="input-effect">' + '<input type="text" name="quantity[]" onkeyup="getTotal(' + count + ')" id="quantity' + count + '" autocomplete="off"  class="form-control primary-input" />' + '<input type="hidden" name="costValue[]" id="costValue' + count + '" autocomplete="off" class="form-control primary-input" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><div class="input-effect">' + '<input type="text" name="total[]" id="total' + count + '" autocomplete="off" class="form-control primary-input" value= "0.00" />' + '<input type="hidden" name="totalValue[]" id="totalValue' + count + '" autocomplete="off" class="form-control primary-input" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><button type="button" class="removeProductRowBtn primary-btn icon-only fix-gr-bg" onclick="removeProductRow(' + count + ')"><span class="ti-trash"></span></button></td>' + '</td>' + '</tr>';
+            tr += '</div></td>' + '<td class="border-top-0" width=""><div class="input-effect">' + '<input type="text" name="unit_price[]" onkeyup="getTotalByPrice(' + count + ')" id="unit_price' + count + '"  autocomplete="off" class="primary-input form-control"  min="1" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><div class="input-effect">' + '<input type="text" name="quantity[]" onkeyup="getTotal(' + count + ')" id="quantity' + count + '" autocomplete="off"  class="form-control primary-input" />' + '<input type="hidden" name="costValue[]" id="costValue' + count + '" autocomplete="off" class="form-control primary-input" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><div class="input-effect">' + '<input type="text" name="total[]" id="total' + count + '" autocomplete="off" class="form-control primary-input" value= "0.00" />' + '<input type="hidden" name="totalValue[]" id="totalValue' + count + '" autocomplete="off" class="form-control primary-input" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><button type="button" class="removeProductRowBtn primary-btn icon-only goova-bt" onclick="removeProductRow(' + count + ')"><span class="ti-trash"></span></button></td>' + '</td>' + '</tr>';
             if (tableLength > 0) {
                 $("#productTable tbody tr:last").after(tr);
             } else {
@@ -674,7 +674,7 @@ $(document).ready(function () {
             tr += "</ul>";
 
 
-            tr += '</div></td>' + '<td class="border-top-0" width=""><div class="input-effect">' + '<input type="text" name="unit_price[]" onkeyup="getTotalByPrice(' + count + ')" id="unit_price' + count + '"  autocomplete="off" class="primary-input form-control"  min="1" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><div class="input-effect">' + '<input type="text" name="quantity[]" onkeyup="getTotalInSell(' + count + ')" id="quantity' + count + '" autocomplete="off"  class="form-control primary-input" />' + '<input type="hidden" name="costValue[]" id="costValue' + count + '" autocomplete="off" class="form-control primary-input" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><div class="input-effect">' + '<input type="text" name="total[]" id="total' + count + '" autocomplete="off" class="form-control primary-input" value= "0.00" />' + '<input type="hidden" name="totalValue[]" id="totalValue' + count + '" autocomplete="off" class="form-control primary-input" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><button type="button" class="removeProductRowBtn primary-btn icon-only fix-gr-bg" onclick="removeProductRow(' + count + ')"><span class="ti-trash"></span></button></td>' + '</td>' + '</tr>';
+            tr += '</div></td>' + '<td class="border-top-0" width=""><div class="input-effect">' + '<input type="text" name="unit_price[]" onkeyup="getTotalByPrice(' + count + ')" id="unit_price' + count + '"  autocomplete="off" class="primary-input form-control"  min="1" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><div class="input-effect">' + '<input type="text" name="quantity[]" onkeyup="getTotalInSell(' + count + ')" id="quantity' + count + '" autocomplete="off"  class="form-control primary-input" />' + '<input type="hidden" name="costValue[]" id="costValue' + count + '" autocomplete="off" class="form-control primary-input" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><div class="input-effect">' + '<input type="text" name="total[]" id="total' + count + '" autocomplete="off" class="form-control primary-input" value= "0.00" />' + '<input type="hidden" name="totalValue[]" id="totalValue' + count + '" autocomplete="off" class="form-control primary-input" />' + '<span class="focus-border"></span>' + '</div></td>' + '<td class="border-top-0"><button type="button" class="removeProductRowBtn primary-btn icon-only goova-bt" onclick="removeProductRow(' + count + ')"><span class="ti-trash"></span></button></td>' + '</td>' + '</tr>';
             if (tableLength > 0) {
                 $("#productTable tbody tr:last").after(tr);
             } else {
@@ -1095,10 +1095,10 @@ $(document).ready(function () {
         $("#checkbox").prop("checked", false);
         var url = $('#url').val();
         console.log($(this).val());
-        
+
         var formData = {
             id: $(this).val()
-        }; 
+        };
         $('#selectStaffss').select2('val', '');
         // get section for student
         $.ajax({
@@ -1544,7 +1544,7 @@ $(function () {
     newRow += "</div>";
     newRow += "</td> ";
     newRow += "<td  class='border-top'>";
-    newRow += "<button class='primary-btn icon-only fix-gr-bg' type='button' id='removeMark'>";
+    newRow += "<button class='primary-btn icon-only goova-bt' type='button' id='removeMark'>";
     newRow += "<span class='ti-trash'></span>";
     newRow += "</button>";
 
@@ -1632,18 +1632,18 @@ $("#imgInp").on('change', function() {
 
 
 $('#all_check').click(function () {
-    $('input[type="checkbox"]').each(function () { 
+    $('input[type="checkbox"]').each(function () {
         if ($(this).is(":checked")) {
-            $(this).attr("checked", false); 
+            $(this).attr("checked", false);
             $(".all_check").html("Select All");
         } else {
-            $(this).attr("checked", true); 
+            $(this).attr("checked", true);
             $(".all_check").html("Unselect All");
         }
-    });  
+    });
     console.log(this);
-}); 
-  
+});
+
   $(document).ready(function () {
 
       $('#formid').validate({ // initialize the plugin
@@ -1662,22 +1662,22 @@ $('#all_check').click(function () {
       });
        // console.log(messages);
   });
- 
-  //get admission number 
 
-  GetAdmin = (val) => {  
+  //get admission number
+
+  GetAdmin = (val) => {
       if (val.length != 0) {
         $.ajax({
         url: $("#url").val() + "/student-admission-check/" + val,
         type: 'GET',
-        success: function (data) { 
-            console.log(data);         
+        success: function (data) {
+            console.log(data);
             if (data == 'found') {
                 $("#student_form").attr("action","javascript:;")
                 $("#Admission_Number").empty();
                 $("#Admission_Number").append(`<strong>Admission number already used, you can find out in student list or disabled student list.</strong>`);
                 $("#Admission_Number").css('display','block');
-            }else{              
+            }else{
                 $("#Admission_Number").empty();
                 $("#student_form").removeAttr("action")
                 $("#student_form").attr("action",$("#url").val()+'/student-store')
@@ -1685,22 +1685,22 @@ $('#all_check').click(function () {
         }
         });
       }
-        
+
     }
-  GetAdminUpdate = (val,id) => {     
-     // console.log(id);         
+  GetAdminUpdate = (val,id) => {
+     // console.log(id);
       if (val.length != 0) {
         $.ajax({
         url: $("#url").val() + "/student-admission-update-check/" + val+"/"+id,
         type: 'GET',
-        success: function (data) {   
-            // console.log(data);                  
+        success: function (data) {
+            // console.log(data);
             if (data == 'found') {
                 $("#student_form").attr("action","javascript:;")
                 $("#Admission_Number").empty();
                  $("#Admission_Number").append(`<strong>Admission number already used, you can find out in student list or disabled student list.</strong>`);
                 $("#Admission_Number").css('display','block');
-            }else{              
+            }else{
                 $("#Admission_Number").empty();
                 $("#student_form").removeAttr("action")
                 $("#student_form").attr("action",$("#url").val()+'/student-store')

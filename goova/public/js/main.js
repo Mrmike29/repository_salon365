@@ -1,7 +1,7 @@
 (function ($) {
-	
+
 	/*-------------------------------------------------------------------------------
-         Nice Select 
+         Nice Select
 	   -------------------------------------------------------------------------------*/
 	if ($('.niceSelect').length) {
 		$('.niceSelect').niceSelect();
@@ -88,7 +88,7 @@
 	// 			'</div>' +
 	// 			'</td>' +
 	// 			'<td width="10%" class="pt-30">' +
-	// 			'<button class="primary-btn icon-only fix-gr-bg close-earnings">' +
+	// 			'<button class="primary-btn icon-only goova-bt close-earnings">' +
 	// 			'<span class="ti-close"></span>' +
 	// 			'</button>' +
 	// 			'</td>' +
@@ -121,7 +121,7 @@
 			'</div>' +
 			'</td>' +
 			'<td width="10%" class="pt-30">' +
-			'<button class="primary-btn icon-only fix-gr-bg close-deductions">' +
+			'<button class="primary-btn icon-only goova-bt close-deductions">' +
 			'<span class="ti-close"></span>' +
 			'</button>' +
 			'</td>' +
@@ -232,7 +232,7 @@
 	$('#end-date-icon').on('click', function () {
 		$('#endDate').focus();
 	});
-	
+
 	$('.primary-input.date').datepicker({
 		autoclose: true,
 		setDate: new Date(),
@@ -242,7 +242,7 @@
 		// $(this).datepicker('hide');
 		$(this).focus();
 	});
-	
+
 	$('.primary-input.time').datetimepicker({
 		format: 'LT'
 	});
@@ -311,7 +311,7 @@
 			},
 			bFilter: false,
 			bLengthChange: false,
-			
+
 		});
 	}
  	if ($('#table_id_table_one_page').length) {
@@ -319,7 +319,7 @@
 			paging:false,
 			bFilter: false,
 			bLengthChange: false,
-			
+
 		});
 	}
 	if ($('#table_id_table_2').length) {
@@ -327,9 +327,9 @@
 			paging:false,
 			bFilter: false,
 			bLengthChange: false,
-			
+
 		});
-	} 
+	}
 
 	if ($('#table_id_table_one').length) {
 		$('#table_id_table_one').DataTable({
@@ -407,7 +407,7 @@
 							"Class: " + $("#cls").val(),
 							"         ",
 							"Section: " + $("#sec").val()
-						]						
+						]
 						return t ;
 					  },
                       alignment: 'center',
@@ -420,8 +420,8 @@
 						image: 'data:image/png;base64,'+$("#logo_img").val()
 					  } );
 					  doc.pageMargins = [70, 20, 10,20 ];
-					  doc.defaultStyle.fontSize = 10; 
-                      doc.styles.tableHeader.fontSize = 11; 
+					  doc.defaultStyle.fontSize = 10;
+                      doc.styles.tableHeader.fontSize = 11;
 					 },
 				},
 				{
@@ -446,7 +446,7 @@
 			responsive: true,
 		});
 	}
-	
+
 	// last child remove n class section
 	if ($('#table_id_tt, .school-table-data').length) {
 		$('#table_id_tt, .school-table-data').DataTable({
@@ -508,7 +508,7 @@
 							"         ",
 							"Section: " + $("#sec").val()
 						]
-						
+
 						return t ;
 					  },
                       alignment: 'center',
@@ -521,8 +521,8 @@
 						image: 'data:image/png;base64,'+$("#logo_img").val()
 					  } );
 					  doc.pageMargins = [100, 20, 10,20 ];
-					  doc.defaultStyle.fontSize = 10; 
-                      doc.styles.tableHeader.fontSize = 11; 
+					  doc.defaultStyle.fontSize = 10;
+                      doc.styles.tableHeader.fontSize = 11;
 					 },
 				},
 				{
@@ -546,7 +546,7 @@
 			responsive: true,
 		});
 	}
-	//last child reomve and class section will keep 
+	//last child reomve and class section will keep
 	// student attendence
 	if ($('#table_id_student, .school-table-data').length) {
 		$('#table_id_student, .school-table-data').DataTable({
@@ -557,7 +557,7 @@
 			language: {
 				search: "<i class='ti-search'></i>",
 				searchPlaceholder: 'Quick Search',
-				
+
 			},
 			dom: 'Bfrtip',
 			buttons: [
@@ -568,7 +568,7 @@
 					title : $("#logo_title").val(),
 					exportOptions: {
 						columns: ':visible',
-						
+
                     }
 				},
 				{
@@ -578,7 +578,7 @@
 					title : $("#logo_title").val(),
 					exportOptions: {
 						columns: ':visible',
-						
+
 						order: 'applied'
                     }
 				},
@@ -589,7 +589,7 @@
 					title : $("#logo_title").val(),
 					exportOptions: {
 						columns: ':visible',
-						
+
                     }
 				},
 				{
@@ -605,14 +605,14 @@
 					pageSize: 'A4',
 					fontSize:10,
 					messageTop: function(){
-						
+
                         var t=[
 							"Class: " + $("#cls").val(),
 							"         ",
 							"Section: " + $("#sec").val()
-						]						
+						]
 						return t ;
-						
+
 					  },
                       alignment: 'center',
 					  header: true,
@@ -623,8 +623,8 @@
 						image: 'data:image/png;base64,'+$("#logo_img").val()
 					  } );
 					  doc.pageMargins = [10, 20, 10,20 ];
-					  doc.defaultStyle.fontSize = 6; 
-					  doc.styles.tableHeader.fontSize = 7; 
+					  doc.defaultStyle.fontSize = 6;
+					  doc.styles.tableHeader.fontSize = 7;
 					 },
 					title : $("#logo_title").val(),
 				},
@@ -635,7 +635,7 @@
 					title : $("#logo_title").val(),
 					exportOptions: {
 						columns: ':visible',
-						
+
                     }
 				},
 				{
@@ -659,7 +659,7 @@
 			language: {
 				search: "<i class='ti-search'></i>",
 				searchPlaceholder: 'Quick Search',
-				
+
 			},
 			dom: 'Bfrtip',
 			buttons: [
@@ -670,7 +670,7 @@
 					title : $("#logo_title").val(),
 					exportOptions: {
 						columns: ':visible',
-						
+
                     }
 				},
 				{
@@ -680,7 +680,7 @@
 					title : $("#logo_title").val(),
 					exportOptions: {
 						columns: ':visible',
-						
+
 						order: 'applied'
                     }
 				},
@@ -691,7 +691,7 @@
 					title : $("#logo_title").val(),
 					exportOptions: {
 						columns: ':visible',
-						
+
                     }
 				},
 				{
@@ -715,8 +715,8 @@
 						image: 'data:image/png;base64,'+$("#logo_img").val()
 					  } );
 					  doc.pageMargins = [10, 20, 10,20 ];
-					  doc.defaultStyle.fontSize = 6; 
-					  doc.styles.tableHeader.fontSize = 7; 
+					  doc.defaultStyle.fontSize = 6;
+					  doc.styles.tableHeader.fontSize = 7;
 					 },
 					title : $("#logo_title").val(),
 				},
@@ -727,7 +727,7 @@
 					title : $("#logo_title").val(),
 					exportOptions: {
 						columns: ':visible',
-						
+
                     }
 				},
 				{
@@ -804,7 +804,7 @@
 							"         ",
 							"Section: " + $("#sec").val()
 						]
-						
+
 						return t ;
 					  },
                       alignment: 'center',
@@ -817,8 +817,8 @@
 						image: 'data:image/png;base64,'+$("#logo_img").val()
 					  } );
 					  doc.pageMargins = [70, 20, 10,20 ];
-					  doc.defaultStyle.fontSize = 10; 
-                      doc.styles.tableHeader.fontSize = 11; 
+					  doc.defaultStyle.fontSize = 10;
+                      doc.styles.tableHeader.fontSize = 11;
 					 },
 					title : $("#logo_title").val(),
 				},
@@ -844,7 +844,7 @@
 			responsive: true,
 		});
 	}
-	//all row keep n without 
+	//all row keep n without
 	if ($('#table_id_al, .school-table-data').length) {
 		$('#table_id_al, .school-table-data').DataTable({
 			bLengthChange: false,
@@ -877,7 +877,7 @@
 					exportOptions: {
 						columns: ':visible',
 					},
-					
+
 				},
 				{
 					extend: 'csvHtml5',
@@ -907,7 +907,7 @@
 					  image: 'data:image/png;base64,'+$("#logo_img").val()
 					} );
 		        	  }
-					
+
 				},
 				{
 					extend: 'print',
@@ -922,7 +922,7 @@
 				{
 					extend: 'colvis',
 					text: '<i class="fa fa-columns"></i>',
-					
+
 					postfixButtons: ['colvisRestore']
 				}
 			],
@@ -966,7 +966,7 @@
 						columns: ':visible',
 						columns: ':not(:last-child)',
 					},
-					
+
 				},
 				{
 					extend: 'csvHtml5',
@@ -998,7 +998,7 @@
 					  image: 'data:image/png;base64,'+$("#logo_img").val()
 					} );
 		        	  }
-					
+
 				},
 				{
 					extend: 'print',
@@ -1027,7 +1027,7 @@
 
 
 	/*-------------------------------------------------------------------------------
-       Full Calendar Js 
+       Full Calendar Js
 	-------------------------------------------------------------------------------*/
 	// if ($('.common-calendar').length) {
 	// 	$('.common-calendar').fullCalendar({
@@ -1042,7 +1042,7 @@
 
 
 	/*-------------------------------------------------------------------------------
-       Moris Chart Js 
+       Moris Chart Js
 	-------------------------------------------------------------------------------*/
 	$(document).ready(function () {
 		if ($('#commonAreaChart').length) {
@@ -1057,7 +1057,7 @@
 		}
 	});
 
-	
+
 
 	function donutChart() {
 		var total_collection = document.getElementById("total_collection").value;
@@ -1069,7 +1069,7 @@
 		window.donutChart = Morris.Donut({
 			element: 'donutChart',
 			data: [{ label: 'Total Collection', value: total_collection }, { label: 'Due', value: due }],
-			colors: ['#7c32ff', '#c738d8'],
+			colors: ['var(--g-third)', 'var(--g-first)'],
 			resize: true,
 			redraw: true
 		});
@@ -1330,7 +1330,7 @@
 			]
 		});
 	}
- 
+
 
 function setNavigation() {
 	var current = location.href;
@@ -1381,7 +1381,7 @@ function setNavigation() {
 
 	if(current == url+'/'+'exam-attendance-create'){
 
-		$('#subMenuExam').addClass('show'); 
+		$('#subMenuExam').addClass('show');
 		$('#subMenuExam').closest('.list-unstyled').siblings('.dropdown-toggle').addClass('active');
 		$("#sidebar a[href='"+url+'/'+"exam-attendance']").addClass('active');
 	}
@@ -1394,7 +1394,7 @@ function setNavigation() {
 // function deleteId() {
 //     var id = $('.deleteStudentModal').data("id")
 //    $('#student_delete_i').val(id);
-    
+
 // }
 
 

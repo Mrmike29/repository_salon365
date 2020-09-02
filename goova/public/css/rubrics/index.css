@@ -15,7 +15,7 @@ table.table.school-table tbody tr td { padding: 15px; }
 .textarea-m {
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #8032fd #d9dce8;
+    scrollbar-color: var(--g-third) #d9dce8;
 }
 
 
@@ -32,7 +32,7 @@ table.table.school-table tbody tr td { padding: 15px; }
 
 .textarea-m::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.50, rgb(124, 50, 255)), color-stop(0.15, rgb(199, 56, 216)));
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.50, var(--g-third)), color-stop(0.15, var(--g-first)));
 }
 
 .divider {								/* minor cosmetics */
@@ -54,23 +54,23 @@ table.table.school-table tbody tr td { padding: 15px; }
 }
 
 .divider span:first-child {				/* color changes in here */
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(#7d32fe));
-    background-image: -webkit-linear-gradient(180deg, transparent, #7d32fe);
-    background-image: -moz-linear-gradient(180deg, transparent, #7d32fe);
-    background-image: -o-linear-gradient(180deg, transparent, #7d32fe);
-    background-image: linear-gradient(90deg, transparent, #7d32fe);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(var(--g-third)));
+    background-image: -webkit-linear-gradient(180deg, transparent, var(--g-third));
+    background-image: -moz-linear-gradient(180deg, transparent, var(--g-third));
+    background-image: -o-linear-gradient(180deg, transparent, var(--g-third));
+    background-image: linear-gradient(90deg, transparent, var(--g-third));
 }
 
 .divider span:nth-child(2) {
-    color: #828bb2; padding: 0px 5px; width: auto; white-space: nowrap;
+    color: var(--g-fourth); padding: 0px 5px; width: auto; white-space: nowrap;
 }
 
 .divider span:last-child {				/* color changes in here */
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#7d32fe), to(transparent));
-    background-image: -webkit-linear-gradient(180deg, #7d32fe, transparent);
-    background-image: -moz-linear-gradient(180deg, #7d32fe, transparent);
-    background-image: -o-linear-gradient(180deg, #7d32fe, transparent);
-    background-image: linear-gradient(90deg, #7d32fe, transparent);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(var(--g-third)), to(transparent));
+    background-image: -webkit-linear-gradient(180deg, var(--g-third), transparent);
+    background-image: -moz-linear-gradient(180deg, var(--g-third), transparent);
+    background-image: -o-linear-gradient(180deg, var(--g-third), transparent);
+    background-image: linear-gradient(90deg, var(--g-third), transparent);
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button .disabled,

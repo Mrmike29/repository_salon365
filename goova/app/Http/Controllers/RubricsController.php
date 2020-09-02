@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Response;
+use phpDocumentor\Reflection\Type;
 
 class RubricsController
 {
@@ -33,13 +34,13 @@ class RubricsController
                     ]);
             }
         } catch (QueryException $e){
-            return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 404);
+            return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 500);
         }
 
         return Response::json(['message' => 'Exito! Se creó el Tema exitosamente!'], 200);
     }
 
-    function getRubricsList (Request $request){
+    function getRubricsList (Request $request) {
         $nxt = $request->get('nxt');
         $prev = $request->get('prev');
         $search = $request->get('search');
@@ -73,11 +74,59 @@ class RubricsController
 
         try {
             $rubric = DB::table('rubrics')->where('id', $id)->first();
-            $rubricRules = DB::table('rubrics_range')->where('id_rubrics', $id)->get();
+            $rubricRules = DB::table('rubrics_range')->where('id_rubrics', $id)->where('status', 1)->get();
         } catch (QueryException $e){
-            return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 404);
+            return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 500);
         }
 
         return [ 'rubric' => $rubric, 'rubricRules' => $rubricRules ];
+    }
+
+    function getRuleRubric (Request $request) {
+        $id = $request->get('idE');
+
+        try {
+            $rule = DB::table('rubrics_range')->where('id', $id)->first();
+        } catch (QueryException $e){
+            return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 500);
+        }
+
+        return [ 'rule' => $rule ];
+    }
+
+    function putSaveEditedRubric (Request $request) {
+        $id = $request->get('id');
+        $name = $request->get('name');
+        $fields = $request->get('fields');
+
+        try {
+            DB::table('rubrics')->where('id', $id)->update([ 'name' => $name ]);
+
+            foreach ($fields AS $item){
+                switch ($item['type']) {
+                    case 'i':
+                        DB::table('rubrics_range')
+                            ->insert([
+                                'id_rubrics' => $id,
+                                'description' => $item['desc'],
+                                'score' => $item['val']
+                            ]);
+                        break;
+                    case 'u':
+                    case 'd':
+                        $data = ($item['type'] === 'u')? [ 'description' => $item['desc'], 'score' => $item['val'] ] : ['status' => 0];
+
+                        DB::table('rubrics_range')
+                            ->where('id', $item['idE'])
+                            ->update($data);
+                        break;
+                }
+
+            }
+        } catch (QueryException $e){
+            return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 500);
+        }
+
+        return Response::json(['message' => 'Exito! Se editó el Tema exitosamente!'], 200);
     }
 }

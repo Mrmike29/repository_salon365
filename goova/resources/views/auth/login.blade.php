@@ -81,10 +81,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="public/uploads/settings/favicon.png" type="image/png"/>
     <meta name="_token" content="utZZETYEKEm51dHsONesWtSdgM2seIPJcAboUoU5"/>
-    <link rel="stylesheet" href="backEnd/login2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="backEnd/login2/themify-icons.css">
-    <link rel="stylesheet" href="backEnd/login2/css/style.css">
-	<link rel="stylesheet" href="backEnd/vendors/css/toastr.min.css"/>
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/themify-icons.css')}}">
+    <link rel="stylesheet" href="{{asset('css/login/index.css')}}">
+	<link rel="stylesheet" href="{{asset('css/toastr.min.css')}}"/>
     <title>Goova | Iniciar sesión</title>
     <style>
         .loginButton {
@@ -123,7 +123,7 @@
             }
         }
         .create_account a {
-            color: #828bb2;
+            color: var(--g-fourth);
             font-weight: 500;
             text-decoration: none;
         }
@@ -187,17 +187,17 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-12 text-center">
-                    <p style="color: #828bb2">Copyright &copy; 2019 - 2020 All rights reserved | This template is made by Codethemes </p>
+                    <p style="color: var(--g-fourth)">Copyright &copy; 2019 - 2020 All rights reserved | This template is made by Codethemes </p>
                 </div>
             </div>
         </div>
     </footer> --}}
 
     <!--================ End Footer Area =================-->
-    <script src="backEnd/login2/js/jquery-3.4.1.min.js"></script>
-    <script src="backEnd/login2/js/popper.min.js"></script>
-	<script src="backEnd/login2/js/bootstrap.min.js"></script>
-	<script src="backEnd/vendors/js/toastr.min.js"></script>
+    <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
+    <script src="{{asset('js/popper.min.js')}}"></script>
+	<script src="{{asset('js/bootstrap.min.js')}}"></script>
+	<script src="{{asset('js/toastr.min.js')}}"></script>
 	<script>
         $(document).ready(function () {
             $('#btnsubmit').on('click',function(){

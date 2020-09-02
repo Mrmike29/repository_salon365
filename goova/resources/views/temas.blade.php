@@ -9,7 +9,7 @@
             table.table.school-table tbody tr td { padding: 15px; }
             .datepicker.dropdown-menu td { padding: 2px 11px; }
 
-            /*.tooltip > .tooltip-inner {background: linear-gradient(90deg, #7c32ff 0%, #c738d8 51%, #7c32ff 100%);}*/
+            /*.tooltip > .tooltip-inner {background: linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 51%, var(--g-third) 100%);}*/
             /*.tooltip > .tooltip-arrow {border-bottom-color:#f00;}*/
 
             .warning {
@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 text-right">
-                                <a href="#" class="primary-btn small fix-gr-bg" data-toggle="tooltip" onclick="openModalCreateTheme()" title="Agregar Tema">
+                                <a href="#" class="primary-btn small goova-bt" data-toggle="tooltip" onclick="openModalCreateTheme()" title="Agregar Tema">
                                     <span class="ti-plus"></span>
                                 </a>
                             </div>
@@ -164,7 +164,7 @@
                                             item.entity +
                                         '</td>' +
                                         '<td>' +
-                                            '<a href="#" class="primary-btn small fix-gr-bg" data-toggle="tooltip" onclick="openModalEditTheme(' + item.id + ')" title="Editar Tema">' +
+                                            '<a href="#" class="primary-btn small goova-bt" data-toggle="tooltip" onclick="openModalEditTheme(' + item.id + ')" title="Editar Tema">' +
                                                 '<span class="ti-pencil-alt"></span>' +
                                             '</a>' +
                                         '</td>' +
@@ -288,7 +288,7 @@
                                     '<div class="col-lg-12 text-center">' +
                                         '<div class="mt-40 d-flex justify-content-between">' +
                                             '<button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>' +
-                                            '<a href="#" class="primary-btn small fix-gr-bg" onclick="saveNewTheme()">' +
+                                            '<a href="#" class="primary-btn small goova-bt" onclick="saveNewTheme()">' +
                                                 '<span class="ti-plus pr-2"></span>' +
                                                 'Guardar' +
                                             '</a>' +
@@ -431,7 +431,7 @@
                                     '<div class="col-lg-12 text-center">' +
                                         '<div class="mt-40 d-flex justify-content-between">' +
                                             '<button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>' +
-                                            '<a href="#" class="primary-btn small fix-gr-bg" onclick="saveEditedTheme()">' +
+                                            '<a href="#" class="primary-btn small goova-bt" onclick="saveEditedTheme()">' +
                                                 '<span class="ti-plus pr-2"></span>' +
                                                 'Guardar' +
                                             '</a>' +

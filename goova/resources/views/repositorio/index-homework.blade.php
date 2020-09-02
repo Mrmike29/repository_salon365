@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-12 text-right">
-                                                <button type="button" class="primary-btn small fix-gr-bg" id="submit-all" data-toggle="tooltip" title="">
+                                                <button type="button" class="primary-btn small goova-bt" id="submit-all" data-toggle="tooltip" title="">
                                                     <span class="ti-search"></span>
                                                     Buscar
                                                 </button>
@@ -163,7 +163,7 @@
                         <div class="mt-40 d-flex justify-content-between">
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
                                 {{-- <input type="hidden" name="id" value="" id="student_inhabilitar"> --}}
-                            <button class="primary-btn fix-gr-bg" id="submit">Aceptar</button>
+                            <button class="primary-btn goova-bt" id="submit">Aceptar</button>
                         </div>
                     </div>
                 </div>
@@ -226,29 +226,29 @@
                                 @else
                                     { data: "name_teacher" },
                                 @endif
-                                { 
+                                {
                                     data: "id_homework",
                                     render: function (data, type, row, meta) {
-                                        return `<button data-id='${data}' type='button' class='primary-btn small fix-gr-bg view_homework'>Ver</button>`
+                                        return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework'>Ver</button>`
                                     }
                                 },
                                 { data: "limit_time" },
-                                { 
+                                {
                                     data: "id_homework_course",
                                     render: function (data, type, row, meta) {
                                         @if(Auth::user()->id_rol == 5)
                                             if(row.status == "Entregado" || row.status == "Vencido"){
-                                                return `<button data-id='${data}' type='button' class='primary-btn small fix-gr-bg view_homework_course'>Ver</button>`
+                                                return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
                                             }
                                             if(row.status == "Pendiente"){
                                                 if(data){
-                                                    return `<button data-id='${data}' type='button' class='primary-btn small fix-gr-bg view_homework_course'>Ver</button>`    
+                                                    return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
                                                 }else{
-                                                    return `<button data-id='${data}' data-homework='${row.id_homework}' type='button' class='primary-btn small fix-gr-bg go_up_homework_course'>Subir</button>`
+                                                    return `<button data-id='${data}' data-homework='${row.id_homework}' type='button' class='primary-btn small goova-bt go_up_homework_course'>Subir</button>`
                                                 }
                                             }
                                         @else
-                                            return `<button data-id='${data}' type='button' class='primary-btn small fix-gr-bg view_homework_course'>Ver</button>`
+                                            return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
                                         @endif
                                     }
                                 },

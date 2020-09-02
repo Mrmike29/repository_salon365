@@ -9,7 +9,7 @@
             @include('includes.sidebar')
             <div id="main-content">
                 @include('includes.header')
-                
+
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
@@ -35,8 +35,8 @@
                                             @foreach ($courses as $key => $val)
                                                 <tr>
                                                     <td>{{$val->name}}</td>
-                                                    <td><button data-id="{{$val->id_list}}" type="button" class="primary-btn small fix-gr-bg view_students">Visualizar Estudiantes</button></td>
-                                                    <td><button data-id="{{$val->id_course}}" type="button" class="primary-btn small fix-gr-bg view_teachers">Visualizar Profesores</button></td>
+                                                    <td><button data-id="{{$val->id_list}}" type="button" class="primary-btn small goova-bt view_students">Visualizar Estudiantes</button></td>
+                                                    <td><button data-id="{{$val->id_course}}" type="button" class="primary-btn small goova-bt view_teachers">Visualizar Profesores</button></td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
@@ -73,8 +73,8 @@
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
                             <form method="POST" action="/inhabilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="id" value="" id="student_inhabilitar">  
-                                <button class="primary-btn fix-gr-bg" type="submit">Aceptar</button>
+                                <input type="hidden" name="id" value="" id="student_inhabilitar">
+                                <button class="primary-btn goova-bt" type="submit">Aceptar</button>
                             </form>
                         </div>
                     </div>
@@ -96,8 +96,8 @@
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
                             <form method="POST" action="/habilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="id" value="" id="student_habilitar">  
-                                <button class="primary-btn fix-gr-bg" type="submit">Aceptar</button>
+                                <input type="hidden" name="id" value="" id="student_habilitar">
+                                <button class="primary-btn goova-bt" type="submit">Aceptar</button>
                             </form>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        
+
                     </div>
                 </div>
             </div>
@@ -125,7 +125,7 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        
+
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@
             @include('includes.sidebar')
             <div id="main-content">
                 @include('includes.header')
-                
+
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-12 text-right">
-                                                <button type="button" class="primary-btn small fix-gr-bg" id="filter_search" data-toggle="tooltip" title="">
+                                                <button type="button" class="primary-btn small goova-bt" id="filter_search" data-toggle="tooltip" title="">
                                                     <span class="ti-search"></span>
                                                     Buscar
                                                 </button>
@@ -104,7 +104,7 @@
                                                         <td>{{$val->asignatura}}</td>
                                                         <td>{{$val->status}}</td>
                                                         <td>
-                                                            
+
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
                                                                     Seleccionar
@@ -151,8 +151,8 @@
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
                             <form method="POST" action="/cambiar-estado/sala" accept-charset="UTF-8" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="id" value="" id="sala_inhabilitar">  
-                                <button class="primary-btn fix-gr-bg" type="submit">Aceptar</button>
+                                <input type="hidden" name="id" value="" id="sala_inhabilitar">
+                                <button class="primary-btn goova-bt" type="submit">Aceptar</button>
                             </form>
                         </div>
                     </div>
@@ -174,15 +174,15 @@
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
                             <form method="POST" action="/cambiar-estado/sala" accept-charset="UTF-8" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="id" value="" id="sala_habilitar">  
-                                <button class="primary-btn fix-gr-bg" type="submit">Aceptar</button>
+                                <input type="hidden" name="id" value="" id="sala_habilitar">
+                                <button class="primary-btn goova-bt" type="submit">Aceptar</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         @include('includes.footer')
         <script>
 

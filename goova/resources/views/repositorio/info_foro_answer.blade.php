@@ -43,7 +43,7 @@
                                         </div>
                                         <div class="row mt-40">
                                             <div class="col-lg-12 text-center">
-                                                <button type="submit" class="primary-btn fix-gr-bg" id="submit-all" data-toggle="tooltip" title="">
+                                                <button type="submit" class="primary-btn goova-bt" id="submit-all" data-toggle="tooltip" title="">
                                                     <span class="ti-check"></span>
                                                     Guardar
                                                 </button>

@@ -203,3 +203,35 @@
         </div>
     </div>
 </nav>
+
+<div class="sidebar-colors">
+    <div class="toggle"></div>
+    <div class="scroll">
+        <div class="templates-header">
+            <h2>Temas</h2>
+        </div>
+        <table>
+            <tbody>
+                <tr>
+                    <td><a class="template template-orange" onclick="changeColor('orange')"></a></td>
+                    <td><a class="template template-blue" onclick="changeColor('blue')"></a></td>
+                </tr>
+                <tr>
+                    <td><a class="template template-purple" onclick="changeColor('purple')"></a></td>
+                    <td><a class="template template-red" onclick="changeColor('red')"></a></td>
+                </tr>
+                <tr>
+                    <td><a class="template template-green" onclick="changeColor('green')"></a></td>
+                    <td><a class="template template-cyan" onclick="changeColor('cyan')"></a></td>
+                </tr>
+                <tr>
+                    <td><a class="template template-columbia" onclick="changeColor('columbia')"></a></td>
+                    <td><a class="template template-grey" onclick="changeColor('grey')"></a></td>
+                </tr>
+                <tr>
+                    <td><a class="template template-mixed" onclick="changeColor('mixed')"></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

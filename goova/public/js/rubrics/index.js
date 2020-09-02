@@ -79,7 +79,7 @@ const
                             item.entity +
                             '</td>' +
                             '<td>' +
-                            '<a href="#" class="primary-btn small fix-gr-bg" data-toggle="tooltip" onclick="openModalEditRubric(' + item.id + ')" title="Editar Rúbrica">' +
+                            '<a href="#" class="primary-btn small goova-bt" data-toggle="tooltip" onclick="openModalEditRubric(' + item.id + ')" title="Editar Rúbrica">' +
                             '<span class="ti-pencil-alt"></span>' +
                             '</a>' +
                             '</td>' +
@@ -159,7 +159,7 @@ function openModalCreateRubric() {
         '</div>' +
         '<div class="col-2">' +
         '<div class="col-lg-12 text-right">' +
-        '<a href="#" class="primary-btn small fix-gr-bg" style="padding: 0 10px" data-toggle="tooltip" onclick="addOptionRubric(`create`)" title="Nueva Regla">' +
+        '<a href="#" class="primary-btn small goova-bt" style="padding: 0 10px" data-toggle="tooltip" onclick="addOptionRubric(`create`)" title="Nueva Regla">' +
         '<span class="ti-plus"></span>' +
         '</a>' +
         '</div>' +
@@ -201,7 +201,7 @@ function openModalCreateRubric() {
         '<span class="modal_input_validation red_alert"></span>' +
         '</div>' +
         '<div class="col-2">' +
-        '<a href="#" class="primary-btn small fix-gr-bg" style="padding: 0 10px" data-toggle="tooltip" onclick="distributeValue(`create`)" title="Distribuir">' +
+        '<a href="#" class="primary-btn small goova-bt" style="padding: 0 10px" data-toggle="tooltip" onclick="distributeValue(`create`)" title="Distribuir">' +
         '<span class="ti-view-list"></span>' +
         '</a>' +
         '</div>' +
@@ -213,7 +213,7 @@ function openModalCreateRubric() {
             '<div class="col-lg-12 text-center">' +
             '<div class="mt-40 d-flex justify-content-between">' +
             '<button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>' +
-            '<a href="#" class="primary-btn small fix-gr-bg" data-toggle="tooltip" onclick="saveRubric()" title="Guardar">' +
+            '<a href="#" class="primary-btn small goova-bt" data-toggle="tooltip" onclick="saveRubric()" title="Guardar">' +
             '<span class="ti-save"></span>' +
             '</a>' +
             '</div>' +
@@ -482,7 +482,7 @@ function openModalEditRubric(id){
             '</div>' +
             '<div class="col-2">' +
             '<div class="col-lg-12 text-right">' +
-            '<a href="#" class="primary-btn small fix-gr-bg" style="padding: 0 10px" data-toggle="tooltip" onclick="addOptionRubric(`edit`)" title="Nueva Regla">' +
+            '<a href="#" class="primary-btn small goova-bt" style="padding: 0 10px" data-toggle="tooltip" onclick="addOptionRubric(`edit`)" title="Nueva Regla">' +
             '<span class="ti-plus"></span>' +
             '</a>' +
             '</div>' +
@@ -502,7 +502,7 @@ function openModalEditRubric(id){
             '<span class="modal_input_validation red_alert"></span>' +
             '</div>' +
             '<div class="col-2">' +
-            '<a href="#" class="primary-btn small fix-gr-bg" style="padding: 0 10px" data-toggle="tooltip" onclick="distributeValue(`edit`)" title="Distribuir">' +
+            '<a href="#" class="primary-btn small goova-bt" style="padding: 0 10px" data-toggle="tooltip" onclick="distributeValue(`edit`)" title="Distribuir">' +
             '<span class="ti-view-list"></span>' +
             '</a>' +
             '</div>' +
@@ -514,7 +514,7 @@ function openModalEditRubric(id){
                 '<div class="col-lg-12 text-center">' +
                 '<div class="mt-40 d-flex justify-content-between">' +
                 '<button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancel</button>' +
-                '<a href="#" class="primary-btn small fix-gr-bg" data-toggle="tooltip" onclick="saveEditedRubric(' + rubric.id + ')" title="Guardar">' +
+                '<a href="#" class="primary-btn small goova-bt" data-toggle="tooltip" onclick="saveEditedRubric(' + rubric.id + ')" title="Guardar">' +
                 '<span class="ti-save"></span>' +
                 '</a>' +
                 '</div>' +

@@ -38,7 +38,7 @@ table.dataTable thead th,
 table.dataTable thead td {
 	text-transform: uppercase;
 	font-size: 12px;
-	color: #415094;
+	color: var(--g-second);
 	font-weight: 600;
 	padding: 10px 18px 10px 0px;
 	border-bottom: 1px solid rgba(130, 139, 178, 0.3);
@@ -124,7 +124,7 @@ table.dataTable tbody tr.selected {
 table.dataTable tbody th,
 table.dataTable tbody td {
 	padding: 20px 10px 20px 0px;
-	color: #828bb2;
+	color: var(--g-fourth);
 }
 table.dataTable tbody td:focus {
 	outline: none;
@@ -374,7 +374,7 @@ table.dataTable td {
 	bottom: -1px;
 	height: 2px;
 	width: 0;
-	background: #7c32ff;
+	background: var(--g-third);
 	transition: all 0.4s ease;
 	-webkit-transition: all 0.4s ease;
 	-moz-transition: all 0.4s ease;
@@ -388,7 +388,7 @@ table.dataTable td {
 	font-weight: 600;
 	position: relative;
 	bottom: -3px;
-	color: #415094;
+	color: var(--g-second);
 }
 .dataTables_wrapper .dataTables_length {
 	float: left;
@@ -401,13 +401,13 @@ table.dataTable td {
 	border: 0;
 	background: transparent;
 	width: 92%;
-	color: #415094;
+	color: var(--g-second);
 	min-height: 36px;
 	padding-bottom: 11px;
 	font-size: 14px;
 }
 .dataTables_wrapper .dataTables_filter input::-webkit-input-placeholder {
-	color: #415094;
+	color: var(--g-fourth);
 	position: relative;
 	bottom: 0px;
 	left: 0px;
@@ -445,7 +445,7 @@ table.dataTable td {
 	text-decoration: none !important;
 	cursor: pointer;
 	*cursor: hand;
-	color: #828bb2 !important;
+	color: var(--g-fourth) !important;
 	border: 0px;
 	border-radius: 5px;
 	background: #ffffff;
@@ -454,19 +454,19 @@ table.dataTable td {
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
 	color: #ffffff !important;
 	border: 0px;
-	background-color: #7c32ff;
-	background: -webkit-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: -moz-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: -o-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	box-shadow: 0px 10px 20px rgba(108, 39, 255, 0.3);
+	background-color: var(--g-third);
+	background: -webkit-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: -moz-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: -o-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	box-shadow: 0px 10px 20px var(--g-third);
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
 	cursor: not-allowed;
 	box-shadow: none;
-	color: #828bb2 !important;
+	color: var(--g-fourth) !important;
 	border: 0px;
 	border-radius: 5px;
 	background: #ffffff;
@@ -474,22 +474,22 @@ table.dataTable td {
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
 	color: #ffffff !important;
 	border: 0px;
-	background-color: #7c32ff;
-	background: -webkit-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: -moz-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: -o-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	box-shadow: 0px 10px 20px rgba(108, 39, 255, 0.3);
+	background-color: var(--g-third);
+	background: -webkit-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: -moz-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: -o-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	box-shadow: 0px 10px 20px var(--g-third);
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button:active {
 	color: #ffffff !important;
 	border: 0px;
-	background-color: #7c32ff;
-	background: -webkit-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: -moz-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: -o-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	box-shadow: 0px 10px 20px rgba(108, 39, 255, 0.3);
+	background-color: var(--g-third);
+	background: -webkit-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: -moz-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: -o-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	box-shadow: 0px 10px 20px var(--g-third);
 }
 .dataTables_wrapper .dataTables_paginate .ellipsis {
 	padding: 0 1em;
@@ -556,7 +556,7 @@ table.dataTable td {
 .dataTables_wrapper .dataTables_info,
 .dataTables_wrapper .dataTables_processing,
 .dataTables_wrapper .dataTables_paginate {
-	color: #415094;
+	color: var(--g-second);
 }
 .dataTables_wrapper .dataTables_scroll {
 	clear: both;

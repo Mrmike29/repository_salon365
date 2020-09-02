@@ -406,11 +406,11 @@
 .datepicker table tr td span.active:hover[disabled],
 .datepicker table tr td span.active.disabled[disabled],
 .datepicker table tr td span.active.disabled:hover[disabled] {
-	background: -webkit-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-    background: -moz-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-    background: -o-linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	background: linear-gradient(90deg, #7c32ff 0%, #c738d8 100%);
-	box-shadow: 0px 10px 20px rgba(108, 39, 255, 0.3);
+	background: -webkit-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+    background: -moz-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+    background: -o-linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	background: linear-gradient(90deg, var(--g-third) 0%, var(--g-first) 100%);
+	box-shadow: 0px 10px 20px var(--g-third);
 	border-radius: 20px;
 }
 .datepicker table tr td span.active:active,
