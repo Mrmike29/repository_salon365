@@ -356,6 +356,7 @@
                 })
             })
             $(document).on('click','#submit-all',function(){
+                
                 if(table){
                     table.destroy();
                 }

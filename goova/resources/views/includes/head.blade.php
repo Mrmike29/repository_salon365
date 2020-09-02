@@ -134,6 +134,10 @@
         .dropzone .dz-message {
             margin: 3em 0 !important;
         }
+        .input-effect span.info {
+            font-style: oblique;
+            font-size: 11px;
+        }
     </style>
 
     <script type="text/javascript">

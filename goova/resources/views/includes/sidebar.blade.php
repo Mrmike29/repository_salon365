@@ -20,7 +20,7 @@
    </div>
    <ul class="list-unstyled components">
       <li>
-         <a href="/" id="admin-dashboard">
+         <a href="/home" id="admin-dashboard">
             <span class="flaticon-speedometer"></span>
             Inicio
          </a>
@@ -52,20 +52,22 @@
             </li>
          </ul>
       </li>
-      <li>
-         <a href="#subMenuCursos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-            <span class="flaticon-analytics"></span>
-            Cursos
-         </a>
-         <ul class="collapse list-unstyled" id="subMenuCursos">
-            <li>
-               <a href="/cursos">Ver</a>
-            </li>
-            <li>
-               <a href="/crear_cursos">Crear</a>
-            </li>
-         </ul>
-      </li>
+      @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2)
+         <li>
+            <a href="#subMenuCursos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+               <span class="flaticon-analytics"></span>
+               Cursos
+            </a>
+            <ul class="collapse list-unstyled" id="subMenuCursos">
+               <li>
+                  <a href="/cursos">Ver</a>
+               </li>
+               <li>
+                  <a href="/crear_cursos">Crear</a>
+               </li>
+            </ul>
+         </li>
+      @endif
       <li>
          <a href="#subMenuRepositorio" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <span class="flaticon-analytics"></span>
@@ -75,15 +77,19 @@
             <li>
                <a href="/tareas">Ver tareas</a>
             </li>
-            <li>
-               <a href="/agregar_tareas">Crear tarea</a>
-            </li>
+            @if(Auth::user()->id_rol == 4)
+               <li>
+                  <a href="/agregar_tareas">Crear tarea</a>
+               </li>
+            @endif
             <li>
                <a href="/foros">Ver foros</a>
             </li>
-            <li>
-               <a href="/agregar_foro">Crear foros</a>
-            </li>
+            @if(Auth::user()->id_rol == 4)
+               <li>
+                  <a href="/agregar_foro">Crear foros</a>
+               </li>
+            @endif
          </ul>
       </li>
       <li>
@@ -125,19 +131,21 @@
             </li>
          </ul>
       </li>
-      <li>
-         <a href="#subMenuUsuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-            <span class="flaticon-analytics"></span>
-            Usuarios
-         </a>
-         <ul class="collapse list-unstyled" id="subMenuUsuarios">
-            <li>
-               <a href="/usuarios">Ver</a>
-            </li>
-            <li>
-               <a href="/crear_usuarios">Crear</a>
-            </li>
-         </ul>
-      </li>
+      @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2)
+         <li>
+            <a href="#subMenuUsuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+               <span class="flaticon-analytics"></span>
+               Usuarios
+            </a>
+            <ul class="collapse list-unstyled" id="subMenuUsuarios">
+               <li>
+                  <a href="/usuarios">Ver</a>
+               </li>
+               <li>
+                  <a href="/crear_usuarios">Crear</a>
+               </li>
+            </ul>
+         </li>
+      @endif
    </ul>
 </nav>

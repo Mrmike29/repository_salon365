@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="main-title">
-                                    <h3 class="mb-0">Welcome - InfixEdu | Super admin</h3>
+                                    <h3 class="mb-0">Bienvenido - Goova | {{$rol->name}}</h3>
                                 </div>
                             </div>
                         </div>
@@ -29,11 +29,11 @@
                                     <div class="white-box single-summery">
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                                <h3>Student</h3>
-                                                <p class="mb-0">Total Students</p>
+                                                <h3>Estudientes</h3>
+                                                <p class="mb-0">Total Estudientes</p>
                                             </div>
                                             <h1 class="gradient-color2">
-                                                38
+                                                {{$roles['students']}}
                                             </h1>
                                         </div>
                                     </div>
@@ -44,11 +44,11 @@
                                     <div class="white-box single-summery">
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                                <h3>Teachers</h3>
-                                                <p class="mb-0">Total Teachers</p>
+                                                <h3>Profesores</h3>
+                                                <p class="mb-0">Total Profesores</p>
                                             </div>
                                             <h1 class="gradient-color2">
-                                                4
+                                                {{$roles['teacher']}}
                                             </h1>
                                         </div>
                                     </div>
@@ -59,11 +59,11 @@
                                     <div class="white-box single-summery">
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                                <h3>Parents</h3>
-                                                <p class="mb-0">Total Parents</p>
+                                                <h3>Padres</h3>
+                                                <p class="mb-0">Total Padres</p>
                                             </div>
                                             <h1 class="gradient-color2">
-                                                38
+                                                {{$roles['parents']}}
                                             </h1>
                                         </div>
                                     </div>
@@ -74,11 +74,11 @@
                                     <div class="white-box single-summery">
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                                <h3>Staffs</h3>
-                                                <p class="mb-0">Total Staffs</p>
+                                                <h3>Secretarias</h3>
+                                                <p class="mb-0">Total Secretarias</p>
                                             </div>
                                             <h1 class="gradient-color2">
-                                                6
+                                                {{$roles['secretary']}}
                                             </h1>
                                         </div>
                                     </div>

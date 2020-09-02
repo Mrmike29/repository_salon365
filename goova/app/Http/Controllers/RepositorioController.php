@@ -15,6 +15,7 @@ use App\Archives_homework_course;
 use App\Foro;
 use App\Content_foro;
 use App\Archives_content_foro;
+use DB;
 use Auth;
 use Mail;
 use DateTime;
@@ -104,6 +105,7 @@ class RepositorioController extends Controller
         }else{
             $id_user = $teacher;
         }
+        $hoy = date('Y-m-d 00:00:00');
         if(Auth::user()->id_rol == 5){
             $tareas = Homework::join('themes_time','themes_time.id','homework.id_theme_time')
                                 ->leftJoin('archives_homework','archives_homework.id','homework.id')
@@ -116,19 +118,25 @@ class RepositorioController extends Controller
                                 ->select('themes_time.name as name_theme','users.name as name_students','users.last_name as last_name_students','homework.id as id_homework','homework.limit_time','homework_course.id as id_homework_course')
                                 ->where('themes_time.id_subject',$subject)
                                 ->where('users_list_students.id_users',Auth::user()->id)
+                                ->where('homework.start_time','<=',$hoy)
                                 ->groupBy('homework.id')
                                 ->get();
             foreach ($tareas as $key => $val) {
                 $val->name_teacher = $val->name_students.' '.$val->last_name_students;
-                $val->limit_time = date('d/m/Y',strtotime($val->limit_time));
+                $val->limit_time = date('Y-m-d',strtotime($val->limit_time));
                 if($val->id_homework_course){
                     $val->status = "Entregado";
-                }elseif($val->limit_time < date('d/m/Y')){
+                }elseif(date('Y-m-d',strtotime($val->limit_time)) < date('Y-m-d')){
                     $val->status = "Vencido";
                 }else{
                     $val->status = "Pendiente";
                 }
                 $data[] = $val;
+                $val->id_homework = encrypt($val->id_homework);
+                if($val->id_homework_course){
+                    $val->id_homework_course = encrypt($val->id_homework_course);
+                }
+                $val->limit_time = date('d/m/Y',strtotime($val->limit_time));
             }
         }else{
             $tareas = Homework::join('teacher_course','teacher_course.id_course','homework.id_course')
@@ -157,6 +165,10 @@ class RepositorioController extends Controller
                     $val->status = "Pendiente";
                 }
                 $data[] = $val;
+                $val->id_homework = encrypt($val->id_homework);
+                if($val->id_homework_course){
+                    $val->id_homework_course = encrypt($val->id_homework_course);
+                }
             }
         }
         return json_encode($data);
@@ -164,6 +176,7 @@ class RepositorioController extends Controller
 
     public function search_homework($id)
     {
+        $id = decrypt($id);
         $tarea = Homework::find($id);
         $archivos = Archives_homework::where('id_homework',$id)->get();
 
@@ -172,6 +185,7 @@ class RepositorioController extends Controller
 
     public function search_homework_course($id)
     {
+        $id = decrypt($id);
         $tarea = Homework_course::find($id);
         $archivos = Archives_homework_course::where('id_homework_course',$id)->get();
 
@@ -283,21 +297,36 @@ class RepositorioController extends Controller
     public function index_foro()
     {
         $id_user = Auth::user()->id;
+        $hoy = date('Y-m-d 00:00:00');
         if(Auth::user()->id_rol == 5){
             $foros = Foro::join('teacher_course','teacher_course.id','foro.id_teacher_course')
+                            ->join('subjects','subjects.id','teacher_course.id_subjects')
                             ->join('course','course.id','teacher_course.id_course')
                             ->join('list_students','list_students.id','course.id_list_students')
                             ->join('users_list_students','users_list_students.id_list_students','list_students.id')
-                            ->select('foro.id','list_students.name as course','foro.description as name','foro.date_start','foro.date_end')
+                            ->join('users','users.id','teacher_course.id_users')
+                            ->select('foro.id','users.name as name_teacher','users.last_name as last_name_teacher','subjects.name as subject','list_students.name as course','foro.description as name','foro.date_start','foro.date_end')
                             ->where('users_list_students.id_users',$id_user)
+                            ->where('foro.date_start','<=',$hoy)
+                            ->groupBy('foro.id')
+                            ->get();
+        }elseif(Auth::user()->id_rol == 4){
+            $foros = Foro::join('teacher_course','teacher_course.id','foro.id_teacher_course')
+                            ->join('subjects','subjects.id','teacher_course.id_subjects')
+                            ->join('course','course.id','teacher_course.id_course')
+                            ->join('list_students','list_students.id','course.id_list_students')
+                            ->join('users','users.id','teacher_course.id_users')
+                            ->select('foro.id','users.name as name_teacher','users.last_name as last_name_teacher','subjects.name as subject','list_students.name as course','foro.description as name','foro.date_start','foro.date_end')
+                            ->where('teacher_course.id_users',$id_user)
                             ->groupBy('foro.id')
                             ->get();
         }else{
             $foros = Foro::join('teacher_course','teacher_course.id','foro.id_teacher_course')
+                            ->join('subjects','subjects.id','teacher_course.id_subjects')
                             ->join('course','course.id','teacher_course.id_course')
                             ->join('list_students','list_students.id','course.id_list_students')
-                            ->select('foro.id','list_students.name as course','foro.description as name','foro.date_start','foro.date_end')
-                            ->where('teacher_course.id_users',$id_user)
+                            ->join('users','users.id','teacher_course.id_users')
+                            ->select('foro.id','users.name as name_teacher','users.last_name as last_name_teacher','subjects.name as subject','list_students.name as course','foro.description as name','foro.date_start','foro.date_end')
                             ->groupBy('foro.id')
                             ->get();
         }
@@ -307,6 +336,8 @@ class RepositorioController extends Controller
 
     public function info_foro($id)
     {
+        $id = decrypt($id);
+        $foro = Foro::find($id);
         $contenido = Content_foro::join('users','users.id','content_foro.id_user')
                                 ->join('rol','rol.id','users.id_rol')
                                 ->leftJoin('users as answer','answer.id','content_foro.answer_to')
@@ -316,11 +347,12 @@ class RepositorioController extends Controller
         $archivos = Archives_content_foro::get();
 
 
-        return view('repositorio.info_foro',array('contenido'=>$contenido, 'archivos'=>$archivos));
+        return view('repositorio.info_foro',array('contenido'=>$contenido, 'archivos'=>$archivos, 'foro'=>$foro));
     }
 
     public function info_foro_answer($id)
     {
+        $id = decrypt($id);
         $contenido = Content_foro::find($id);
 
         return view('repositorio.info_foro_answer', array('contenido'=>$contenido));
@@ -349,7 +381,7 @@ class RepositorioController extends Controller
             }
         }
 
-        return redirect('/info_foro/'.$request->id_foro);
+        return redirect('/info_foro/'.encrypt($request->id_foro));
     }
 
     public function create_foro()
@@ -385,7 +417,14 @@ class RepositorioController extends Controller
         $remove = '<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>';
 
         $id_user = Auth::user()->id;
-        $foro = new Foro($request->except('descriptions','document'));
+
+        $id_teacher_course = Teacher_course::where('id_users',$id_user)
+                                            ->where('id_course',$request->id_course)
+                                            ->where('id_subjects',$request->id_subject)
+                                            ->first();
+
+        $foro = new Foro($request->except('id_course','id_subject','descriptions','document'));
+        $foro->id_teacher_course = $id_teacher_course->id;
         $foro->save();
 
         if($request->has('descriptions')){

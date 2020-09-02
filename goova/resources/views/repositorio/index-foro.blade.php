@@ -25,7 +25,13 @@
                                         <thead>
                                             <tr>
                                                 <th>Nombre</th>
-                                                <th>Grado</th>
+                                                <th>Materia</th>
+                                                @if(Auth::user()->id_rol !== 4)
+                                                    <th>Profesor</th>
+                                                @endif
+                                                @if(Auth::user()->id_rol !== 5)
+                                                    <th>Grado</th>
+                                                @endif
                                                 <th>Fecha Inicio</th>
                                                 <th>Fecha Fin</th>
                                                 <th>Acciones</th>
@@ -35,7 +41,13 @@
                                             @foreach($foros as $key => $val)
                                                 <tr>
                                                     <td>{{$val->name}}</td>
-                                                    <td>{{$val->course}}</td>
+                                                    <td>{{$val->subject}}</td>
+                                                    @if(Auth::user()->id_rol !== 4)
+                                                        <td>{{$val->name_teacher}}{{$val->last_name_teacher}}</td>
+                                                    @endif
+                                                    @if(Auth::user()->id_rol !== 5)
+                                                        <td>{{$val->course}}</td>
+                                                    @endif
                                                     <td>{{date('d/m/Y', strtotime($val->date_start))}}</td>
                                                     <td>{{date('d/m/Y', strtotime($val->date_end))}}</td>
                                                     <td>
@@ -44,7 +56,7 @@
                                                                 Seleccionar
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="/info_foro/{{$val->id}}">Ingresar</a>
+                                                                <a class="dropdown-item" href="/info_foro/{{encrypt($val->id)}}">Ingresar</a>
                                                             </div>
                                                         </div>
                                                     </td>

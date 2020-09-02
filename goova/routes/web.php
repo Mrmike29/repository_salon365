@@ -20,9 +20,10 @@ Route::get('/', function () { return view('front/index'); });
 Route::get('/get-entities', 'FrontController@getEntities');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', function () {
-        return view('welcome');
-    });
+    // Route::get('/home', function () {
+    //     return view('welcome');
+    // });
+    Route::get('/home','HomeController@home');
 
     Route::get('/tareas','RepositorioController@index_homework');
     Route::get('/temas_materias/{id}/{teacher}','RepositorioController@themes_subjects');

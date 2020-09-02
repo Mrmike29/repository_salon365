@@ -29,6 +29,10 @@
                                             <div class="row mb-30">
                                                 <div class="form-group col-lg-12">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
+                                                        <div style="float: right">
+                                                            <span class="info">Cantidad maxima de archivos: 9</span><br>
+                                                            <span class="info">Tamaño maximo de archivos: 5MB</span>
+                                                        </div>
                                                         <div class="dropzone dropzone-previews" id="my-awesome-dropzone"></div><br>
                                                     </div>
                                                 </div>
@@ -68,6 +72,8 @@
                     addRemoveLinks: true,
                     dictRemoveFile: "Eliminar archivo",
                     // maxfilesexceeded: 5024,
+                    maxFiles: 9,
+                    dictMaxFilesExceeded: "La cantidad maxima de archivos es de 9",
                     maxFilesize: 5,
                     dictFileTooBig: "El tamaño maximo de archivos es de 5MB.",
                     // autoProcessQueue: false,

@@ -4,14 +4,19 @@
         @include('includes.head')
         <style>
             .admin-visitor-area {
-                position: absolute;
-                width: 78%;
-                height: 80%;
+                width: 100%;
+                height: 91%;
                 overflow-y: scroll;
                 padding: 0px 5px;
             }
             .icofont {
                 font-size: 17px;
+            }
+            html, body, .main-wrapper, #main-content {
+                height: 100%;
+            }
+            .admin .navbar {
+                height: 8%;
             }
         </style>
     </head>
@@ -34,7 +39,11 @@
                             <div class="row m-0 @if(Auth::user()->id == $val->id){{'d-flex justify-content-end'}}@endif">
                                 <div class="p-0 col-md-7 col-md-offset-4">
                                     <div class="white-box mt-10" style="padding: 20px 20px;">
-                                        <h5 style="text-transform: uppercase;"><b>{{$val->name}} {{$val->last_name}}</b> ({{$val->rol}}) a <b>{{$val->answer_name}} {{$val->answer_last_name}}</b></h5>
+                                        @if($key == 0)
+                                            <h5 style="text-transform: uppercase;"><b>{{$val->name}} {{$val->last_name}}</b> ({{$val->rol}})</h5>
+                                        @else
+                                            <h5 style="text-transform: uppercase;"><b>{{$val->name}} {{$val->last_name}}</b> ({{$val->rol}}) a <b>{{$val->answer_name}} {{$val->answer_last_name}}</b></h5>
+                                        @endif
                                         <?= $val->content ?>
                                         @if(!$archivos->isEmpty())
                                             <span class="text-primary">Archivos adjuntos</span>
@@ -65,9 +74,13 @@
                                                 @endif
                                             @endforeach
                                         @endif
-                                        <div class="reply" style="display: flex; justify-content: flex-end;">
-                                            <a href="/info_foro_responder/{{$val->id_content_foro}}" style="text-decoration: underline;">Responder</a>
-                                        </div>
+                                        @if(Auth::user()->id_rol == 4 || Auth::user()->id_rol == 5)
+                                            @if($foro->date_end >= date('Y-m-d 00:00:00'))
+                                                <div class="reply" style="display: flex; justify-content: flex-end;">
+                                                    <a href="/info_foro_responder/{{encrypt($val->id_content_foro)}}" style="text-decoration: underline;">Responder</a>
+                                                </div>
+                                            @endif
+                                        @endif
                                     </div>
                                 </div>
                             </div>
