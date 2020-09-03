@@ -140,6 +140,8 @@
         }
     </style>
 
+    <script type="text/javascript" src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
+
     <script type="text/javascript">
         const cl = [], root = document.documentElement, t = localStorage.getItem('template');
 
@@ -160,6 +162,18 @@
             root.style.setProperty('--g-second', cl[t][2]);
             root.style.setProperty('--g-third', cl[t][3]);
             root.style.setProperty('--g-fourth', cl[t][4]);
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: '/get-e-c'
+            }).done(function(data) {
+                const e = data.e.color;
+                localStorage.setItem('template', e);
+                root.style.setProperty('--g-first', cl[e][1]);
+                root.style.setProperty('--g-second', cl[e][2]);
+                root.style.setProperty('--g-third', cl[e][3]);
+                root.style.setProperty('--g-fourth', cl[e][4]);
+            });
         }
 
         function isNumberKey(evt) {

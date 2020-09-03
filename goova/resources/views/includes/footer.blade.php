@@ -13,7 +13,6 @@
 </footer> --}}
 
 <!-- ================End Footer Area ================= -->
-<script type="text/javascript" src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery-ui.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.data-tables.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/dataTables.buttons.min.js')}}"></script>

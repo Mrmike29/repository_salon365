@@ -18,6 +18,7 @@ Route::get('/', function () { return view('front/index'); });
 
 /** FRONT */
 Route::get('/get-entities', 'FrontController@getEntities');
+Route::get('/get-e-c', 'FrontController@getEC');
 
 Route::middleware(['auth'])->group(function () {
     // Route::get('/home', function () {

@@ -25,4 +25,9 @@ class FrontController
 
         return Response::json(['entities' => $entities], 200);
     }
+
+    function getEC(){
+        $e = DB::table('entity')->select('color')->first();
+        return Response::json(['e' => $e], 200);
+    }
 }

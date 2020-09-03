@@ -206,7 +206,7 @@
     </div>
 </nav>
 
-<div class="sidebar-colors">
+<!--<div class="sidebar-colors">
     <div class="toggle"></div>
     <div class="scroll">
         <div class="templates-header">
@@ -236,4 +236,4 @@
             </tbody>
         </table>
     </div>
-</div>
+</div>-->
