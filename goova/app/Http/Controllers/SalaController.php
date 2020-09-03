@@ -24,15 +24,14 @@ class SalaController extends Controller
         ->join('video_chat as vc','vc.id','room.id_video_chat');
        
         if ($tipo=="Estudiante") {
-            $teacher=DB::table('room')->where('room.id_list_students',$users_list_students)->get();
-            dd($teacher);
             $room=$room->where('room.id_list_students',$users_list_students);
         }
         $asignatura=DB::table('subjects')->get();
         $curso=DB::table('list_students')->get();
+        $teacher=DB::table('users')->where('id_rol',4)->get();
         $room=$room->select('u.name as nombre','u.last_name as apellido','ls.name as listado','s.name as asignatura','vc.code',DB::raw('IF(vc.status=1,"HABILITADO","INHABILITADO") as status'),'vc.start_date as fecha','room.id')
         ->get();
-        return view('sala.index',compact('room','tipo','asignatura','curso'));
+        return view('sala.index',compact('room','tipo','asignatura','curso','teacher'));
     }
 
     public function getCrearSala(){

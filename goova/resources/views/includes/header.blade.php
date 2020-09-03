@@ -1,3 +1,5 @@
+
+
 <nav class="navbar navbar-expand-lg up_navbar">
     <div class="container-fluid">
         <div class="row">
@@ -175,8 +177,8 @@
                                                         view profile
                                                     </a>
                                                 </li>
-                                                <li>
-                                                    <a href="change-password">
+                                                <li id="password_change">
+                                                    <a href="#change">
                                                         <span class="ti-key"></span>
                                                         Password
                                                     </a>

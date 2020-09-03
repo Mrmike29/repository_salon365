@@ -26,15 +26,20 @@
                                     <div class="white-box">
                                         <div class="">
                                             <div class="row">
-                                                <div class="form-group col-lg-4">
-                                                    <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <select class="niceSelect w-100 bb form-control" name="id_teacher" id="id_teacher">
-                                                            <option data-display="Seleccionar Profesor *" value="">Section *</option>
-                                                        </select>
-                                                        <span class="focus-border"></span>
+                                                @if(Auth::user()->id_rol != 4 )
+                                                    <div class="form-group col-lg-4">
+                                                        <div class="input-effect sm2_mb_20 md_mb_20">
+                                                            <select class="niceSelect w-100 bb form-control" name="id_teacher" id="id_teacher">
+                                                                <option data-display="Seleccionar Profesor *" value="">Section *</option>
+                                                                @foreach($teacher as $key => $value)
+                                                                    <option value="{{$value->id}}">{{$value->name}} {{$value->last_name}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            <span class="focus-border"></span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group @if(!empty($profesores) && Auth::user()->id_rol <> 5){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
+                                                @endif
+                                                <div class="form-group @if(Auth::user()->id_rol <> 5){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects">
                                                             <option data-display="Seleccionar Asignatura *" value="">Section *</option>
@@ -46,7 +51,7 @@
                                                     </div>
                                                 </div>
                                                 @if(Auth::user()->id_rol <> 5)
-                                                    <div class="form-group @if(!empty($profesores)){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
+                                                    <div class="form-group @if(Auth::user()->id_rol==5){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
                                                             <select class="niceSelect w-100 bb form-control" name="id_curso" id="id_theme_time">
                                                                 <option data-display="Seleccionar Curso *" value="">Section *</option>

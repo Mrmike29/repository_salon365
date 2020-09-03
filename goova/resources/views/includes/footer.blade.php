@@ -1,4 +1,6 @@
 
+
+
 <div class="modal fade admin-query" id="universal_modal"></div>
 {{-- <footer class="footer-area">
     <div class="container">
@@ -9,6 +11,7 @@
         </div>
     </div>
 </footer> --}}
+
 <!-- ================End Footer Area ================= -->
 <script type="text/javascript" src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery-ui.js')}}"></script>
@@ -114,8 +117,72 @@
             $("body").find(".custom_notification").removeClass("open_notification");
         }
     });
+    $(document).on('click','#password_change',function(){
+        var html=`<form action="/probandoAndo" method="post" enctype="multipart/form-data" id="change-password">
+                    <div class="form-group">
+                        <div class="row no-gutters input-right-icon">
+                            <div class="input-effect sm2_mb_20 md_mb_20">
+                                  <input type="password" name="old_password" class="read-only-input primary-input form-control" id="old_password">
+                                  <label for="name">Antigua Contraseña</label>
+                                  <span class="focus-border"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row no-gutters input-right-icon">
+                            <div class="input-effect sm2_mb_20 md_mb_20">
+                                  <input type="password" name="new_password" class="read-only-input primary-input form-control" id="password">
+                                  <label for="name">Contraseña Nueva</label>
+                                  <span class="focus-border"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row no-gutters input-right-icon">
+                            <div class="input-effect sm2_mb_20 md_mb_20">
+                                  <input type="password" name="confirm_password" class="read-only-input primary-input form-control" id="password_confirmation">
+                                  <label for="name">Confirmar Contraseña</label>
+                                  <span class="focus-border"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <center><button type="submit" class="btn btn-primary btn-sm">Cambiar Contraseña</button></center>
+                    <input type="hidden" value="{{ Session::token() }}" name="_token">
+                    <br>
+                    <div id="errors_change"></div>
+                 </form>`
+        universalModal('Cambio de contraseña',html)
+    })
+    $(document).on('submit','#change-password',function(){
+        $.ajax({
+            url:'/probandoAndo',
+            data:$('#change-password').serialize(),
+            type:'POST',
+            success:function(data){
+                if (data.errors != [] && !data.data) {
+                    console.log(data.errors)
+                    var html=`<div class="alert alert-danger">
+                            <p>Corrige los siguientes errores:</p>
+                            <ul>`
+                            $.each(data.errors,function(a,e){
+                                $.each(e,function(x,y){
+                                    html+=`<li>${y}</li>`
+                                })
+                            })
+                                
+                    html+=`</ul>
+                    </div>`
+                    $('#errors_change').html(html)
+                }else
+                if(data.data){
+                    $('.modal').modal('hide')
+                }
+                
+            }
 
-
+        })
+        return false;
+    })
 
 </script>
 <script src="{{asset('js/search.js')}}"></script>

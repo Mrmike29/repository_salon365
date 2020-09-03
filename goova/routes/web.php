@@ -25,6 +25,8 @@ Route::middleware(['auth'])->group(function () {
     // });
     Route::get('/home','HomeController@home');
 
+
+
     Route::get('/tareas','RepositorioController@index_homework');
     Route::get('/temas_materias/{id}/{teacher}','RepositorioController@themes_subjects');
     Route::get('/materias_profesores/{id}','RepositorioController@subjects_teacher');
@@ -48,6 +50,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/archivo', 'RepositorioController@archivos_store');
     Route::post('/upload_image', 'RepositorioController@upload_image');
     Route::post('/delete_archivo', 'RepositorioController@archivos_delete');
+
+
+    Route::post('/probandoAndo','UsuariosController@changePassword');
 
     Route::get('/usuarios','UsuariosController@index');
     Route::get('/crear_usuarios','UsuariosController@create');
