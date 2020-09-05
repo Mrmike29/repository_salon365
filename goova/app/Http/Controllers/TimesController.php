@@ -3,9 +3,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Response;
 
 class TimesController
 {
@@ -17,6 +19,7 @@ class TimesController
         $end = $request->get('dateEnd');
         $duration = $request->get('duration');
 
+        try {
         $time = DB::table('times')
             ->insert([
                 'id_entity' => $idEntity,
@@ -25,13 +28,29 @@ class TimesController
                 'time_end' => $end,
                 'duration' => $duration
             ]);
+        } catch (QueryException $e){
+            return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 500);
+        }
+
+        return Response::json(['message' => 'Exito! Se creó el Ciclo/Periodo exitosamente!'], 200);
     }
 
     function getTimesList (Request $request){
+        $nxt = $request->get('nxt');
+        $prev = $request->get('prev');
+        $search = $request->get('search');
         $idEntity = Auth::user()->id_info_entity;
 
-        $times = DB::table('times')->where('id_entity', $idEntity)->select('*')->get();
+        $times = DB::table('times');
+        $timesCounter = DB::table('times');
+        if ($search !== '' && $search !== null) {
+            $times = $times->where('times.name', 'LIKE', '%' . $search . '%');
+            $timesCounter = $timesCounter->where('times.name', 'LIKE', '%' . $search . '%');
+        }
 
-        return [ 'times' => $times ];
+        $times = $times->select('*')->skip($prev)->take(20)->get();
+        $timesCounter = $timesCounter->count();
+
+        return [ 'times' => $times, 'counter' => $timesCounter ];
     }
 }

@@ -157,24 +157,27 @@
         cl['pink'] = {1: '#FF00FF', 2: '#BF00BF', 3: '#800080', 4: '#727373'}
         cl['yellow'] = {1: '#FFFF00', 2: '#E6E600', 3: '#bfbf00', 4: '#727373'}
 
-        if(t !== null){
-            root.style.setProperty('--g-first', cl[t][1]);
-            root.style.setProperty('--g-second', cl[t][2]);
-            root.style.setProperty('--g-third', cl[t][3]);
-            root.style.setProperty('--g-fourth', cl[t][4]);
-        } else {
-            $.ajax({
-                type: 'GET',
-                url: '/get-e-c'
-            }).done(function(data) {
-                const e = data.e.color;
-                localStorage.setItem('template', e);
+        $.ajax({
+            type: 'GET',
+            url: '/get-e-c'
+        }).done(function(data) {
+            const e = data.e.color;
+            if(t !== null) {
                 root.style.setProperty('--g-first', cl[e][1]);
                 root.style.setProperty('--g-second', cl[e][2]);
                 root.style.setProperty('--g-third', cl[e][3]);
                 root.style.setProperty('--g-fourth', cl[e][4]);
-            });
-        }
+            } else {
+                if(t === e) return false;
+
+                localStorage.setItem('template', e);
+
+                root.style.setProperty('--g-first', cl[e][1]);
+                root.style.setProperty('--g-second', cl[e][2]);
+                root.style.setProperty('--g-third', cl[e][3]);
+                root.style.setProperty('--g-fourth', cl[e][4]);
+            }
+        });
 
         function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : (event.keyCode);

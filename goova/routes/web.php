@@ -71,8 +71,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/view_teachers_course/{id}','CursosController@view_teachers');
 
     /** RÚBRICAS */
-    Route::get('/gestionar-rubricas', function () { return view('rubricas'); });
-    Route::get('/rubricas', function () { return view('rubricas'); });
+    Route::get('/gestionar-rubricas', function () { return view('rubrics/rubricas'); });
+    Route::get('/rubricas', function () { return view('rubrics/rubricas'); });
     Route::get('/get-rubrics-list', 'RubricsController@getRubricsList');
     Route::get('/get-data-edit-rubric', 'RubricsController@getDataEditRubric');
     Route::get('/get-rule-rubric', 'RubricsController@getRuleRubric');
@@ -83,7 +83,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     /** CICLO O PERIODO */
-    Route::get('/ciclo-o-periodo', function () { return view('ciclo_o_periodo'); });
+    Route::get('/ciclo-o-periodo', function () { return view('times/ciclo_o_periodo'); });
     Route::get('/get-times-list', 'TimesController@getTimesList');
     Route::post('/post-save-time', 'TimesController@postSaveTime');
 
@@ -105,6 +105,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-calendar-events', 'ImportantDatesController@getCalendarEvents');
     Route::post('/post-save-event', 'ImportantDatesController@postSaveEvent');
     Route::put('/put-edit-event', 'ImportantDatesController@putEditEvent');
+
+    /** NOTAS */
+    Route::get('/notas', 'NotesController@getNotesView');
+    Route::get('/get-student', 'NotesController@getStudent');
+    Route::get('/get-notes-list', 'NotesController@getNotesList');
+    Route::get('/get-students-list', 'NotesController@getStudentsList');
+    Route::get('/get-course-filter', 'NotesController@getCourseFilter');
+    Route::get('/get-teacher-filter', 'NotesController@getTeacherFilter');
 
     /* VIDEOCHAT */
     Route::get('/listar/sala','SalaController@index');

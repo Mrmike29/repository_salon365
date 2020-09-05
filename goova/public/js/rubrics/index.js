@@ -9,8 +9,7 @@ let del = [],
     page = 1,
     next = $('#next'),
     previous = $('#previous'),
-    search = $('#search_rubric'),
-    searchButton = $('#search_button');
+    search = $('#search_rubric');
 
 const
     filterRubrics = (search, previous, next) => {
@@ -110,20 +109,13 @@ $(document).ready(function(){
 
     filterRubrics($.trim(search.val()), previous, next);
 
-    searchButton.click(function (){
+    search.keyup(function(e) {
+        if($(this).val().length > 0 && $(this).val().length < 4) return false;
         page = 1;
         next.attr('data-id', 20);
         previous.attr('data-id', 0);
-        filterRubrics(search.val(), previous, next);
-    });
+        filterRubrics($.trim(search.val()), previous, next);
 
-    search.keypress(function(e) {
-        if(e.which === 13) {
-            page = 1;
-            next.attr('data-id', 20);
-            previous.attr('data-id', 0);
-            filterRubrics($.trim(search.val()), previous, next);
-        }
     });
 
     previous.click(function(){

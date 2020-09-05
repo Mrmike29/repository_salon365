@@ -8,15 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ThemesController {
-    function getThemesView() { return view('temas'); }
+    function getThemesView() { return view('themes/temas'); }
 
     function getSubjectFilter() { $subjects = DB::table('subjects')->get(); return [ 'subjects' => $subjects ]; }
 
-    function getTimesFilter() {
-        $idEntity = Auth::user()->id_info_entity;
-        $times = DB::table('times')->where('id_entity', $idEntity)->get();
-        return [ 'times' => $times ];
-    }
+    function getTimesFilter() { $times = DB::table('times')->get(); return [ 'times' => $times ]; }
 
     function getDataCreateTheme() {
         $idEntity = Auth::user()->id_info_entity;
@@ -55,29 +51,46 @@ class ThemesController {
     }
 
     function getThemesList (Request $request) {
-        $idEntity = Auth::user()->id_info_entity;
+        $nxt = $request->get('nxt');
+        $prev = $request->get('prev');
+        $time = $request->get('time');
         $search = $request->get('search');
         $subject = $request->get('subject');
-        $time = $request->get('time');
-        //Auth::user()->id_rol
 
         $themes = DB::table('themes_time')
             ->join('times AS T', 'T.id', '=', 'id_time')
             ->join('entity AS E', 'E.id', '=', 'T.id_entity')
             ->join('course AS C', 'C.id', '=', 'id_course')
             ->join('list_students AS LS', 'LS.id', '=', 'C.id_list_students')
-            ->join('subjects AS S', 'S.id', '=', 'id_subject')
-            ->where('T.id_entity', $idEntity);
+            ->join('subjects AS S', 'S.id', '=', 'id_subject');
+
+        $themesCounter = DB::table('themes_time')
+            ->join('times AS T', 'T.id', '=', 'id_time')
+            ->join('entity AS E', 'E.id', '=', 'T.id_entity')
+            ->join('course AS C', 'C.id', '=', 'id_course')
+            ->join('list_students AS LS', 'LS.id', '=', 'C.id_list_students')
+            ->join('subjects AS S', 'S.id', '=', 'id_subject');
+
+
         if ($search !== '' && $search !== null) {
             $themes = $themes->where('themes_time.name', 'LIKE', '%' . $search . '%');
-            if(Auth::user()->id_rol == 1){ $themes = $themes->orWhere('entity', 'LIKE', '%' . $search . '%'); }
+            $themesCounter = $themesCounter->where('themes_time.name', 'LIKE', '%' . $search . '%');
         }
-        if ($subject !== '' && $subject !== null) { $themes = $themes->where('themes_time.id_subject', $subject); }
-        if ($time !== '' && $time !== null) { $themes = $themes->where('themes_time.id_time', $time); }
-        $themes = $themes->select('themes_time.*', 'E.name AS entity', 'T.name AS time', 'LS.name AS course', 'S.name AS subject')
-            ->get();
 
-        return [ 'themes' => $themes ];
+        if ($subject !== '' && $subject !== null) {
+            $themes = $themes->where('themes_time.id_subject', $subject);
+            $themesCounter = $themesCounter->where('themes_time.id_subject', $subject);
+        }
+
+        if ($time !== '' && $time !== null) {
+            $themes = $themes->where('themes_time.id_time', $time);
+            $themesCounter = $themesCounter->where('themes_time.id_time', $time);
+        }
+
+        $themes = $themes->select('themes_time.*', 'E.name AS entity', 'T.name AS time', 'LS.name AS course', 'S.name AS subject')->skip($prev)->take(20)->get();
+        $themesCounter = $themesCounter->count();
+
+        return [ 'themes' => $themes, 'counter' => $themesCounter ];
     }
 
     function getDataEditTheme(Request $request) {

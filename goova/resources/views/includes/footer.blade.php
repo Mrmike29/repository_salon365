@@ -55,9 +55,9 @@
 <script src="{{asset('js/goova-template.js')}}"></script>
 <script type="text/javascript">
 
-    function universalModal(title, body, footer = "") {
+    function universalModal(title, body, footer = "", extraClass = "") {
         let html =
-            '<div class="modal-dialog modal-dialog-centered">' +
+            '<div class="modal-dialog ' + extraClass + ' modal-dialog-centered">' +
                 '<div class="modal-content">' +
                     '<div class="modal-header">' +
                         '<h4 class="modal-title">' + title + '</h4>' +
@@ -168,7 +168,7 @@
                                     html+=`<li>${y}</li>`
                                 })
                             })
-                                
+
                     html+=`</ul>
                     </div>`
                     $('#errors_change').html(html)
@@ -176,7 +176,7 @@
                 if(data.data){
                     $('.modal').modal('hide')
                 }
-                
+
             }
 
         })

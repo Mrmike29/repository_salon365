@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Response;
-use phpDocumentor\Reflection\Type;
 
 class RubricsController
 {
@@ -44,15 +43,12 @@ class RubricsController
         $nxt = $request->get('nxt');
         $prev = $request->get('prev');
         $search = $request->get('search');
-        $idEntity = Auth::user()->id_info_entity;
 
         $rubrics = DB::table('rubrics')
-            ->join('entity AS E', 'E.id', '=', 'id_entity')
-            ->where('id_entity', $idEntity);
+            ->join('entity AS E', 'E.id', '=', 'id_entity');
 
         $rubricsCounter = DB::table('rubrics')
-            ->join('entity AS E', 'E.id', '=', 'id_entity')
-            ->where('id_entity', $idEntity);
+            ->join('entity AS E', 'E.id', '=', 'id_entity');
 
         if ($search !== '' && $search !== null) {
             $rubrics = $rubrics->where('rubrics.name', 'LIKE', '%' . $search . '%');

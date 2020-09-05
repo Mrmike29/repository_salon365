@@ -13,7 +13,7 @@ class ImportantDatesController
 
         $dates = DB::table('important_dates')->select('*')->get();
 
-        return view('fechas_importantes', ['dates' => $dates]);
+        return view('important-dates/fechas_importantes', ['dates' => $dates]);
     }
 
     function getPendingEvents(){

@@ -94,13 +94,10 @@
       </li>
       <li>
          <a href="#subMenuNotas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-            <span class=""></span>
+             <span class="flaticon-resume"></span>
             Notas y Reportes
          </a>
          <ul class="collapse list-unstyled" id="subMenuNotas">
-            <li>
-               <a href="/rubricas_mostrar">Rúbricas</a>
-            </li>
             <li>
                <a href="/notas">Notas Parciales</a>
             </li>
