@@ -26,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
     // });
     Route::get('/home','HomeController@home');
 
-
+    Route::get('/getBoletin','SalaController@getBoletin');
 
     Route::get('/tareas','RepositorioController@index_homework');
     Route::get('/temas_materias/{id}/{teacher}','RepositorioController@themes_subjects');
@@ -123,5 +123,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cambiar-estado/sala','SalaController@cambiarEstado');
     Route::get('/ingresar/sala/{id}','SalaController@ingresarSala');
     Route::get('/room_filter','SalaController@room_filter');
+    Route::post('/saveAssist','SalaController@saveAssist');
+
+
+    /* SECRETARIA */
+    Route::get('/getHorarios','SalaController@getHorario');
 
 });

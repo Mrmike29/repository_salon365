@@ -25,26 +25,39 @@
                                     <div class="white-box">
                                         <div class="">
                                             <div class="row">
-                                                @if(!empty($profesores))
+                                                @if(Auth::user()->id_rol != 4 || Auth::user()->id_rol == 3)
                                                     <div class="form-group col-lg-4">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
                                                             <select class="niceSelect w-100 bb form-control" name="id_teacher" id="id_teacher">
                                                                 <option data-display="Seleccionar Profesor *" value="">Section *</option>
-                                                                @foreach($profesores as $key => $val)
-                                                                    <option value="{{$val->id}}">{{$val->name}} {{$val->last_name}}</option>
+                                                                @foreach($teacher as $key => $value)
+                                                                    <option value="{{$value->id}}">{{$value->name}} {{$value->last_name}}</option>
                                                                 @endforeach
                                                             </select>
                                                             <span class="focus-border"></span>
                                                         </div>
                                                     </div>
                                                 @endif
-                                                <div class="form-group @if(!empty($profesores) && Auth::user()->id_rol <> 5){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
+                                                <!-- @if(Auth::user()->id_rol <> 5)
+                                                    <div class="form-group col-lg-4">
+                                                        <div class="input-effect sm2_mb_20 md_mb_20">
+                                                            <select class="niceSelect w-100 bb form-control" name="id_curso" id="id_theme_time">
+                                                                <option data-display="Seleccionar Curso *" value="">Section *</option>
+                                                                @foreach($curso as $key => $value)
+                                                                    <option value="{{$value->id}}">{{$value->name}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            <span class="focus-border"></span>
+                                                        </div>
+                                                    </div>
+                                                @endif -->
+                                                <div class="form-group col-lg-4">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects">
-                                                            <option data-display="Seleccionar Materia *" value="">Section *</option>
-                                                            @if(empty($profesores))
-                                                                @foreach($materias as $key => $val)
-                                                                    <option value="{{$val->id}}">{{$val->name}}</option>
+                                                            <option data-display="Seleccionar Asignatura *" value="">Section *</option>
+                                                            @if(Auth::user()->id_rol == 5 || Auth::user()->id_rol == 4)
+                                                                @foreach($asignatura as $key => $value)
+                                                                    <option value="{{$value->id}}">{{$value->name}}</option>
                                                                 @endforeach
                                                             @endif
                                                         </select>

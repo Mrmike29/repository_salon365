@@ -26,7 +26,7 @@
                                     <div class="white-box">
                                         <div class="">
                                             <div class="row">
-                                                @if(Auth::user()->id_rol != 4 )
+                                                @if(Auth::user()->id_rol != 4 || Auth::user()->id_rol == 3)
                                                     <div class="form-group col-lg-4">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
                                                             <select class="niceSelect w-100 bb form-control" name="id_teacher" id="id_teacher">
@@ -39,25 +39,37 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                <div class="form-group @if(Auth::user()->id_rol <> 5){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
-                                                    <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects">
-                                                            <option data-display="Seleccionar Asignatura *" value="">Section *</option>
-                                                            @foreach($asignatura as $key => $value)
-                                                                <option value="{{$value->id}}">{{$value->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <span class="focus-border"></span>
-                                                    </div>
-                                                </div>
-                                                @if(Auth::user()->id_rol <> 5)
-                                                    <div class="form-group @if(Auth::user()->id_rol==5){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
+                                                <!-- @if(Auth::user()->id_rol <> 5)
+                                                    <div class="form-group col-lg-4">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
                                                             <select class="niceSelect w-100 bb form-control" name="id_curso" id="id_theme_time">
                                                                 <option data-display="Seleccionar Curso *" value="">Section *</option>
                                                                 @foreach($curso as $key => $value)
                                                                     <option value="{{$value->id}}">{{$value->name}}</option>
                                                                 @endforeach
+                                                            </select>
+                                                            <span class="focus-border"></span>
+                                                        </div>
+                                                    </div>
+                                                @endif -->
+                                                <div class="form-group col-lg-4">
+                                                    <div class="input-effect sm2_mb_20 md_mb_20">
+                                                        <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects">
+                                                            <option data-display="Seleccionar Asignatura *" value="">Section *</option>
+                                                            @if(Auth::user()->id_rol == 5 || Auth::user()->id_rol == 4)
+                                                                @foreach($asignatura as $key => $value)
+                                                                    <option value="{{$value->id}}">{{$value->name}}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                        <span class="focus-border"></span>
+                                                    </div>
+                                                </div>
+                                                @if(Auth::user()->id_rol <> 5)
+                                                    <div class="form-group @if(!empty($profesores)){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
+                                                        <div class="input-effect sm2_mb_20 md_mb_20">
+                                                            <select class="niceSelect w-100 bb form-control" name="id_theme_time" id="id_theme_time">
+                                                                <option data-display="Seleccionar Tema *" value="">Section *</option>
                                                             </select>
                                                             <span class="focus-border"></span>
                                                         </div>
@@ -82,7 +94,7 @@
                 <section class="admin-visitor-area up_st_admin_visitor">
                     <div class="container-fluid p-0">
                         <div class="row m-0">
-                            <div class="p-0 col-md-11">
+                            <div class="p-0 col-md-12">
                                 <div class="white-box mt-10">
                                     <table id="table_users" class="school-table">
                                         <thead>
@@ -110,27 +122,7 @@
                                                         <td>{{$val->asignatura}}</td>
                                                         <td>{{$val->materia}}</td>
                                                         <td>{{$val->status}}</td>
-                                                        <td>
-
-                                                            <div class="dropdown">
-                                                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                                                                    Seleccionar
-                                                                </button>
-                                                                <div class="dropdown-menu dropdown-menu-right">
-                                                                    @if($val->status == "HABILITADO")
-                                                                        <a href="/ingresar/sala/{{encrypt($val->id)}}" target="_blank" class="dropdown-item">Ingresar</button>
-                                                                    @endif
-                                                                    @if($tipo=="Administrador" || $tipo=="Profesor")
-                                                                        <a href="/editar/sala/{{encrypt($val->id)}}" class="dropdown-item">Editar</button>
-                                                                        @if($val->status == "HABILITADO")
-                                                                            <a class="dropdown-item inhabilitar_sala" data-id="{{encrypt($val->id)}}" data-toggle="modal" data-target="#inhabilitarSalaModal" href="#">Inhabilitar</a>
-                                                                        @else
-                                                                            <a class="dropdown-item habilitar_sala" data-id="{{encrypt($val->id)}}" data-toggle="modal" data-target="#habilitarSalaModal" href="#">Habilitar</a>
-                                                                        @endif
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </td>
+                                                        <td><button data-id="{{$val->id_list_students}}" type="button" class="primary-btn small goova-bt view_students">Visualizar Estudiantes</button></td>
                                                     </tr>
                                                 @endif
                                             @endforeach
@@ -143,48 +135,14 @@
                 </section>
             </div>
         </div>
-        <div class="modal fade admin-query" id="inhabilitarSalaModal" >
+        <div class="modal fade admin-query" id="studentsModal" >
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">INHABILITAR SALA</h4>
+                        <h4 class="modal-title">ESTUDIENTES</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <div class="text-center">
-                            <h4>¿Estás seguro de inhabilitar esta sala?</h4>
-                        </div>
-                        <div class="mt-40 d-flex justify-content-between">
-                            <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
-                            <form method="POST" action="/cambiar-estado/sala" accept-charset="UTF-8" enctype="multipart/form-data">
-                                @csrf
-                                <input type="hidden" name="id" value="" id="sala_inhabilitar">
-                                <button class="primary-btn goova-bt" type="submit">Aceptar</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade admin-query" id="habilitarSalaModal" >
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">HABILITAR SALA</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <h4>¿Estás seguro de habilitar esta sala?</h4>
-                        </div>
-                        <div class="mt-40 d-flex justify-content-between">
-                            <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
-                            <form method="POST" action="/cambiar-estado/sala" accept-charset="UTF-8" enctype="multipart/form-data">
-                                @csrf
-                                <input type="hidden" name="id" value="" id="sala_habilitar">
-                                <button class="primary-btn goova-bt" type="submit">Aceptar</button>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -194,13 +152,22 @@
         <script>
 
             function search_filter(){
-                var teacher=$('select[name=id_teacher]').val()
-                var curso=$('select[name=id_curso]').val()
+                if(($('select[name=id_teacher]').length > 0)){
+                    var teacher=$('select[name=id_teacher]').val()
+                }else{
+                    var teacher=0
+                }
+                if(($('select[name=id_teacher]').length > 0)){
+                    var curso=$('select[name=id_curso]').val()
+                }else{
+                    var curso=0
+                }
                 var subjects=$('select[name=id_subjects]').val()
+                var tema=$('select[name=id_theme_time]').val()
                 $.ajax({
                     url:'/room_filter',
                     type:'GET',
-                    data:{id_teahcer:teacher,id_curso:curso,id_subjects:subjects},
+                    data:{id_teahcer:teacher,id_curso:curso,id_subjects:subjects,id_themes_time:tema},
                     beforeSend:function(){
                         $('tbody').html('<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">Cargando...</td></tr>')
                     },
@@ -302,10 +269,78 @@
                     }],
                     responsive: true,
                 });
+                setTimeout( function() {
+                    $('#table_users').parent().parent().parent().removeClass('col-md-11').addClass('col-md-12')
+                }, 80);
             }
 
             // $('tbody').html('<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">Cargando...</td></tr>')
-
+            $(document).on('change','select[name=id_teacher]',function(){
+                var id = $(this).val()
+                $.ajax({
+                    url: '/materias_profesores/'+id,
+                    type: 'get',
+                    success:function(dato){
+                        var html = '<option data-display="Seleccionar Materia *" value="">Section *</option>'
+                        $(dato).each(function(k,v){
+                            html += `<option value="${v.id}">${v.name}</option>`
+                        })
+                        $('select[name=id_subjects]').html(html)
+                        $('select[name=id_subjects]').niceSelect('update');
+                    }
+                })
+            })
+            // $(document).on('change','select[name=id_subjects]',function(){
+            //     var id = $(this).val()
+            //     $.ajax({
+            //         url: '/materias_tereas/'+id,
+            //         type: 'get',
+            //         success:function(dato){
+            //             var html = '<option data-display="Seleccionar Asignatura *" value="">Section *</option>'
+            //             $(dato).each(function(k,v){
+            //                 html += `<option value="${v.id}">${v.subjects} - ${v.teacher} ${v.last_name}</option>`
+            //             })
+            //             $('select[name=id_subject]').html(html)
+            //             $('select[name=id_subject]').niceSelect('update');
+            //         }
+            //     })
+            // })
+            $(document).on('change','select[name=id_subjects]',function(){
+                var id = $(this).val()
+                if(($('select[name=id_teacher]').length > 0)){
+                    var teacher = $('select[name=id_teacher]').val()
+                }else{
+                    var teacher = 0
+                }
+                $.ajax({
+                    url: '/temas_materias/'+id+'/'+teacher,
+                    type: 'get',
+                    success:function(dato){
+                        var html = '<option data-display="Seleccionar Tema *" value="">Section *</option>'
+                        $(dato).each(function(k,v){
+                            html += `<option value="${v.id}">${v.name} ${v.name_list}</option>`
+                        })
+                        $('select[name=id_theme_time]').html(html)
+                        $('select[name=id_theme_time]').niceSelect('update');
+                    }
+                })
+            })
+            // $(document).on('change','select[name=id_subjects]',function(){
+            //     var id = $(this).val()
+            //     var con = $('select[name=id_subjects]').val()
+            //     $.ajax({
+            //         url: '/temas_tereas/'+id+'/'+con,
+            //         type: 'get',
+            //         success:function(dato){
+            //             var html = '<option data-display="Seleccionar Tema *" value="">Section *</option>'
+            //             $(dato).each(function(k,v){
+            //                 html += `<option value="${v.id}">${v.name}</option>`
+            //             })
+            //             $('select[name=id_theme_time]').html(html)
+            //             $('select[name=id_theme_time]').niceSelect('update');
+            //         }
+            //     })
+            // })
 
             $('#filter_search').click(function(){
                 search_filter()
@@ -408,13 +443,38 @@
             setTimeout( function() {
                 $('#table_users').parent().parent().parent().removeClass('col-md-11').addClass('col-md-12')
             }, 80);
-            $('.inhabilitar_sala').click(function(){
+            $(document).on('click','.view_students',function(){
                 var id = $(this).data('id')
-                $('.modal#inhabilitarSalaModal form input[name=id]').val(id)
-            })
-            $('.habilitar_sala').click(function(){
-                var id = $(this).data('id')
-                $('.modal#habilitarSalaModal form input[name=id]').val(id)
+                $.ajax({
+                    url: '/view_students_course/'+id,
+                    type: 'get',
+                    success:function(dato){
+                        var html = `<table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Documento</th>
+                                                <th>Nombre</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>`
+                            if(dato != 0){
+                                $(dato).each(function(k,v){
+                                    html += `<tr>
+                                                <td>${v.document}</td>
+                                                <td>${v.name} ${v.last_name}</td>
+                                            </tr>`
+                                })
+                            }else{
+                                    html += `<tr>
+                                                <td colspan="2"><center>Ningún dato disponible</center></td>
+                                            </tr>`
+                            }
+                                html += `</tbody>
+                                    </table>`
+                        $('#studentsModal .modal-body').html(html)
+                        $('#studentsModal').modal('show')
+                    }
+                })
             })
         </script>
     </body>

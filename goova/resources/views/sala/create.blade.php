@@ -66,10 +66,18 @@
                                                 <div class="form-group col-lg-6">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_subject" id="classSelectStudent" required>
-                                                            <option data-display="Escoger asignatura *" value="">Select</option>
-                                                            @foreach($asignatura as $key => $val)
+                                                            <option data-display="Seleccionar asignatura *" value="">Select</option>
+                                                            <!-- @foreach($asignatura as $key => $val)
                                                                 <option value="{{$val->id}}">{{$val->name}}</option>
-                                                            @endforeach
+                                                            @endforeach -->
+                                                        </select>
+                                                        <span class="focus-border"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <div class="input-effect sm2_mb_20 md_mb_20" id="sectionStudentDiv">
+                                                        <select class="niceSelect w-100 bb form-control" name="id_theme_time" id="id_theme_time" id="sectionSelectStudent">
+                                                            <option data-display="Seleccionar Tema *" value="">Section *</option>
                                                         </select>
                                                         <span class="focus-border"></span>
                                                     </div>
@@ -110,6 +118,37 @@
             $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
             $('#date_create_event').datepicker({ format: 'yyyy-mm-dd', autoclose: false, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
             $("#datetime_create_event").datetimepicker({format: 'HH:mm' }).val("00:00");
+            $(document).on('change','select[name=id_list_students]',function(){
+                var id = $(this).val()
+                $.ajax({
+                    url: '/materias_tereas/'+id,
+                    type: 'get',
+                    success:function(dato){
+                        var html = '<option data-display="Seleccionar Asignatura *" value="">Section *</option>'
+                        $(dato).each(function(k,v){
+                            html += `<option value="${v.id}">${v.subjects} - ${v.teacher} ${v.last_name}</option>`
+                        })
+                        $('select[name=id_subject]').html(html)
+                        $('select[name=id_subject]').niceSelect('update');
+                    }
+                })
+            })
+            $(document).on('change','select[name=id_subject]',function(){
+                var id = $(this).val()
+                var con = $('select[name=id_list_students]').val()
+                $.ajax({
+                    url: '/temas_tereas/'+id+'/'+con,
+                    type: 'get',
+                    success:function(dato){
+                        var html = '<option data-display="Seleccionar Tema *" value="">Section *</option>'
+                        $(dato).each(function(k,v){
+                            html += `<option value="${v.id}">${v.name}</option>`
+                        })
+                        $('select[name=id_theme_time]').html(html)
+                        $('select[name=id_theme_time]').niceSelect('update');
+                    }
+                })
+            })
         </script>
     </body>
 </html>

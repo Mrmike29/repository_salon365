@@ -7,6 +7,7 @@
             <td>{{$val->listado}}</td>
             <td>{{$val->fecha}}</td>
             <td>{{$val->asignatura}}</td>
+            <td>{{$val->materia}}</td>
             <td>{{$val->status}}</td>
             <td>
                 
