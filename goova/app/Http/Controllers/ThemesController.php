@@ -34,10 +34,12 @@ class ThemesController {
     }
 
     function postSaveTheme(Request $request){
-        $subject = $request->get('subject');
-        $course = $request->get('course');
         $time = $request->get('time');
         $name = $request->get('name');
+        $exam = $request->get('exam');
+        $course = $request->get('course');
+        $subject = $request->get('subject');
+        $homework = $request->get('homework');
         $description = $request->get('description');
 
         $themes = DB::table('themes_time')
@@ -46,7 +48,9 @@ class ThemesController {
                 'id_course' => $course,
                 'id_time' => $time,
                 'name' => $name,
-                'description' => $description
+                'description' => $description,
+                'homework_percentage' => $homework,
+                'exam_percentage' => $exam
             ]);
     }
 
@@ -118,10 +122,12 @@ class ThemesController {
 
     function putEditTheme(Request $request) {
         $id = $request->get('id');
-        $subject = $request->get('subject');
-        $course = $request->get('course');
         $time = $request->get('time');
         $name = $request->get('name');
+        $exam = $request->get('exam');
+        $course = $request->get('course');
+        $subject = $request->get('subject');
+        $homework = $request->get('homework');
         $description = $request->get('description');
 
         $theme = DB::table('themes_time')
@@ -131,7 +137,9 @@ class ThemesController {
                 'id_course' => $course,
                 'id_time' => $time,
                 'name' => $name,
-                'description' => $description
+                'description' => $description,
+                'homework_percentage' => $homework,
+                'exam_percentage' => $exam
             ]);
 
         return [ 'theme' => $theme ];

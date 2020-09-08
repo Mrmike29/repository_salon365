@@ -114,6 +114,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-course-filter', 'NotesController@getCourseFilter');
     Route::get('/get-teacher-filter', 'NotesController@getTeacherFilter');
 
+    /** REPORTES */
+    Route::get('/reporte-anual', 'ReportsController@getAnualReport');
+    Route::get('/reporte-periodo', 'ReportsController@getPeriodReport');
+
+
+    /** PDF */
+    Route::get('/pdf', 'PdfController@getPdf');
+
     /* VIDEOCHAT */
     Route::get('/listar/sala','SalaController@index');
     Route::get('/crear/sala','SalaController@getCrearSala');

@@ -105,10 +105,10 @@
                <a href="#reportes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">oTRO</a>
                <ul class="collapse list-unstyled" id="reportes">
                   <li>
-                     <a href="/reporte_anual">Reporte Anual</a>
+                     <a href="/reporte-anual">Reporte Anual</a>
                   </li>
                   <li>
-                     <a href="/reporte_periodo">Reporte por Periodo</a>
+                     <a href="/reporte-periodo">Reporte por Periodo</a>
                   </li>
                </ul>
             </li>

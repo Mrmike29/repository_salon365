@@ -110,6 +110,51 @@ paranoia = (number) => {
     previous.attr('data-id', (page-1)*20);
     next.attr('data-id', page*20);
     filterTimes($.trim(search.val()), previous, next);
+},
+mDate = (date, format = "") => {
+    let d = [],
+        oN = [],
+        oS = [],
+        dN = 0, mN = 0, yN = 0,
+        cS = 0, fS = "", sS = "",
+        r = "", e = false,
+        eM = "Formato invalido.";
+
+    d['D'] = date.getDate();
+    d['M'] = date.getMonth()+1;
+    d['Y'] = date.getFullYear();
+
+    if(format !== ""){
+        for (let i = 0; i < format.length; i++) {
+            if (i === 0) oN.push(format.charAt(i).toUpperCase());
+            if (format.charAt(i) === 'd' || format.charAt(i) === 'D') dN++;
+            if (format.charAt(i) === 'm' || format.charAt(i) === 'M') mN++;
+            if (format.charAt(i) === 'y' || format.charAt(i) === 'Y') yN++;
+            if (format.charAt(i) === '/' || format.charAt(i) === '-'){
+                switch(cS) {
+                    case 0: fS = format.charAt(i); oS.push(format.charAt(i)); oN.push(format.charAt(i+1).toUpperCase()); cS++; break;
+                    case 1: sS = format.charAt(i); oS.push(format.charAt(i)); oN.push(format.charAt(i+1).toUpperCase()); cS++; break;
+                    default: e = true;
+                }
+            }
+        }
+
+        if (!dN || !mN || !yN) if (cS > 1) e = true;
+        if (format.length > 0) if (!dN && !mN && !yN) e = true;
+        if (!dN && !mN || !dN && !yN || !mN && !yN) if (cS > 0) e = true;
+
+        if(cS > 2 || dN > 2 || mN > 2 || yN > 4 || yN === 3) e = true;
+
+        if (e) return eM;
+
+        if (dN){ if (dN === 2 && String(d['D']).length < 2){ d['D'] = '0' + d['D'] } }
+        if (mN){ if (mN === 2 && String(d['M']).length < 2){ d['M'] = '0' + d['M'] } }
+        if (yN){ if (yN === 2)  d['Y'] = String(d['Y']).slice(2); d['Y'] = d['Y']*1; }
+
+        for (let i = 0; i < oN.length; i++){ r += d[oN[i]] + ((oS[i])? oS[i] : ''); }
+    }
+
+    return r;
 };
 
 $(document).ready(function(){
@@ -167,7 +212,7 @@ function openModalCreateTime() {
                                 '<div class="col">' +
                                     '<div class="input-effect date">' +
                                         '<div class="input-group">' +
-                                            '<input class="read-only-input primary-input date form-control" id="date_create_time" type="text" readonly="true" autocomplete="off" name="date_create_time" value="{{ date("Y-m-d") }}">' +
+                                            '<input class="read-only-input primary-input date form-control" id="date_create_time" type="text" readonly="true" autocomplete="off" name="date_create_time" value="' + mDate(new Date(), "YYYY-MM-DD") + '">' +
                                             '<label>' +
                                                 'Inicio <span></span> ' +
                                             '</label>' +
@@ -182,7 +227,7 @@ function openModalCreateTime() {
                                 '<div class="col">' +
                                     '<div class="input-effect date">' +
                                         '<div class="input-group">' +
-                                            '<input class="read-only-input primary-input date form-control" id="date_end_create_time" type="text" readonly="true" autocomplete="off" name="date_end_create_time" value="{{ date("Y-m-d") }}">' +
+                                            '<input class="read-only-input primary-input date form-control" id="date_end_create_time" type="text" readonly="true" autocomplete="off" name="date_end_create_time" value="' + mDate(new Date(), "YYYY-MM-DD") +'">' +
                                             '<label>' +
                                                 'Fin <span></span> ' +
                                             '</label>' +

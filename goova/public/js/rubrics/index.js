@@ -75,9 +75,6 @@ const
                             item.name +
                             '</td>' +
                             '<td>' +
-                            item.entity +
-                            '</td>' +
-                            '<td>' +
                             '<a href="#" class="primary-btn small goova-bt" data-toggle="tooltip" onclick="openModalEditRubric(' + item.id + ')" title="Editar Rúbrica">' +
                             '<span class="ti-pencil-alt"></span>' +
                             '</a>' +

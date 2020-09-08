@@ -74,6 +74,8 @@
                                                 <th>Asignatura</th>
                                                 <th>Curso</th>
                                                 <th>Nº Periodo/Ciclo</th>
+                                                <th>% Tarea</th>
+                                                <th>% Ex&aacute;men</th>
                                                 <th>Descripción</th>
                                                 <th>Acciones</th>
                                             </tr>

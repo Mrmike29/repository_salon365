@@ -14,10 +14,12 @@
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
-                            <h1>Reporte Anual</h1>
+                            <h1>Reportes por Periodo</h1>
                         </div>
                     </div>
                 </section>
+
+                @include('reports.list')
             </div>
         </div>
 

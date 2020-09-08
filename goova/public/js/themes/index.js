@@ -11,6 +11,16 @@ const isset = (v) => { return (typeof v != "undefined" && v != null); }
         return ($.trim($(this).val()) === '');
     };
 })( jQuery );
+/** Mi función, función hecha a la loca para validar los porcentajes */
+const mPercent = ({first, second, text}) => {
+    let t = first.val()*1 + second.val()*1;
+    text = (t > 100 || t < 100)? text : '';
+    first.parents('div.input-effect').siblings('span').text(text);
+    second.parents('div.input-effect').siblings('span').text(text);
+    return (t > 100 || t < 100);
+};
+/** Mi función, la utilizo para hacer mis inputs de tipo number */
+(function( $ ){ $.fn.mNumber = function() { $(this).bind('paste input',function(){ $(this).val ( $(this).val().replace (/[A-Za-zàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝäëïöüÿÄËÏÖÜŸ !@%&`":´¨<>ºªñÑçÇ;·~€¬/='¿¡[\]{}()*+?,\\^$|#\s-]/g ,"")) }); }; })( jQuery );
 
 let page = 1,
     next = $('#next'),
@@ -93,10 +103,13 @@ const
                             'Nº ' + item.time +
                             '</td>' +
                             '<td>' +
-                            item.description +
+                            item.homework_percentage +
                             '</td>' +
                             '<td>' +
-                            item.entity +
+                            item.exam_percentage +
+                            '</td>' +
+                            '<td>' +
+                            item.description +
                             '</td>' +
                             '<td>' +
                             '<a href="#" class="primary-btn small goova-bt" data-toggle="tooltip" onclick="openModalEditTheme(' + item.id + ')" title="Editar Tema">' +
@@ -264,6 +277,28 @@ function openModalCreateTheme() {
                             '</div>' +
                         '</div>' +
                         '<div class="row mt-25">' +
+                            '<div class="col-lg-6">' +
+                                '<div class="input-effect">' +
+                                    '<input class="primary-input m-number form-control" type="text" name="homework_percent_create_theme" id="homework_percent_create_theme" value="">' +
+                                    '<label>' +
+                                        'Valor de Tarea % *<span></span> ' +
+                                    '</label>' +
+                                    '<span class="focus-border"></span>' +
+                                '</div>' +
+                                '<span class="modal_input_validation red_alert"></span>' +
+                            '</div>' +
+                            '<div class="col-lg-6">' +
+                                '<div class="input-effect">' +
+                                    '<input class="primary-input m-number form-control" type="text" name="exam_percent_create_theme" id="exam_percent_create_theme" value="">' +
+                                    '<label>' +
+                                        'Valor de Exámen % *<span></span> ' +
+                                    '</label>' +
+                                    '<span class="focus-border"></span>' +
+                                '</div>' +
+                                '<span class="modal_input_validation red_alert"></span>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="row mt-25">' +
                             '<div class="col-lg-12">' +
                                 '<div class="input-effect">' +
                                     '<textarea class="primary-input form-control" name="description_theme" id="description_theme" cols="30" rows="10"></textarea>' +
@@ -289,6 +324,7 @@ function openModalCreateTheme() {
             '</div>';
 
             universalModal('Crear Tema', html);
+            $('.m-number').mNumber();
             $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } });
             $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
             $('#subject').niceSelect(); $('#course').niceSelect(); $('#time').niceSelect();
@@ -299,17 +335,22 @@ function openModalCreateTheme() {
 function saveNewTheme() {
     let pass = true,
         empty = false,
-        subject = $.trim($('#subject').val()),
+        timeN =  $.trim($('#time').val()),
         course = $.trim($('#course').val()),
-        time =  $.trim($('#time').val()),
+        subjectN = $.trim($('#subject').val()),
         name = $.trim($('#name_create_theme').val()),
-        description = $.trim($('#description_theme').val());
+        description = $.trim($('#description_theme').val()),
+        exam = $.trim($('#exam_percent_create_theme').val()),
+        homework = $.trim($('#homework_percent_create_theme').val());
 
     empty = $('#subject').mValid({text: 'Asignatura no debe quedar vacía.'}); if(empty){ pass = false}
     empty = $('#course').mValid({text: 'Curso no debe quedar vacío.'}); if(empty){ pass = false}
     empty = $('#time').mValid({text: 'Ciclo/Periodo no debe quedar vacío.'}); if(empty){ pass = false}
     empty = $('#name_create_theme').mValid({text: 'Nombre no debe quedar vacío.'}); if(empty){ pass = false}
     empty = $('#description_theme').mValid({text: 'Descripción no debe quedar vacía.'}); if(empty){ pass = false}
+    empty = $('#homework_percent_create_theme').mValid({text: 'Valor de Tarea no debe quedar vacía.'}); if(empty){ pass = false}
+    empty = $('#exam_percent_create_theme').mValid({text: 'Valor de Exámen no debe quedar vacía.'}); if(empty){ pass = false}
+    empty = mPercent({first: $('#homework_percent_create_theme'), second: $('#exam_percent_create_theme'), text: "No suman un 100%"}); if(empty){ pass = false}
 
     if(pass){
         $.ajax({
@@ -317,14 +358,16 @@ function saveNewTheme() {
             url: '/post-save-theme',
             data: {
                 _token,
-                subject,
-                course,
-                time,
+                timeN,
                 name,
+                exam,
+                course,
+                subjectN,
+                homework,
                 description
             },
             success: (data) => {
-                filterThemes($.trim(search.val()), window.subject.value, window.time.value, previous, next);
+                filterThemes($.trim(search.val()), subject.val(), time.val(), previous, next);
                 $('.modal').modal('hide');
                 $("body").overhang({
                     type: "success",
@@ -409,6 +452,28 @@ function openModalEditTheme(id) {
                             '</div>' +
                         '</div>' +
                         '<div class="row mt-25">' +
+                            '<div class="col-lg-6">' +
+                                '<div class="input-effect">' +
+                                    '<input class="primary-input m-number form-control has-content" type="text" name="homework_percent_edit_theme" id="homework_percent_edit_theme" value="' + theme.homework_percentage +'">' +
+                                    '<label>' +
+                                        'Valor de Tarea % *<span></span> ' +
+                                    '</label>' +
+                                    '<span class="focus-border"></span>' +
+                                '</div>' +
+                                '<span class="modal_input_validation red_alert"></span>' +
+                            '</div>' +
+                            '<div class="col-lg-6">' +
+                                '<div class="input-effect">' +
+                                    '<input class="primary-input m-number form-control has-content" type="text" name="exam_percent_edit_theme" id="exam_percent_edit_theme" value="' + theme.exam_percentage +'">' +
+                                    '<label>' +
+                                        'Valor de Exámen % *<span></span> ' +
+                                    '</label>' +
+                                    '<span class="focus-border"></span>' +
+                                '</div>' +
+                                '<span class="modal_input_validation red_alert"></span>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="row mt-25">' +
                             '<div class="col-lg-12">' +
                                 '<div class="input-effect">' +
                                     '<textarea class="primary-input form-control has-content" name="description_theme" id="description_theme" cols="30" rows="10">' + theme.description +'</textarea>' +
@@ -434,6 +499,7 @@ function openModalEditTheme(id) {
             '</div>';
 
             universalModal('Editar Tema', html);
+            $('.m-number').mNumber();
             $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } });
             $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
             $('#subject').niceSelect(); $('#course').niceSelect(); $('#time').niceSelect();
@@ -445,17 +511,22 @@ function saveEditedTheme() {
     let id = edId,
         pass = true,
         empty = false,
-        subject = $.trim($('#subject').val()),
+        timeE =  $.trim($('#time').val()),
         course = $.trim($('#course').val()),
-        time =  $.trim($('#time').val()),
+        subjectE = $.trim($('#subject').val()),
         name = $.trim($('#name_edit_theme').val()),
-        description = $.trim($('#description_theme').val());
+        exam = $.trim($('#exam_percent_edit_theme').val()),
+        description = $.trim($('#description_theme').val()),
+        homework = $.trim($('#homework_percent_edit_theme').val());
 
     empty = $('#subject').mValid({text: 'Asignatura no debe quedar vacía.'}); if(empty){ pass = false}
     empty = $('#course').mValid({text: 'Curso no debe quedar vacío.'}); if(empty){ pass = false}
     empty = $('#time').mValid({text: 'Ciclo/Periodo no debe quedar vacío.'}); if(empty){ pass = false}
     empty = $('#name_edit_theme').mValid({text: 'Nombre no debe quedar vacío.'}); if(empty){ pass = false}
     empty = $('#description_theme').mValid({text: 'Descripción no debe quedar vacía.'}); if(empty){ pass = false}
+    empty = $('#homework_percent_edit_theme').mValid({text: 'Valor de Tarea no debe quedar vacía.'}); if(empty){ pass = false}
+    empty = $('#exam_percent_edit_theme').mValid({text: 'Valor de Exámen no debe quedar vacía.'}); if(empty){ pass = false}
+    empty = mPercent({first: $('#homework_percent_edit_theme'), second: $('#exam_percent_edit_theme'), text: "No suman un 100%"}); if(empty){ pass = false}
 
     if(pass){
         $.ajax({
@@ -464,15 +535,17 @@ function saveEditedTheme() {
             data: {
                 _token,
                 id,
-                subject,
-                course,
-                time,
+                timeE,
                 name,
+                exam,
+                course,
+                subjectE,
+                homework,
                 description
             },
             success: (data) => {
                 if(data.theme){
-                    filterThemes($.trim(search.val()), window.subject.value, window.time.value, previous, next);
+                    filterThemes($.trim(search.val()), subject.val(), time.val(), previous, next);
                     $('.modal').modal('hide');
                     $("body").overhang({
                         type: "success",
