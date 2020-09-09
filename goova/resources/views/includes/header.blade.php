@@ -8,7 +8,7 @@
                     <button type="button" id="sidebarCollapse" class="btn d-lg-none nav_icon">
                         <i class="ti-more"></i>
                     </button>
-                    <ul class="nav navbar-nav mr-auto search-bar">
+                    {{-- <ul class="nav navbar-nav mr-auto search-bar">
                         <li class="">
                             <div class="input-group" id="serching">
                                 <span>
@@ -19,7 +19,7 @@
                             </div>
                             <div id="livesearch" style="display: none;"></div>
                         </li>
-                    </ul>
+                    </ul> --}}
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto nav_icon" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <div class="client_thumb_btn"></div>
                         <img class="client_img" src="https://media-exp1.licdn.com/dms/image/C560BAQHMnA03XDdf3w/company-logo_200_200/0?e=2159024400&v=beta&t=C7KMOtnrJwGrMXmgIk2u1B8a7VRfgxMwXng9cdP9kZk" alt="">

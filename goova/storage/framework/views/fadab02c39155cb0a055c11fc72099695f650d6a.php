@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
     <head>
-        @include('includes.head')
+        <?php echo $__env->make('includes.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </head>
     <body class="admin">
 		<div class="main-wrapper">
     		<!-- Sidebar  -->
-    		@include('includes.sidebar')
+    		<?php echo $__env->make('includes.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <div id="main-content">
-    		    @include('includes.header')
+    		    <?php echo $__env->make('includes.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
@@ -19,7 +19,7 @@
                 <section class="admin-visitor-area">
                     <div class="container-fluid p-0">
                         <form method="POST" action="/crear_foro" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="white-box">
@@ -29,9 +29,9 @@
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_course" id="id_course">
                                                             <option data-display="Seleccionar Curso *" value="">Select</option>
-                                                            @foreach($cursos as $key => $val)
-                                                                <option value="{{$val->id}}">{{$val->name}}</option>
-                                                            @endforeach
+                                                            <?php $__currentLoopData = $cursos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <option value="<?php echo e($val->id); ?>"><?php echo e($val->name); ?></option>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                         </select>
                                                         <span class="focus-border"></span>
                                                     </div>
@@ -55,7 +55,7 @@
                                                     <div class="no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input date form-control" type="text" name="date_start" id="start_time" value="{{date('Y-m-d')}}" readonly="true">
+                                                                <input class="primary-input date form-control" type="text" name="date_start" id="start_time" value="<?php echo e(date('Y-m-d')); ?>" readonly="true">
                                                                 <label>Fecha Inicio <span>*</span></label>
                                                                 <span class="focus-border"></span>
                                                             </div>
@@ -71,7 +71,7 @@
                                                     <div class="no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input date form-control" type="text" name="date_end" id="limit_time" value="{{date('Y-m-d')}}" readonly="true">
+                                                                <input class="primary-input date form-control" type="text" name="date_end" id="limit_time" value="<?php echo e(date('Y-m-d')); ?>" readonly="true">
                                                                 <label>Fecha Fin <span>*</span></label>
                                                                 <span class="focus-border"></span>
                                                             </div>
@@ -117,7 +117,7 @@
                 </section>
             </div>
     	</div>
-    	@include('includes.footer')
+    	<?php echo $__env->make('includes.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <script>
             Dropzone.autoDiscover = false;
             jQuery(document).ready(function() {
@@ -134,7 +134,7 @@
                     dictFileTooBig: "El tamaño maximo de archivos es de 5MB.",
                     // autoProcessQueue: false,
                     headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        'X-CSRF-TOKEN': "<?php echo e(csrf_token()); ?>"
                     },
                     success: function (file, response) {
                         $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
@@ -151,7 +151,7 @@
 
                         $.ajax({
                             headers: {
-                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                'X-CSRF-TOKEN': "<?php echo e(csrf_token()); ?>"
                             },
                             type: 'POST',
                             url: '/delete_archivo',
@@ -212,3 +212,4 @@
         </script>
     </body>
 </html>
+<?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/repositorio/create-foro.blade.php ENDPATH**/ ?>

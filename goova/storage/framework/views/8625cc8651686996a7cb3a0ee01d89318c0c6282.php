@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
     <head>
-        @include('includes.head')
+        <?php echo $__env->make('includes.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </head>
     <body class="admin">
 
 		<div class="main-wrapper" style="min-height: 600px">
     		<!-- Sidebar  -->
-    		@include('includes.sidebar')
+    		<?php echo $__env->make('includes.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <div id="main-content">
-    		    @include('includes.header')
+    		    <?php echo $__env->make('includes.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 <section class="mb-40">
                     <div class="container-fluid p-0">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="main-title">
-                                    <h3 class="mb-0">Bienvenido - Goova | {{$rol->name}}</h3>
+                                    <h3 class="mb-0">Bienvenido - Goova | <?php echo e($rol->name); ?></h3>
                                 </div>
                             </div>
                         </div>
@@ -33,7 +33,8 @@
                                                 <p class="mb-0">Total Estudiantes</p>
                                             </div>
                                             <h1 class="gradient-color2">
-                                                {{$roles['students']}}
+                                                <?php echo e($roles['students']); ?>
+
                                             </h1>
                                         </div>
                                     </div>
@@ -48,7 +49,8 @@
                                                 <p class="mb-0">Total Profesores</p>
                                             </div>
                                             <h1 class="gradient-color2">
-                                                {{$roles['teacher']}}
+                                                <?php echo e($roles['teacher']); ?>
+
                                             </h1>
                                         </div>
                                     </div>
@@ -63,7 +65,8 @@
                                                 <p class="mb-0">Total Padres</p>
                                             </div>
                                             <h1 class="gradient-color2">
-                                                {{$roles['parents']}}
+                                                <?php echo e($roles['parents']); ?>
+
                                             </h1>
                                         </div>
                                     </div>
@@ -78,7 +81,8 @@
                                                 <p class="mb-0">Total Secretarias</p>
                                             </div>
                                             <h1 class="gradient-color2">
-                                                {{$roles['secretary']}}
+                                                <?php echo e($roles['secretary']); ?>
+
                                             </h1>
                                         </div>
                                     </div>
@@ -89,6 +93,6 @@
                 </section>
             </div>
     	</div>
-    	@include('includes.footer')
+    	<?php echo $__env->make('includes.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </body>
-</html>
+</html><?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/welcome.blade.php ENDPATH**/ ?>

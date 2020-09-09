@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
     <head>
-        @include('includes.head')
+        <?php echo $__env->make('includes.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </head>
     <body class="admin">
 		<div class="main-wrapper">
     		<!-- Sidebar  -->
-    		@include('includes.sidebar')
+    		<?php echo $__env->make('includes.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <div id="main-content">
-    		    @include('includes.header')
+    		    <?php echo $__env->make('includes.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
@@ -19,53 +19,40 @@
                 <section class="admin-visitor-area">
                     <div class="container-fluid p-0">
                         <form method="POST" action="/crear_tarea" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="white-box">
                                         <div class="">
                                             <div class="row">
-                                                @if(Auth::user()->id_rol != 4 || Auth::user()->id_rol == 3)
+                                                <?php if(!empty($profesores)): ?>
                                                     <div class="form-group col-lg-4">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
                                                             <select class="niceSelect w-100 bb form-control" name="id_teacher" id="id_teacher">
                                                                 <option data-display="Seleccionar Profesor *" value="">Section *</option>
-                                                                @foreach($teacher as $key => $value)
-                                                                    <option value="{{$value->id}}">{{$value->name}} {{$value->last_name}}</option>
-                                                                @endforeach
+                                                                <?php $__currentLoopData = $profesores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                    <option value="<?php echo e($val->id); ?>"><?php echo e($val->name); ?> <?php echo e($val->last_name); ?></option>
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                             </select>
                                                             <span class="focus-border"></span>
                                                         </div>
                                                     </div>
-                                                @endif
-                                                <!-- @if(Auth::user()->id_rol <> 5)
-                                                    <div class="form-group col-lg-4">
-                                                        <div class="input-effect sm2_mb_20 md_mb_20">
-                                                            <select class="niceSelect w-100 bb form-control" name="id_curso" id="id_theme_time">
-                                                                <option data-display="Seleccionar Curso *" value="">Section *</option>
-                                                                @foreach($curso as $key => $value)
-                                                                    <option value="{{$value->id}}">{{$value->name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            <span class="focus-border"></span>
-                                                        </div>
-                                                    </div>
-                                                @endif -->
-                                                <div class="form-group col-lg-4">
+                                                <?php endif; ?>
+                                                <div class="form-group <?php if(!empty($profesores) && Auth::user()->id_rol <> 5): ?><?php echo e('col-lg-4'); ?><?php else: ?><?php echo e('col-lg-6'); ?><?php endif; ?>">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects">
                                                             <option data-display="Seleccionar Asignatura *" value="">Section *</option>
-                                                            @if(empty($profesores))
-                                                                @foreach($materias as $key => $val)
-                                                                    <option value="{{$val->id}}">{{$val->name}}</option>
-                                                                @endforeach
-                                                            @endif
+                                                            <?php if(empty($profesores)): ?>
+                                                                <?php $__currentLoopData = $materias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                    <option value="<?php echo e($val->id); ?>"><?php echo e($val->name); ?></option>
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                            <?php endif; ?>
                                                         </select>
                                                         <span class="focus-border"></span>
                                                     </div>
                                                 </div>
-                                                @if(Auth::user()->id_rol <> 5)
-                                                    <div class="form-group @if(!empty($profesores)){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
+                                                <?php if(Auth::user()->id_rol <> 5): ?>
+                                                    <div class="form-group <?php if(!empty($profesores)): ?><?php echo e('col-lg-4'); ?><?php else: ?><?php echo e('col-lg-6'); ?><?php endif; ?>">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
                                                             <select class="niceSelect w-100 bb form-control" name="id_theme_time" id="id_theme_time">
                                                                 <option data-display="Seleccionar Tema *" value="">Section *</option>
@@ -73,7 +60,7 @@
                                                             <span class="focus-border"></span>
                                                         </div>
                                                     </div>
-                                                @endif
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -95,7 +82,7 @@
                         <div class="row m-0">
                             <div class="p-0 col-md-12">
                                 <div class="white-box mt-10">
-                                    @if(Auth::user()->id_rol == 5)
+                                    <?php if(Auth::user()->id_rol == 5): ?>
                                         <table id="table_users" class="school-table" style="width: 100%">
                                             <thead>
                                                 <tr>
@@ -110,7 +97,7 @@
                                             <tbody>
                                             </tbody>
                                         </table>
-                                    @else
+                                    <?php else: ?>
                                         <table id="table_users" class="school-table" style="width: 100%">
                                             <thead>
                                                 <tr>
@@ -127,7 +114,7 @@
                                             <tbody>
                                             </tbody>
                                         </table>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -175,14 +162,14 @@
                         </form>
                         <div class="mt-40 d-flex justify-content-between">
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
-                                {{-- <input type="hidden" name="id" value="" id="student_inhabilitar"> --}}
+                                
                             <button class="primary-btn goova-bt" id="submit">Aceptar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @include('includes.footer')
+        <?php echo $__env->make('includes.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <script>
             $('#show-table').hide()
             var table = null
@@ -232,13 +219,13 @@
                             },
                             columns: [
                                 { data: "name_theme" },
-                                @if(Auth::user()->id_rol <> 5)
+                                <?php if(Auth::user()->id_rol <> 5): ?>
                                     { data: "name_subject" },
                                     { data: "name_students" },
                                     { data: "name_list" },
-                                @else
+                                <?php else: ?>
                                     { data: "name_teacher" },
-                                @endif
+                                <?php endif; ?>
                                 {
                                     data: "id_homework",
                                     render: function (data, type, row, meta) {
@@ -249,7 +236,7 @@
                                 {
                                     data: "id_homework_course",
                                     render: function (data, type, row, meta) {
-                                        @if(Auth::user()->id_rol == 5)
+                                        <?php if(Auth::user()->id_rol == 5): ?>
                                             if(row.status == "Entregado" || row.status == "Vencido"){
                                                 return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
                                             }
@@ -260,9 +247,9 @@
                                                     return `<button data-id='${data}' data-homework='${row.id_homework}' type='button' class='primary-btn small goova-bt go_up_homework_course'>Subir</button>`
                                                 }
                                             }
-                                        @else
+                                        <?php else: ?>
                                             return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
-                                        @endif
+                                        <?php endif; ?>
                                     }
                                 },
                                 { data: "status" }
@@ -429,7 +416,7 @@
                         dictFileTooBig: "El tamaño maximo de archivos es de 5MB.",
                         // autoProcessQueue: false,
                         headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                            'X-CSRF-TOKEN': "<?php echo e(csrf_token()); ?>"
                         },
                         success: function (file, response) {
                             $('#goUpHomeworkCourseModal .modal-body form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
@@ -446,7 +433,7 @@
 
                             $.ajax({
                                 headers: {
-                                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                    'X-CSRF-TOKEN': "<?php echo e(csrf_token()); ?>"
                                 },
                                 type: 'POST',
                                 url: '/delete_archivo',
@@ -481,7 +468,7 @@
             }
             $(document).on('click','.go_up_homework_course',function(){
                 var id = $(this).data('homework')
-                var html = `@csrf
+                var html = `<?php echo csrf_field(); ?>
                             <div class="row">
                                 <input type="hidden" name="id_homework" value="${id}">
                                 <div class="form-group col-lg-12">
@@ -517,3 +504,4 @@
         </script>
     </body>
 </html>
+<?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/repositorio/index-homework.blade.php ENDPATH**/ ?>

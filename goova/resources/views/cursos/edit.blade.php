@@ -40,7 +40,7 @@
                                                 </div>
                                                 <div class="form-group col-lg-3">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <button type="button" class="btn btn-primary plus">Añadir Materia</button>
+                                                        <button type="button" class="btn btn-primary plus">Añadir Asignatura</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -49,7 +49,7 @@
                                                     <div class="form-group col-lg-5">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
                                                             <select class="niceSelect w-100 bb form-control" name="id_subjects[]" id="classSelectStudent" required>
-                                                                <option data-display="Seleccionar Materia *" value="">Select</option>
+                                                                <option data-display="Seleccionar Asignatura *" value="">Select</option>
                                                                 @foreach($subjects as $key => $val)
                                                                     <option value="{{$val->id}}" @if($val->id == $value->id_subjects){{'selected'}}@endif>{{$val->name}}</option>
                                                                 @endforeach
@@ -99,7 +99,7 @@
                                 <div class="form-group col-lg-5">
                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                         <select class="niceSelect w-100 bb form-control" name="id_subjects[]" id="classSelectStudent" required>
-                                            <option data-display="Seleccionar Materia *" value="">Select</option>
+                                            <option data-display="Seleccionar Asignatura *" value="">Select</option>
                                             @foreach($subjects as $key => $val)
                                                 <option value="{{$val->id}}">{{$val->name}}</option>
                                             @endforeach

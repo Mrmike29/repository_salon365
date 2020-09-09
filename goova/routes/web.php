@@ -24,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/home', function () {
     //     return view('welcome');
     // });
-    Route::get('/home','HomeController@home');
+    Route::get('/home', 'HomeController@home');
 
     Route::get('/getBoletin','SalaController@getBoletin');
 
@@ -40,13 +40,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/subir_tarea','RepositorioController@go_up_homework');
     Route::post('/crear_tarea','RepositorioController@store_homework');
 
-    Route::get('/foros','RepositorioController@index_foro');
-    Route::get('/info_foro/{id}','RepositorioController@info_foro');
-    Route::get('/info_foro_responder/{id}','RepositorioController@info_foro_answer');
-    Route::post('/crear_respuest_foro','RepositorioController@store_info_foro_answer');
-    Route::get('/agregar_foro','RepositorioController@create_foro');
-    Route::get('/materias_curso/{id}','RepositorioController@subjects_course');
-    Route::post('/crear_foro','RepositorioController@store_foro');
+    Route::get('/foros', 'RepositorioController@index_foro');
+    Route::get('/info_foro/{id}', 'RepositorioController@info_foro');
+    Route::get('/info_foro_responder/{id}', 'RepositorioController@info_foro_answer');
+    Route::post('/crear_respuest_foro', 'RepositorioController@store_info_foro_answer');
+    Route::get('/agregar_foro', 'RepositorioController@create_foro');
+    Route::get('/materias_curso/{id}', 'RepositorioController@subjects_course');
+    Route::post('/crear_foro', 'RepositorioController@store_foro');
 
     Route::post('/archivo', 'RepositorioController@archivos_store');
     Route::post('/upload_image', 'RepositorioController@upload_image');
@@ -69,6 +69,34 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update_cursos','CursosController@update');
     Route::get('/view_students_course/{id}','CursosController@view_students');
     Route::get('/view_teachers_course/{id}','CursosController@view_teachers');
+    Route::get('/exams', 'RepositorioController@exams');
+    Route::get('/examenes', 'RepositorioController@index_exam');
+    Route::get('/materias_profesores_exam/{id}', 'RepositorioController@subjects_teacher_exam');
+    Route::get('/temas_materias_exam/{id}/{teacher}', 'RepositorioController@themes_subjects_exam');
+    Route::get('/buscar_exam/{subject}/{teacher}', 'RepositorioController@search_exam');
+    Route::get('/buscar_tema_exam/{subject}/{theme}/{teacher}', 'RepositorioController@search_themes_exam');
+    Route::post('/realizar_examen', 'RepositorioController@perform_exam');
+    Route::post('/crear_realizar_examen', 'RepositorioController@store_perform_exam');
+    Route::get('/respuestas_examen/{id}', 'RepositorioController@answer_exam');
+    Route::post('/crear_nota', 'RepositorioController@store_answer_exam');
+    Route::get('/ver_nota/{id}/{user}', 'RepositorioController@view_note');
+    Route::get('/agregar_examen', 'RepositorioController@create_exam');
+    Route::post('/crear_examen', 'RepositorioController@store_exam');
+
+    Route::get('/usuarios', 'UsuariosController@index');
+    Route::get('/crear_usuarios', 'UsuariosController@create');
+    Route::post('/store_usuarios', 'UsuariosController@store');
+    Route::get('/editar_usuario/{id}', 'UsuariosController@edit');
+    Route::post('/post_usuario', 'UsuariosController@update');
+    Route::post('/inhabilitar_usuario', 'UsuariosController@inhabilitar');
+    Route::post('/habilitar_usuario', 'UsuariosController@habilitar');
+    Route::get('/cursos', 'CursosController@index');
+    Route::get('/crear_cursos', 'CursosController@create');
+    Route::post('/store_cursos', 'CursosController@store');
+    Route::get('/editar_cursos/{id}', 'CursosController@edit');
+    Route::post('/update_cursos', 'CursosController@update');
+    Route::get('/view_students_course/{id}', 'CursosController@view_students');
+    Route::get('/view_teachers_course/{id}', 'CursosController@view_teachers');
 
     /** RÚBRICAS */
     Route::get('/gestionar-rubricas', function () { return view('rubrics/rubricas'); });

@@ -52,7 +52,7 @@
             </li>
          </ul>
       </li>
-      @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2)
+      <?php if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2): ?>
          <li>
             <a href="#subMenuCursos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                <span class="flaticon-analytics"></span>
@@ -67,7 +67,7 @@
                </li>
             </ul>
          </li>
-      @endif
+      <?php endif; ?>
       <li>
          <a href="#subMenuRepositorio" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <span class="flaticon-analytics"></span>
@@ -77,35 +77,38 @@
             <li>
                <a href="/tareas">Ver tareas</a>
             </li>
-            @if(Auth::user()->id_rol == 4)
+            <?php if(Auth::user()->id_rol == 4): ?>
                <li>
                   <a href="/agregar_tareas">Crear tarea</a>
                </li>
-            @endif
+            <?php endif; ?>
             <li>
                <a href="/foros">Ver foros</a>
             </li>
-            @if(Auth::user()->id_rol == 4)
+            <?php if(Auth::user()->id_rol == 4): ?>
                <li>
                   <a href="/agregar_foro">Crear foros</a>
                </li>
-            @endif
+            <?php endif; ?>
             <li>
                <a href="/examenes">Ver examenes</a>
             </li>
-            @if(Auth::user()->id_rol == 4)
+            <?php if(Auth::user()->id_rol == 4): ?>
                <li>
                   <a href="/agregar_examen">Crear examen</a>
                </li>
-            @endif
+            <?php endif; ?>
          </ul>
       </li>
       <li>
          <a href="#subMenuNotas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-             <span class="flaticon-resume"></span>
+            <span class=""></span>
             Notas y Reportes
          </a>
          <ul class="collapse list-unstyled" id="subMenuNotas">
+            <li>
+               <a href="/rubricas_mostrar">Rúbricas</a>
+            </li>
             <li>
                <a href="/notas">Notas Parciales</a>
             </li>
@@ -113,10 +116,10 @@
                <a href="#reportes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">oTRO</a>
                <ul class="collapse list-unstyled" id="reportes">
                   <li>
-                     <a href="/reporte-anual">Reporte Anual</a>
+                     <a href="/reporte_anual">Reporte Anual</a>
                   </li>
                   <li>
-                     <a href="/reporte-periodo">Reporte por Periodo</a>
+                     <a href="/reporte_periodo">Reporte por Periodo</a>
                   </li>
                </ul>
             </li>
@@ -136,7 +139,7 @@
             </li>
          </ul>
       </li>
-      @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2)
+      <?php if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2): ?>
          <li>
             <a href="#subMenuUsuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                <span class="flaticon-analytics"></span>
@@ -151,6 +154,6 @@
                </li>
             </ul>
          </li>
-      @endif
+      <?php endif; ?>
    </ul>
-</nav>
+</nav><?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/includes/sidebar.blade.php ENDPATH**/ ?>

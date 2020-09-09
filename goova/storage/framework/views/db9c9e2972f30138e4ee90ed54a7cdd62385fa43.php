@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
     <head>
-        @include('includes.head')
+        <?php echo $__env->make('includes.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </head>
     <body class="admin">
         <div class="main-wrapper">
             <!-- Sidebar  -->
-            @include('includes.sidebar')
+            <?php echo $__env->make('includes.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <div id="main-content">
-                @include('includes.header')
+                <?php echo $__env->make('includes.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
@@ -32,23 +32,23 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($courses as $key => $val)
+                                            <?php $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
-                                                    <td>{{$val->name}}</td>
-                                                    <td><button data-id="{{$val->id_list}}" type="button" class="primary-btn small goova-bt view_students">Visualizar Estudiantes</button></td>
-                                                    <td><button data-id="{{$val->id_course}}" type="button" class="primary-btn small goova-bt view_teachers">Visualizar Profesores</button></td>
+                                                    <td><?php echo e($val->name); ?></td>
+                                                    <td><button data-id="<?php echo e($val->id_list); ?>" type="button" class="primary-btn small goova-bt view_students">Visualizar Estudiantes</button></td>
+                                                    <td><button data-id="<?php echo e($val->id_course); ?>" type="button" class="primary-btn small goova-bt view_teachers">Visualizar Profesores</button></td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
                                                                 Seleccionar
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="/editar_cursos/{{$val->id_course}}">Editar</a>
+                                                                <a class="dropdown-item" href="/editar_cursos/<?php echo e($val->id_course); ?>">Editar</a>
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -72,7 +72,7 @@
                         <div class="mt-40 d-flex justify-content-between">
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
                             <form method="POST" action="/inhabilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
-                                @csrf
+                                <?php echo csrf_field(); ?>
                                 <input type="hidden" name="id" value="" id="student_inhabilitar">
                                 <button class="primary-btn goova-bt" type="submit">Aceptar</button>
                             </form>
@@ -95,7 +95,7 @@
                         <div class="mt-40 d-flex justify-content-between">
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
                             <form method="POST" action="/habilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
-                                @csrf
+                                <?php echo csrf_field(); ?>
                                 <input type="hidden" name="id" value="" id="student_habilitar">
                                 <button class="primary-btn goova-bt" type="submit">Aceptar</button>
                             </form>
@@ -130,7 +130,7 @@
                 </div>
             </div>
         </div>
-        @include('includes.footer')
+        <?php echo $__env->make('includes.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <script>
             $('#table_users').DataTable({
                 bLengthChange: false,
@@ -307,3 +307,4 @@
         </script>
     </body>
 </html>
+<?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/cursos/index.blade.php ENDPATH**/ ?>

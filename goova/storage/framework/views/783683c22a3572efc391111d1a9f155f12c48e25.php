@@ -1,54 +1,69 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
     <head>
-        @include('includes.head')
+        <?php echo $__env->make('includes.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </head>
     <body class="admin">
-        <div class="main-wrapper">
-            <!-- Sidebar  -->
-            @include('includes.sidebar')
+		<div class="main-wrapper">
+    		<!-- Sidebar  -->
+    		<?php echo $__env->make('includes.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <div id="main-content">
-                @include('includes.header')
+    		    <?php echo $__env->make('includes.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
-                            <h1>Cursos</h1>
+                            <h1>Usuarios</h1>
                         </div>
                     </div>
                 </section>
                 <section class="admin-visitor-area up_st_admin_visitor">
                     <div class="container-fluid p-0">
                         <div class="row m-0">
-                            <div class="p-0 col-md-12">
+                            <div class="p-0 col-md-11">
                                 <div class="white-box mt-10">
                                     <table id="table_users" class="school-table">
                                         <thead>
                                             <tr>
+                                                <th>Tipo de Documento</th>
+                                                <th>Documento</th>
                                                 <th>Nombre</th>
-                                                <th>Estudiantes</th>
-                                                <th>Profesores</th>
+                                                <th>Correo</th>
+                                                <th>Rol</th>
+                                                <th>Estado</th>
+                                                <th>Telefono</th>
+                                                <th>Dirrección</th>
                                                 <th class="noExport">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($courses as $key => $val)
+                                            <?php $__currentLoopData = $usuarios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
-                                                    <td>{{$val->name}}</td>
-                                                    <td><button data-id="{{$val->id_list}}" type="button" class="primary-btn small goova-bt view_students">Visualizar Estudiantes</button></td>
-                                                    <td><button data-id="{{$val->id_course}}" type="button" class="primary-btn small goova-bt view_teachers">Visualizar Profesores</button></td>
+                                                    <td><?php echo e($val->type_document); ?></td>
+                                                    <td><?php echo e($val->document); ?></td>
+                                                    <td><?php echo e($val->name); ?> <?php echo e($val->last_name); ?></td>
+                                                    <td><?php echo e($val->email); ?></td>
+                                                    <td><?php echo e($val->rol); ?></td>
+                                                    <td><?php echo e($val->state); ?></td>
+                                                    <td><?php echo e($val->phone); ?></td>
+                                                    <td><?php echo e($val->address); ?></td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
                                                                 Seleccionar
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="/editar_cursos/{{$val->id_course}}">Editar</a>
+                                                                <a class="dropdown-item" href="/editar_usuario/<?php echo e($val->id); ?>">Editar</a>
+                                                                <?php if($val->state == "HABILITADO"): ?>
+                                                                    <a class="dropdown-item inhabilitar_user" data-id="<?php echo e($val->id); ?>" data-toggle="modal" data-target="#inhabilitarUserModal" href="#">Inhabilitar</a>
+                                                                <?php else: ?>
+                                                                    <a class="dropdown-item habilitar_user" data-id="<?php echo e($val->id); ?>" data-toggle="modal" data-target="#habilitarUserModal" href="#">Habilitar</a>
+                                                                <?php endif; ?>
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -72,7 +87,7 @@
                         <div class="mt-40 d-flex justify-content-between">
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
                             <form method="POST" action="/inhabilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
-                                @csrf
+                                <?php echo csrf_field(); ?>
                                 <input type="hidden" name="id" value="" id="student_inhabilitar">
                                 <button class="primary-btn goova-bt" type="submit">Aceptar</button>
                             </form>
@@ -95,7 +110,7 @@
                         <div class="mt-40 d-flex justify-content-between">
                             <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
                             <form method="POST" action="/habilitar_usuario" accept-charset="UTF-8" enctype="multipart/form-data">
-                                @csrf
+                                <?php echo csrf_field(); ?>
                                 <input type="hidden" name="id" value="" id="student_habilitar">
                                 <button class="primary-btn goova-bt" type="submit">Aceptar</button>
                             </form>
@@ -104,36 +119,11 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade admin-query" id="studentsModal" >
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">ESTUDIENTES</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade admin-query" id="teachersModal" >
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">PROFESORES</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        @include('includes.footer')
+        <?php echo $__env->make('includes.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <script>
             $('#table_users').DataTable({
                 bLengthChange: false,
+                // paging: true,
                 "bDestroy": true,
                 language: {
                     search: "<i class='ti-search'></i>",
@@ -236,74 +226,7 @@
                 var id = $(this).data('id')
                 $('.modal#habilitarUserModal form input[name=id]').val(id)
             })
-            $(document).on('click','.view_students',function(){
-                var id = $(this).data('id')
-                $.ajax({
-                    url: '/view_students_course/'+id,
-                    type: 'get',
-                    success:function(dato){
-                        var html = `<table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Documento</th>
-                                                <th>Nombre</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>`
-                            if(dato != 0){
-                                $(dato).each(function(k,v){
-                                    html += `<tr>
-                                                <td>${v.document}</td>
-                                                <td>${v.name} ${v.last_name}</td>
-                                            </tr>`
-                                })
-                            }else{
-                                    html += `<tr>
-                                                <td colspan="2"><center>Ningún dato disponible</center></td>
-                                            </tr>`
-                            }
-                                html += `</tbody>
-                                    </table>`
-                        $('#studentsModal .modal-body').html(html)
-                        $('#studentsModal').modal('show')
-                    }
-                })
-            })
-            $(document).on('click','.view_teachers',function(){
-                var id = $(this).data('id')
-                $.ajax({
-                    url: '/view_teachers_course/'+id,
-                    type: 'get',
-                    success:function(dato){
-                        var html = `<table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Documento</th>
-                                                <th>Nombre</th>
-                                                <th>Asignatura</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>`
-                            if(dato != 0){
-                                $(dato).each(function(k,v){
-                                    html += `<tr>
-                                                <td>${v.document}</td>
-                                                <td>${v.name} ${v.last_name}</td>
-                                                <td>${v.subject}</td>
-                                            </tr>`
-                                })
-                            }else{
-                                    html += `<tr>
-                                                <td colspan="3"><center>Ningún dato disponible</center></td>
-                                            </tr>`
-                            }
-                                html += `</tbody>
-                                    </table>`
-                        $('#teachersModal .modal-body').html(html)
-                        $('#teachersModal').modal('show')
-                    }
-                })
-            })
         </script>
     </body>
 </html>
+<?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/usuarios/index.blade.php ENDPATH**/ ?>

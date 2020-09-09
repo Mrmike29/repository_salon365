@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
     <head>
-        @include('includes.head')
+        <?php echo $__env->make('includes.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </head>
     <body class="admin">
 		<div class="main-wrapper">
     		<!-- Sidebar  -->
-    		@include('includes.sidebar')
+    		<?php echo $__env->make('includes.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <div id="main-content">
-    		    @include('includes.header')
+    		    <?php echo $__env->make('includes.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
@@ -26,42 +26,42 @@
                                             <tr>
                                                 <th>Nombre</th>
                                                 <th>Asignatura</th>
-                                                @if(Auth::user()->id_rol !== 4)
+                                                <?php if(Auth::user()->id_rol !== 4): ?>
                                                     <th>Profesor</th>
-                                                @endif
-                                                @if(Auth::user()->id_rol !== 5)
+                                                <?php endif; ?>
+                                                <?php if(Auth::user()->id_rol !== 5): ?>
                                                     <th>Grado</th>
-                                                @endif
+                                                <?php endif; ?>
                                                 <th>Fecha Inicio</th>
                                                 <th>Fecha Fin</th>
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($foros as $key => $val)
+                                            <?php $__currentLoopData = $foros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
-                                                    <td>{{$val->name}}</td>
-                                                    <td>{{$val->subject}}</td>
-                                                    @if(Auth::user()->id_rol !== 4)
-                                                        <td>{{$val->name_teacher}}{{$val->last_name_teacher}}</td>
-                                                    @endif
-                                                    @if(Auth::user()->id_rol !== 5)
-                                                        <td>{{$val->course}}</td>
-                                                    @endif
-                                                    <td>{{date('d/m/Y', strtotime($val->date_start))}}</td>
-                                                    <td>{{date('d/m/Y', strtotime($val->date_end))}}</td>
+                                                    <td><?php echo e($val->name); ?></td>
+                                                    <td><?php echo e($val->subject); ?></td>
+                                                    <?php if(Auth::user()->id_rol !== 4): ?>
+                                                        <td><?php echo e($val->name_teacher); ?><?php echo e($val->last_name_teacher); ?></td>
+                                                    <?php endif; ?>
+                                                    <?php if(Auth::user()->id_rol !== 5): ?>
+                                                        <td><?php echo e($val->course); ?></td>
+                                                    <?php endif; ?>
+                                                    <td><?php echo e(date('d/m/Y', strtotime($val->date_start))); ?></td>
+                                                    <td><?php echo e(date('d/m/Y', strtotime($val->date_end))); ?></td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
                                                                 Seleccionar
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="/info_foro/{{encrypt($val->id)}}">Ingresar</a>
+                                                                <a class="dropdown-item" href="/info_foro/<?php echo e(encrypt($val->id)); ?>">Ingresar</a>
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -71,7 +71,7 @@
                 </section>
             </div>
         </div>
-        @include('includes.footer')
+        <?php echo $__env->make('includes.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <script>
             $('#table_users').DataTable({
                 bLengthChange: false,
@@ -168,4 +168,4 @@
             });
         </script>
     </body>
-</html>
+</html><?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/repositorio/index-foro.blade.php ENDPATH**/ ?>

@@ -103,6 +103,7 @@
         }
     });
 
+
 </script>
 <script>
     $('.close_modal').on('click', function() {

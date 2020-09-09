@@ -1,71 +1,58 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
     <head>
-        @include('includes.head')
+        <?php echo $__env->make('includes.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </head>
     <body class="admin">
 		<div class="main-wrapper">
     		<!-- Sidebar  -->
-    		@include('includes.sidebar')
+    		<?php echo $__env->make('includes.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <div id="main-content">
-    		    @include('includes.header')
+    		    <?php echo $__env->make('includes.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
-                            <h1>Ver Tareas</h1>
+                            <h1>Ver Examenes</h1>
                         </div>
                     </div>
                 </section>
                 <section class="admin-visitor-area">
                     <div class="container-fluid p-0">
                         <form method="POST" action="/crear_tarea" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="white-box">
                                         <div class="">
                                             <div class="row">
-                                                @if(Auth::user()->id_rol != 4 || Auth::user()->id_rol == 3)
+                                                <?php if(!empty($profesores)): ?>
                                                     <div class="form-group col-lg-4">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
                                                             <select class="niceSelect w-100 bb form-control" name="id_teacher" id="id_teacher">
                                                                 <option data-display="Seleccionar Profesor *" value="">Section *</option>
-                                                                @foreach($teacher as $key => $value)
-                                                                    <option value="{{$value->id}}">{{$value->name}} {{$value->last_name}}</option>
-                                                                @endforeach
+                                                                <?php $__currentLoopData = $profesores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                    <option value="<?php echo e($val->id); ?>"><?php echo e($val->name); ?> <?php echo e($val->last_name); ?></option>
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                             </select>
                                                             <span class="focus-border"></span>
                                                         </div>
                                                     </div>
-                                                @endif
-                                                <!-- @if(Auth::user()->id_rol <> 5)
-                                                    <div class="form-group col-lg-4">
-                                                        <div class="input-effect sm2_mb_20 md_mb_20">
-                                                            <select class="niceSelect w-100 bb form-control" name="id_curso" id="id_theme_time">
-                                                                <option data-display="Seleccionar Curso *" value="">Section *</option>
-                                                                @foreach($curso as $key => $value)
-                                                                    <option value="{{$value->id}}">{{$value->name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            <span class="focus-border"></span>
-                                                        </div>
-                                                    </div>
-                                                @endif -->
-                                                <div class="form-group col-lg-4">
+                                                <?php endif; ?>
+                                                <div class="form-group <?php if(!empty($profesores) && Auth::user()->id_rol <> 5): ?><?php echo e('col-lg-4'); ?><?php else: ?><?php echo e('col-lg-6'); ?><?php endif; ?>">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects">
                                                             <option data-display="Seleccionar Asignatura *" value="">Section *</option>
-                                                            @if(empty($profesores))
-                                                                @foreach($materias as $key => $val)
-                                                                    <option value="{{$val->id}}">{{$val->name}}</option>
-                                                                @endforeach
-                                                            @endif
+                                                            <?php if(empty($profesores)): ?>
+                                                                <?php $__currentLoopData = $materias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                    <option value="<?php echo e($val->id); ?>"><?php echo e($val->name); ?></option>
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                            <?php endif; ?>
                                                         </select>
                                                         <span class="focus-border"></span>
                                                     </div>
                                                 </div>
-                                                @if(Auth::user()->id_rol <> 5)
-                                                    <div class="form-group @if(!empty($profesores)){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
+                                                <?php if(Auth::user()->id_rol <> 5): ?>
+                                                    <div class="form-group <?php if(!empty($profesores)): ?><?php echo e('col-lg-4'); ?><?php else: ?><?php echo e('col-lg-6'); ?><?php endif; ?>">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
                                                             <select class="niceSelect w-100 bb form-control" name="id_theme_time" id="id_theme_time">
                                                                 <option data-display="Seleccionar Tema *" value="">Section *</option>
@@ -73,7 +60,7 @@
                                                             <span class="focus-border"></span>
                                                         </div>
                                                     </div>
-                                                @endif
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -95,22 +82,21 @@
                         <div class="row m-0">
                             <div class="p-0 col-md-12">
                                 <div class="white-box mt-10">
-                                    @if(Auth::user()->id_rol == 5)
+                                    <?php if(Auth::user()->id_rol == 5): ?>
                                         <table id="table_users" class="school-table" style="width: 100%">
                                             <thead>
                                                 <tr>
                                                     <th>Nombre</th>
                                                     <th>Profesor</th>
-                                                    <th>Ver Tarea</th>
                                                     <th>Fecha Limite de Entrega</th>
-                                                    <th>Entrega Tarea</th>
                                                     <th>Estado</th>
+                                                    <th>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             </tbody>
                                         </table>
-                                    @else
+                                    <?php else: ?>
                                         <table id="table_users" class="school-table" style="width: 100%">
                                             <thead>
                                                 <tr>
@@ -118,16 +104,15 @@
                                                     <th>Asignatura</th>
                                                     <th>Estudiante</th>
                                                     <th>Grado</th>
-                                                    <th>Ver Tarea</th>
                                                     <th>Fecha Limite de Entrega</th>
-                                                    <th>Entrega Tarea</th>
                                                     <th>Estado</th>
+                                                    <th>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             </tbody>
                                         </table>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -135,54 +120,22 @@
                 </section>
             </div>
         </div>
-        <div class="modal fade admin-query" id="homeworkModal" >
+        <form style="display: none" action="/realizar_examen" method="POST" id="form">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" id="id" name="id" value=""/>
+            <input type="hidden" id="exam" name="exam" value=""/>
+        </form>
+        <div class="modal fade admin-query" id="examCourseModal" >
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="text-center" id="descripcion">
                         </div>
-                        <div class="text-center" id="archivos">
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade admin-query" id="homeworkCourseModal" >
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="text-center" id="descripcion">
-                        </div>
-                        <div class="text-center" id="archivos">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade admin-query" id="goUpHomeworkCourseModal" >
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">ENTREGA DE ACTIVIDAD</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
-                            <div class="text-center" id="descripcion">
-                            </div>
-                            <div class="text-center" id="archivos">
-                            </div>
-                        </form>
-                        <div class="mt-40 d-flex justify-content-between">
-                            <button type="button" class="primary-btn tr-bg" data-dismiss="modal">Cancelar</button>
-                                {{-- <input type="hidden" name="id" value="" id="student_inhabilitar"> --}}
-                            <button class="primary-btn goova-bt" id="submit">Aceptar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @include('includes.footer')
+        <?php echo $__env->make('includes.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <script>
             $('#show-table').hide()
             var table = null
@@ -227,45 +180,39 @@
                                 }
                             },
                             ajax: {
-                                url: "/buscar_tema/"+subject+"/"+theme+"/"+teacher,
+                                url: "/buscar_tema_exam/"+subject+"/"+theme+"/"+teacher,
                                 dataSrc: ""
                             },
                             columns: [
                                 { data: "name_theme" },
-                                @if(Auth::user()->id_rol <> 5)
+                                <?php if(Auth::user()->id_rol <> 5): ?>
                                     { data: "name_subject" },
                                     { data: "name_students" },
                                     { data: "name_list" },
-                                @else
+                                <?php else: ?>
                                     { data: "name_teacher" },
-                                @endif
-                                {
-                                    data: "id_homework",
+                                <?php endif; ?>
+                                { data: "date_end" },
+                                { data: "status" },
+                                { 
+                                    data: "id_questions_students",
                                     render: function (data, type, row, meta) {
-                                        return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework'>Ver</button>`
-                                    }
-                                },
-                                { data: "limit_time" },
-                                {
-                                    data: "id_homework_course",
-                                    render: function (data, type, row, meta) {
-                                        @if(Auth::user()->id_rol == 5)
+                                        <?php if(Auth::user()->id_rol == 5): ?>
                                             if(row.status == "Entregado" || row.status == "Vencido"){
-                                                return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
+                                                return `<button data-id='${data}' data-s='${row.id_students}' type='button' class='primary-btn small goova-bt view_exam_course'>Listo</button>`
                                             }
                                             if(row.status == "Pendiente"){
                                                 if(data){
-                                                    return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
+                                                    return `<button data-id='${data}' data-s='${row.id_students}' type='button' class='primary-btn small goova-bt view_exam_course'>Listo</button>`
                                                 }else{
-                                                    return `<button data-id='${data}' data-homework='${row.id_homework}' type='button' class='primary-btn small goova-bt go_up_homework_course'>Subir</button>`
+                                                    return `<button data-id='${data}' data-exam='${row.id_exam}' type='button' class='primary-btn small goova-bt go_up_exam_course'>Realizar</button>`
                                                 }
                                             }
-                                        @else
-                                            return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
-                                        @endif
+                                        <?php else: ?>
+                                            return `<button data-id='${data}' data-s='${row.id_students}' type='button' class='primary-btn small goova-bt view_exam_course'>Ver</button>`
+                                        <?php endif; ?>
                                     }
-                                },
-                                { data: "status" }
+                                }
                             ],
                             dom: 'Bfrtip',
                             buttons: [
@@ -336,7 +283,7 @@
             $(document).on('change','select[name=id_teacher]',function(){
                 var id = $(this).val()
                 $.ajax({
-                    url: '/materias_profesores/'+id,
+                    url: '/materias_profesores_exam/'+id,
                     type: 'get',
                     success:function(dato){
                         var html = '<option data-display="Seleccionar Asignatura *" value="">Section *</option>'
@@ -356,7 +303,7 @@
                     var teacher = 0
                 }
                 $.ajax({
-                    url: '/temas_materias/'+id+'/'+teacher,
+                    url: '/temas_materias_exam/'+id+'/'+teacher,
                     type: 'get',
                     success:function(dato){
                         var html = '<option data-display="Seleccionar Tema *" value="">Section *</option>'
@@ -376,144 +323,39 @@
                 tables()
                 $('#show-table').show()
             })
-            $(document).on('click','.view_homework',function(){
+            $(document).on('click','.go_up_exam_course',function(){
                 var id = $(this).data('id')
-                $.ajax({
-                    url: '/buscar_tarea/'+id,
-                    type: 'get',
-                    success:function(dato){
-                        $('#homeworkModal .modal-body #descripcion').html(dato.tarea.description)
-                        var html = `<div class="row">`
-                        $(dato.archivos).each(function(k, v){
-                            html += `<div class="col-md-3"><center><i class="icofont icofont-file-alt" style="font-size: 35px;"></i><br><a href="${v.description}" download>Descargar</a></center></div>`
-                        })
-                        $('#homeworkModal .modal-body #archivos').html(html)
-                        $('#homeworkModal').modal()
-                    }
-                })
+                var exam = $(this).data('exam')
+                $('#form input[name=id]').val(id)
+                $('#form input[name=exam]').val(exam)
+                $('#form').submit()
             })
-            $(document).on('click','.view_homework_course',function(){
+            $(document).on('click','.view_exam_course',function(){
                 var id = $(this).data('id')
-                if(id){
+                var user = $(this).data('s')
+                if(id && id !== 'undefined'){
                     $.ajax({
-                        url: '/buscar_tarea_curso/'+id,
+                        url: '/ver_nota/'+id+'/'+user,
                         type: 'get',
                         success:function(dato){
-                            $('#homeworkCourseModal .modal-body #descripcion').html(dato.tarea.description)
-                            var html = `<div class="row">`
-                            $(dato.archivos).each(function(k, v){
-                                html += `<div class="col-md-3"><center><i class="icofont icofont-file-alt" style="font-size: 35px;"></i><br><a href="${v.description}" download>Descargar</a></center></div>`
-                            })
-                            $('#homeworkCourseModal .modal-body #archivos').html(html)
-                            $('#homeworkCourseModal').modal()
+                            if(dato){
+                                $('#examCourseModal .modal-body #descripcion').html(`<h3>${dato.value}</h3>`)
+                                $('#examCourseModal').modal()
+                            }else{
+                                <?php if(Auth::user()->id_rol == 4): ?>
+                                    window.location.href = '/respuestas_examen/'+id
+                                <?php else: ?>
+                                    $('#examCourseModal .modal-body #descripcion').html('<h4>Aún no se ha calificado</h4>')
+                                    $('#examCourseModal').modal()
+                                <?php endif; ?>
+                            }
                         }
                     })
                 }else{
-                    $('#homeworkCourseModal .modal-body #descripcion').html('<h4>No hay ningún elemento</h4>')
-                    $('#homeworkCourseModal .modal-body #archivos').html('')
-                    $('#homeworkCourseModal').modal()
+                    $('#examCourseModal .modal-body #descripcion').html('<h4>Aún no lo ha realizado</h4>')
+                    $('#examCourseModal').modal()
                 }
-            })
-            function option_homework()
-            {
-                Dropzone.autoDiscover = false;
-                jQuery(document).ready(function() {
-                    var uploadedDocumentMap = {}
-                    $("div#my-awesome-dropzone").dropzone({
-                        url: "/archivo",
-                        dictDefaultMessage: "Agrege los archivos de la tarea",
-                        addRemoveLinks: true,
-                        dictRemoveFile: "Eliminar archivo",
-                        // maxfilesexceeded: 5024,
-                        maxFilesize: 5,
-                        dictFileTooBig: "El tamaño maximo de archivos es de 5MB.",
-                        // autoProcessQueue: false,
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        },
-                        success: function (file, response) {
-                            $('#goUpHomeworkCourseModal .modal-body form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
-                            uploadedDocumentMap[file.name] = response.name
-                        },
-                        removedfile: function (file) {
-
-                            var name = ''
-                            if (typeof file.file_name !== 'undefined') {
-                                name = file.file_name
-                            } else {
-                                name = uploadedDocumentMap[file.name]
-                            }
-
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                                },
-                                type: 'POST',
-                                url: '/delete_archivo',
-                                data: {filename: name},
-                                success: function (data){
-                                    console.log("File deleted successfully!!");
-                                },
-                                error: function(e) {
-                                    console.log(e);
-                                }
-                            });
-                            file.previewElement.remove()
-
-                            $('#goUpHomeworkCourseModal .modal-body form').find('input[name="document[]"][value="' + name + '"]').remove()
-                        }
-                    });
-                });
-                var editor = new FroalaEditor('#textarea textarea', {
-                    language: 'es',
-                    fontFamilyDefaultSelection: 'Font',
-                    fontFamily: {
-                        'Arial,Helvetica,sans-serif': 'Arial',
-                        'Georgia,serif': 'Georgia',
-                        'Impact,Charcoal,sans-serif': 'Impact',
-                        'Tahoma,Geneva,sans-serif': 'Tahoma',
-                        "'Times New Roman',Times,serif": 'Times New Roman',
-                        'Verdana,Geneva,sans-serif': 'Verdana',
-                        "'Open Sans Condensed',sans-serif": 'Open Sans Condensed',
-                        "'Century Gothic', Futura, sans-serif": 'Century Gothic'
-                    }
-                } );
-            }
-            $(document).on('click','.go_up_homework_course',function(){
-                var id = $(this).data('homework')
-                var html = `@csrf
-                            <div class="row">
-                                <input type="hidden" name="id_homework" value="${id}">
-                                <div class="form-group col-lg-12">
-                                    <div class="input-effect sm2_mb_20 md_mb_20">
-                                        <div class="dropzone dropzone-previews" id="my-awesome-dropzone"></div><br>
-                                    </div>
-                                </div>
-                                <div class="form-group col-lg-12">
-                                    <div class="input-effect sm2_mb_20 md_mb_20">
-                                        <div class="form-group" id="textarea">
-                                            <textarea id="texto" name="description" id="description"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`
-                $('#goUpHomeworkCourseModal .modal-body form').html(html)
-                option_homework()
-                $('#goUpHomeworkCourseModal').modal('show')
-            })
-            $(document).on('click','#goUpHomeworkCourseModal .modal-body #submit', function(){
-                $.ajax({
-                    url: '/subir_tarea',
-                    type: 'post',
-                    data: $('#goUpHomeworkCourseModal .modal-body form').serialize(),
-                    success:function(dato){
-                        if(dato == 1){
-                            $('#submit-all').trigger('click')
-                            $('#goUpHomeworkCourseModal').modal('hide')
-                        }
-                    }
-                })
             })
         </script>
     </body>
-</html>
+</html><?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/repositorio/index-exam.blade.php ENDPATH**/ ?>

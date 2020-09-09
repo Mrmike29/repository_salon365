@@ -2,44 +2,40 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-{{--    <link rel="icon" href="public/uploads/settings/favicon.png" type="image/png">--}}
+
     <title>Goova  <?= ($_SERVER['REQUEST_URI'] != '/' ? '| ' . ucwords(preg_replace(["/[\/]/", "/[-]/", "/[_]/"], ['', ' ', ' '], explode("/", "$_SERVER[REQUEST_URI]")[1])) : '') ?></title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/bootstrap.css')); ?>">
 
 
-    <link rel="stylesheet" href="{{asset('css/jquery-ui.css')}}">
-    <link rel="stylesheet" href="{{asset('css/jquery.data-tables.css')}}">
-    <link rel="stylesheet" href="{{asset('css/buttons.dataTables.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/rowReorder.dataTables.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/responsive.dataTables.min.css')}}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/jquery-ui.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/jquery.data-tables.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/buttons.dataTables.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/rowReorder.dataTables.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/responsive.dataTables.min.css')); ?>">
 
 
-    <link rel="stylesheet" href="{{asset('css/bootstrap-datepicker.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/themify-icons.css')}}">
-    <link rel="stylesheet" href="{{asset('css/flaticon.css')}}">
-    <link rel="stylesheet" href="{{asset('icofont/icofont.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/nice-select.css')}}">
-    <link rel="stylesheet" href="{{asset('css/magnific-popup.css')}}">
-    <link rel="stylesheet" href="{{asset('css/fastselect.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/toastr.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/select2.css')}}">
-    <link rel="stylesheet" href="{{asset('css/fullcalendar.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/overhang.min.css')}}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/bootstrap-datepicker.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/bootstrap-datetimepicker.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/themify-icons.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/flaticon.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('icofont/icofont.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/font-awesome.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/nice-select.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/magnific-popup.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/fastselect.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/toastr.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/select2.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/fullcalendar.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/overhang.min.css')); ?>">
 
-    <link rel="stylesheet" href="{{asset('css/loade.css')}}">
-    <link rel="stylesheet" href="{{asset('css/goova.css')}}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/loade.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/goova.css')); ?>">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css">
 
-
-    
-
-    
     <style>
         .dataTables_wrapper .dataTables_paginate .paginate_button.current,
         .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
@@ -145,8 +141,6 @@
         }
     </style>
 
-    <script type="text/javascript" src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
-
     <script type="text/javascript">
         const cl = [], root = document.documentElement, t = localStorage.getItem('template');
 
@@ -162,27 +156,12 @@
         cl['pink'] = {1: '#FF00FF', 2: '#BF00BF', 3: '#800080', 4: '#727373'}
         cl['yellow'] = {1: '#FFFF00', 2: '#E6E600', 3: '#bfbf00', 4: '#727373'}
 
-        $.ajax({
-            type: 'GET',
-            url: '/get-e-c'
-        }).done(function(data) {
-            const e = data.e.color;
-            if(t !== null) {
-                root.style.setProperty('--g-first', cl[e][1]);
-                root.style.setProperty('--g-second', cl[e][2]);
-                root.style.setProperty('--g-third', cl[e][3]);
-                root.style.setProperty('--g-fourth', cl[e][4]);
-            } else {
-                if(t === e) return false;
-
-                localStorage.setItem('template', e);
-
-                root.style.setProperty('--g-first', cl[e][1]);
-                root.style.setProperty('--g-second', cl[e][2]);
-                root.style.setProperty('--g-third', cl[e][3]);
-                root.style.setProperty('--g-fourth', cl[e][4]);
-            }
-        });
+        if(t !== null){
+            root.style.setProperty('--g-first', cl[t][1]);
+            root.style.setProperty('--g-second', cl[t][2]);
+            root.style.setProperty('--g-third', cl[t][3]);
+            root.style.setProperty('--g-fourth', cl[t][4]);
+        }
 
         function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : (event.keyCode);
@@ -192,3 +171,4 @@
             return true;
         }
     </script>
+<?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/includes/head.blade.php ENDPATH**/ ?>
