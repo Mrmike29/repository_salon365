@@ -1,97 +1,736 @@
 <?php
 
+namespace App\Http\Controllers;
 
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Response;
 
-// Include the main TCPDF library (search for installation path).
-require_once('TCPDF/examples/tcpdf_include.php');
-
-class PdfController extends TCPDF {
-
-    //Page header
-    public function Header() {
-        // Logo
-        $image_file = K_PATH_IMAGES.'logo_example.jpg';
-        $this->Image($image_file, 10, 10, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-        // Set font
-        $this->SetFont('helvetica', 'B', 20);
-        // Title
-        $this->Cell(0, 15, '<< TCPDF Example 003 >>', 0, false, 'C', 0, '', 0, false, 'M', 'M');
-    }
-
-    // Page footer
-    public function Footer() {
-        // Position at 15 mm from bottom
-        $this->SetY(-15);
-        // Set font
-        $this->SetFont('helvetica', 'I', 8);
-        // Page number
-        $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
-    }
+class PdfController {
 
     function getPdf () {
-        // create new PDF document
-        $pdf = new PdfController(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $id = 3;
+        $u = DB::table('users AS U')
+            ->join('entity AS E', 'E.id', 'U.id_info_entity')
+            ->join('users_list_students AS ULS', 'ULS.id_users', 'U.id')
+            ->join('list_students AS LS', 'LS.id', 'ULS.id_list_students')
+            ->where('U.id', $id)
+            ->select(
+                'E.name AS institution_name',
+                'E.document AS institution_nit',
+                'LS.name AS course_name',
+                'U.name AS student_name',
+                'U.last_name AS student_lastname'
+            )
+            ->first();
 
-// set document information
-        $pdf->SetCreator(PDF_CREATOR);
-        $pdf->SetAuthor('Nicola Asuni');
-        $pdf->SetTitle('TCPDF Example 003');
-        $pdf->SetSubject('TCPDF Tutorial');
-        $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+//        dd($u->e_name);
 
-// set default header data
-        $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
+        $html =
+            '<style>
+                .l-header { font-size: 8px;}
+                .l-body { font-size: 8px;}
+                .l-content { font-size: 6px; }
+                .img-container { width: 10%;}
+                .upp { text-transform: uppercase; }
+                .bt { border-top: 1px solid black; }
+                .br { border-right: 1px solid black; }
+                .bb { border-bottom: 1px solid black; }
+                .bl { border-left: 1px solid black; }
+            </style>
+            <table cellpadding="0" cellspacing="0" style="width:600px; border: 1px solid black">
+                <tr>
+                    <td class="img-container bb" rowspan="5">
+                        <img style="width: 55px; height: 45px;" src="https://www.goova.co/img/logo.png" alt="">
+                    </td>
+                    <td class="l-header bb bl" style=" width: 80%; font-size: 8px" colspan="3" align="center">
+                        <b class="upp">Institución Educativa ' . $u->institution_name . '</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bl" style="width: 80%; font-size: 6px" colspan="3" align="center">
+                        Reconocimiento oficial según Resolucion No. 1688 del 3 de septiembre del 2002 expedida por la Secrataria de Educación Departamental
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-header bt br bb bl" style="width: 65%; " align="left">
+                        <b>Estudiante: </b>' . $u->student_name . ' ' . $u->student_lastname . '
+                    </td>
+                    <td class="l-header bt" style="width: 15%; " align="left">
+                        <b>Periodo: </b>1 - 2020
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-header br bb bl" style="width: 65%; " align="left">
+                        <b>Curso: </b>' . $u->course_name . '
+                    </td>
+                    <td class="l-header bb" style="width: 15%;" align="left">
+                        <b>Página: </b>1
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-header" style="width: 80%; border: 1px solid black;" align="left">
+                        <b>NIT: </b>' . $u->institution_nit . '
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" style="width: 20%;" align="left">
+                        <b class="upp l-content">Matemáticas</b>
+                    </td>
+                    <td class="l-body" style="width: 7%;" align="left">
+                        <b class="upp l-content">Docente:</b>
+                    </td>
+                    <td class="l-body" style="width: 28%;" align="center">
+                        <b class="upp l-content">pnombre snombre papellido sapellido</b>
+                    </td>
+                    <td class="l-body" style="width: 3%;" align="left">
+                        <b class="upp l-content">IHS:</b>
+                    </td>
+                    <td class="l-body" style="width: 8%;" align="center">
+                        <b class="upp l-content">4</b>
+                    </td>
+                    <td class="l-body" style="width: 3%;" align="left">
+                        <b class="upp l-content">FA:</b>
+                    </td>
+                    <td class="l-body" style="width: 8%;" align="left">
+                        <b class="upp l-content">0</b>
+                    </td>
+                    <td class="l-body" style="width: 3%;" align="left">
+                        <b class="upp l-content">4.7</b>
+                    </td>
+                    <td class="l-body" style="width: 2%;" align="left">
+                        <b class="upp l-content">-</b>
+                    </td>
+                    <td class="l-body" style="width: 8%;" align="center">
+                        <b class="upp l-content">superior</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Cognitivo
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" style="width:4%;" align="center">
+                    </td>
+                    <td class="l-body" style="width:82%;" colspan="10"><p style="font-weight: normal;font-size: 6px">Casi siempre consulta a través de recursos tecnológicos los principales eventos biológicos y geológicos que han ocurrido desde la formación del planeta hasta nuestros días.
+                    <br><br>Diferencia cada una de las estructuras y organelos que constituyen las células animal y vegetal. con su respectiva función.
+                    <br><br>Identifica los tipos de transporte de sustancias a través de la membrana según su función.
+                    <br><br>Casi siempre conoce las hipótesis y teorías que explican el origen de la vida y, comprendo en qué consiste la evolución de los organismos.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Personal
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Social
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body bt" style="width: 20%;" align="left">
+                        <b class="upp l-content">Matemáticas</b>
+                    </td>
+                    <td class="l-body bt" style="width: 7%;" align="left">
+                        <b class="upp l-content">Docente:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 28%;" align="center">
+                        <b class="upp l-content">pnombre snombre papellido sapellido</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">IHS:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">4</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">FA:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="left">
+                        <b class="upp l-content">0</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">4.7</b>
+                    </td>
+                    <td class="l-body bt" style="width: 2%;" align="left">
+                        <b class="upp l-content">-</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">superior</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Cognitivo
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" style="width:4%;" align="center">
+                    </td>
+                    <td class="l-body" style="width:82%;" colspan="10"><p style="font-weight: normal;font-size: 6px">Casi siempre consulta a través de recursos tecnológicos los principales eventos biológicos y geológicos que han ocurrido desde la formación del planeta hasta nuestros días.
+                    <br><br>Diferencia cada una de las estructuras y organelos que constituyen las células animal y vegetal. con su respectiva función.
+                    <br><br>Identifica los tipos de transporte de sustancias a través de la membrana según su función.
+                    <br><br>Casi siempre conoce las hipótesis y teorías que explican el origen de la vida y, comprendo en qué consiste la evolución de los organismos.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Personal
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Social
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body bt" style="width: 20%;" align="left">
+                        <b class="upp l-content">Matemáticas</b>
+                    </td>
+                    <td class="l-body bt" style="width: 7%;" align="left">
+                        <b class="upp l-content">Docente:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 28%;" align="center">
+                        <b class="upp l-content">pnombre snombre papellido sapellido</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">IHS:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">4</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">FA:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="left">
+                        <b class="upp l-content">0</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">4.7</b>
+                    </td>
+                    <td class="l-body bt" style="width: 2%;" align="left">
+                        <b class="upp l-content">-</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">superior</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Cognitivo
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" style="width:4%;" align="center">
+                    </td>
+                    <td class="l-body" style="width:82%;" colspan="10"><p style="font-weight: normal;font-size: 6px">Casi siempre consulta a través de recursos tecnológicos los principales eventos biológicos y geológicos que han ocurrido desde la formación del planeta hasta nuestros días.
+                    <br><br>Diferencia cada una de las estructuras y organelos que constituyen las células animal y vegetal. con su respectiva función.
+                    <br><br>Identifica los tipos de transporte de sustancias a través de la membrana según su función.
+                    <br><br>Casi siempre conoce las hipótesis y teorías que explican el origen de la vida y, comprendo en qué consiste la evolución de los organismos.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Personal
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Social
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body bt" style="width: 20%;" align="left">
+                        <b class="upp l-content">Matemáticas</b>
+                    </td>
+                    <td class="l-body bt" style="width: 7%;" align="left">
+                        <b class="upp l-content">Docente:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 28%;" align="center">
+                        <b class="upp l-content">pnombre snombre papellido sapellido</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">IHS:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">4</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">FA:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="left">
+                        <b class="upp l-content">0</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">4.7</b>
+                    </td>
+                    <td class="l-body bt" style="width: 2%;" align="left">
+                        <b class="upp l-content">-</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">superior</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Cognitivo
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" style="width:4%;" align="center">
+                    </td>
+                    <td class="l-body" style="width:82%;" colspan="10"><p style="font-weight: normal;font-size: 6px">Casi siempre consulta a través de recursos tecnológicos los principales eventos biológicos y geológicos que han ocurrido desde la formación del planeta hasta nuestros días.
+                    <br><br>Diferencia cada una de las estructuras y organelos que constituyen las células animal y vegetal. con su respectiva función.
+                    <br><br>Identifica los tipos de transporte de sustancias a través de la membrana según su función.
+                    <br><br>Casi siempre conoce las hipótesis y teorías que explican el origen de la vida y, comprendo en qué consiste la evolución de los organismos.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Personal
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Social
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body bt" style="width: 20%;" align="left">
+                        <b class="upp l-content">Matemáticas</b>
+                    </td>
+                    <td class="l-body bt" style="width: 7%;" align="left">
+                        <b class="upp l-content">Docente:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 28%;" align="center">
+                        <b class="upp l-content">pnombre snombre papellido sapellido</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">IHS:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">4</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">FA:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="left">
+                        <b class="upp l-content">0</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">4.7</b>
+                    </td>
+                    <td class="l-body bt" style="width: 2%;" align="left">
+                        <b class="upp l-content">-</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">superior</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Cognitivo
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" style="width:4%;" align="center">
+                    </td>
+                    <td class="l-body" style="width:82%;" colspan="10"><p style="font-weight: normal;font-size: 6px">Casi siempre consulta a través de recursos tecnológicos los principales eventos biológicos y geológicos que han ocurrido desde la formación del planeta hasta nuestros días.
+                    <br><br>Diferencia cada una de las estructuras y organelos que constituyen las células animal y vegetal. con su respectiva función.
+                    <br><br>Identifica los tipos de transporte de sustancias a través de la membrana según su función.
+                    <br><br>Casi siempre conoce las hipótesis y teorías que explican el origen de la vida y, comprendo en qué consiste la evolución de los organismos.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Personal
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Social
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body bt" style="width: 20%;" align="left">
+                        <b class="upp l-content">Matemáticas</b>
+                    </td>
+                    <td class="l-body bt" style="width: 7%;" align="left">
+                        <b class="upp l-content">Docente:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 28%;" align="center">
+                        <b class="upp l-content">pnombre snombre papellido sapellido</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">IHS:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">4</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">FA:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="left">
+                        <b class="upp l-content">0</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">4.7</b>
+                    </td>
+                    <td class="l-body bt" style="width: 2%;" align="left">
+                        <b class="upp l-content">-</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">superior</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Cognitivo
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" style="width:4%;" align="center">
+                    </td>
+                    <td class="l-body" style="width:82%;" colspan="10"><p style="font-weight: normal;font-size: 6px">Casi siempre consulta a través de recursos tecnológicos los principales eventos biológicos y geológicos que han ocurrido desde la formación del planeta hasta nuestros días.
+                    <br><br>Diferencia cada una de las estructuras y organelos que constituyen las células animal y vegetal. con su respectiva función.
+                    <br><br>Identifica los tipos de transporte de sustancias a través de la membrana según su función.
+                    <br><br>Casi siempre conoce las hipótesis y teorías que explican el origen de la vida y, comprendo en qué consiste la evolución de los organismos.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Personal
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Social
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body bt" style="width: 20%;" align="left">
+                        <b class="upp l-content">Matemáticas</b>
+                    </td>
+                    <td class="l-body bt" style="width: 7%;" align="left">
+                        <b class="upp l-content">Docente:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 28%;" align="center">
+                        <b class="upp l-content">pnombre snombre papellido sapellido</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">IHS:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">4</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">FA:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="left">
+                        <b class="upp l-content">0</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">4.7</b>
+                    </td>
+                    <td class="l-body bt" style="width: 2%;" align="left">
+                        <b class="upp l-content">-</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">superior</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Cognitivo
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" style="width:4%;" align="center">
+                    </td>
+                    <td class="l-body" style="width:82%;" colspan="10"><p style="font-weight: normal;font-size: 6px">Casi siempre consulta a través de recursos tecnológicos los principales eventos biológicos y geológicos que han ocurrido desde la formación del planeta hasta nuestros días.
+                    <br><br>Diferencia cada una de las estructuras y organelos que constituyen las células animal y vegetal. con su respectiva función.
+                    <br><br>Identifica los tipos de transporte de sustancias a través de la membrana según su función.
+                    <br><br>Casi siempre conoce las hipótesis y teorías que explican el origen de la vida y, comprendo en qué consiste la evolución de los organismos.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Personal
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body bb" style="width: 90%" colspan="15">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Social
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body bt" style="width: 20%;" align="left">
+                        <b class="upp l-content">Matemáticas</b>
+                    </td>
+                    <td class="l-body bt" style="width: 7%;" align="left">
+                        <b class="upp l-content">Docente:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 28%;" align="center">
+                        <b class="upp l-content">pnombre snombre papellido sapellido</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">IHS:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">4</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">FA:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="left">
+                        <b class="upp l-content">0</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">4.7</b>
+                    </td>
+                    <td class="l-body bt" style="width: 2%;" align="left">
+                        <b class="upp l-content">-</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">superior</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Cognitivo
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" style="width:4%;" align="center">
+                    </td>
+                    <td class="l-body" style="width:82%;" colspan="10"><p style="font-weight: normal;font-size: 6px">Casi siempre consulta a través de recursos tecnológicos los principales eventos biológicos y geológicos que han ocurrido desde la formación del planeta hasta nuestros días.
+                    <br><br>Diferencia cada una de las estructuras y organelos que constituyen las células animal y vegetal. con su respectiva función.
+                    <br><br>Identifica los tipos de transporte de sustancias a través de la membrana según su función.
+                    <br><br>Casi siempre conoce las hipótesis y teorías que explican el origen de la vida y, comprendo en qué consiste la evolución de los organismos.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Personal
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Social
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body bt" style="width: 20%;" align="left">
+                        <b class="upp l-content">Matemáticas</b>
+                    </td>
+                    <td class="l-body bt" style="width: 7%;" align="left">
+                        <b class="upp l-content">Docente:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 28%;" align="center">
+                        <b class="upp l-content">pnombre snombre papellido sapellido</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">IHS:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">4</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">FA:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="left">
+                        <b class="upp l-content">0</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">4.7</b>
+                    </td>
+                    <td class="l-body bt" style="width: 2%;" align="left">
+                        <b class="upp l-content">-</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">superior</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Cognitivo
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" style="width:4%;" align="center">
+                    </td>
+                    <td class="l-body" style="width:82%;" colspan="10"><p style="font-weight: normal;font-size: 6px">Casi siempre consulta a través de recursos tecnológicos los principales eventos biológicos y geológicos que han ocurrido desde la formación del planeta hasta nuestros días.
+                    <br><br>Diferencia cada una de las estructuras y organelos que constituyen las células animal y vegetal. con su respectiva función.
+                    <br><br>Identifica los tipos de transporte de sustancias a través de la membrana según su función.
+                    <br><br>Casi siempre conoce las hipótesis y teorías que explican el origen de la vida y, comprendo en qué consiste la evolución de los organismos.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Personal
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Social
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body bt" style="width: 20%;" align="left">
+                        <b class="upp l-content">Matemáticas</b>
+                    </td>
+                    <td class="l-body bt" style="width: 7%;" align="left">
+                        <b class="upp l-content">Docente:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 28%;" align="center">
+                        <b class="upp l-content">pnombre snombre papellido sapellido</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">IHS:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">4</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">FA:</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="left">
+                        <b class="upp l-content">0</b>
+                    </td>
+                    <td class="l-body bt" style="width: 3%;" align="left">
+                        <b class="upp l-content">4.7</b>
+                    </td>
+                    <td class="l-body bt" style="width: 2%;" align="left">
+                        <b class="upp l-content">-</b>
+                    </td>
+                    <td class="l-body bt" style="width: 8%;" align="center">
+                        <b class="upp l-content">superior</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Cognitivo
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" style="width:4%;" align="center">
+                    </td>
+                    <td class="l-body" style="width:82%;" colspan="10"><p style="font-weight: normal;font-size: 6px">Casi siempre consulta a través de recursos tecnológicos los principales eventos biológicos y geológicos que han ocurrido desde la formación del planeta hasta nuestros días.
+                    <br><br>Diferencia cada una de las estructuras y organelos que constituyen las células animal y vegetal. con su respectiva función.
+                    <br><br>Identifica los tipos de transporte de sustancias a través de la membrana según su función.
+                    <br><br>Casi siempre conoce las hipótesis y teorías que explican el origen de la vida y, comprendo en qué consiste la evolución de los organismos.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Personal
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l-body" colspan="10">
+                        <b style="font-size: 6px">
+                            &nbsp;&nbsp;&nbsp;
+                            Desempeño Social
+                        </b>
+                    </td>
+                </tr>
+            </table>';
 
-// set header and footer fonts
-        $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-// set default monospaced font
-        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
-// set margins
-        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-
-// set auto page breaks
-        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-
-// set image scale factor
-        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
-// set some language-dependent strings (optional)
-        if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-            require_once(dirname(__FILE__).'/lang/eng.php');
-            $pdf->setLanguageArray($l);
-        }
-
-// ---------------------------------------------------------
-
-// set font
-        $pdf->SetFont('times', 'BI', 12);
-
-// add a page
-        $pdf->AddPage();
-
-// set some text to print
-        $txt = <<<EOD
-TCPDF Example 003
-
-Custom page header and footer are defined by extending the TCPDF class and overriding the Header() and Footer() methods.
-EOD;
-
-// print a block of text using Write()
-        $pdf->Write(0, $txt, '', 0, 'C', true, 0, false, false, 0);
-
-// ---------------------------------------------------------
-
-//Close and output PDF document
-        $pdf->Output('example_003.pdf', 'I');
+        PDF::SetTitle('Boletín de Notas');
+        PDF::AddPage();
+        PDF::writeHTML($html, true, false, true, false, '');
+        PDF::Output('hello_world.pdf');
     }
 }

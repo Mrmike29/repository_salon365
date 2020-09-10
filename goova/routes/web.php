@@ -149,6 +149,7 @@ Route::middleware(['auth'])->group(function () {
 
     /** PDF */
     Route::get('/pdf', 'PdfController@getPdf');
+    Route::get('/pdf-view', function () { return view('boletin/bulletin'); });
 
     /* VIDEOCHAT */
     Route::get('/listar/sala','SalaController@index');
