@@ -23,6 +23,7 @@ use App\Question_multiple;
 use App\Questions_students;
 use App\Parcial_notes;
 use App\Notes_exam;
+use App\Notes_homework;
 use DB;
 use Auth;
 use Mail;
@@ -122,9 +123,18 @@ class RepositorioController extends Controller
                                 ->join('list_students','list_students.id','course.id_list_students')
                                 ->leftJoin('users_list_students','users_list_students.id_list_students','list_students.id')
                                 ->join('users','users.id','teacher_course.id_users')
-                                ->leftJoin('homework_course','homework_course.id_homework','homework.id')
-                                ->leftJoin('homework_course as homework_course_2','homework_course_2.id_student','users_list_students.id_users')
-                                ->select('themes_time.name as name_theme','users.name as name_students','users.last_name as last_name_students','homework.id as id_homework','homework.limit_time','homework_course.id as id_homework_course','homework_course_2.id as id_homework_course_2')
+                                ->leftJoin('homework_course', function ($join) {
+                                    $join->on('homework_course.id_homework', '=', 'homework.id');
+                                    $join->on('homework_course.id_student', '=', 'users_list_students.id_users');
+                                })
+                                // ->leftJoin('homework_course','homework_course.id_homework','homework.id')
+                                // ->leftJoin('homework_course as homework_course_2','homework_course_2.id_student','users_list_students.id_users')
+                                ->leftJoin('notes_homework', function ($join) {
+                                    $join->on('notes_homework.id_homework', '=', 'homework.id');
+                                    $join->on('notes_homework.id_student', '=', 'users_list_students.id_users');
+                                })
+                                ->leftJoin('parcial_notes','parcial_notes.id','notes_homework.id_parcial_notes')
+                                ->select('themes_time.name as name_theme','users.name as name_students','users.last_name as last_name_students','homework.id as id_homework','homework.limit_time','homework_course.id as id_homework_course','parcial_notes.value as nota')
                                 ->where('themes_time.id_subject',$subject)
                                 ->where('users_list_students.id_users',Auth::user()->id)
                                 ->where('homework.start_time','<=',$hoy)
@@ -133,7 +143,9 @@ class RepositorioController extends Controller
             foreach ($tareas as $key => $val) {
                 $val->name_teacher = $val->name_students.' '.$val->last_name_students;
                 $val->limit_time = date('Y-m-d',strtotime($val->limit_time));
-                if($val->id_homework_course && $val->id_homework_course_2){
+                if($val->nota){
+                    $val->status = "Calificado";
+                }elseif($val->id_homework_course){
                     $val->status = "Entregado";
                 }elseif(date('Y-m-d',strtotime($val->limit_time)) < date('Y-m-d')){
                     $val->status = "Vencido";
@@ -142,7 +154,7 @@ class RepositorioController extends Controller
                 }
                 $data[] = $val;
                 $val->id_homework = encrypt($val->id_homework);
-                if($val->id_homework_course && $val->id_homework_course_2){
+                if($val->id_homework_course){
                     $val->id_homework_course = encrypt($val->id_homework_course);
                 }else{
                     $val->id_homework_course = null;
@@ -158,9 +170,18 @@ class RepositorioController extends Controller
                                 ->join('list_students','list_students.id','course.id_list_students')
                                 ->leftJoin('users_list_students','users_list_students.id_list_students','list_students.id')
                                 ->join('users','users.id','users_list_students.id_users')
-                                ->leftJoin('homework_course','homework_course.id_homework','homework.id')
-                                ->leftJoin('homework_course as homework_course_2','homework_course_2.id_student','users.id')
-                                ->select('themes_time.name as name_theme','subjects.name as name_subject','users.name as name_students','users.last_name as last_name_students','list_students.name as name_list','homework.id as id_homework','homework.limit_time','homework_course.id as id_homework_course','homework_course_2.id as id_homework_course_2')
+                                ->leftJoin('homework_course', function ($join) {
+                                    $join->on('homework_course.id_homework', '=', 'homework.id');
+                                    $join->on('homework_course.id_student', '=', 'users.id');
+                                })
+                                // ->leftJoin('homework_course','homework_course.id_homework','homework.id')
+                                // ->leftJoin('homework_course as homework_course_2','homework_course_2.id_student','users.id')
+                                ->leftJoin('notes_homework', function ($join) {
+                                    $join->on('notes_homework.id_homework', '=', 'homework.id');
+                                    $join->on('notes_homework.id_student', '=', 'users.id');
+                                })
+                                ->leftJoin('parcial_notes','parcial_notes.id','notes_homework.id_parcial_notes')
+                                ->select('themes_time.name as name_theme','subjects.name as name_subject','users.id as id_user','users.name as name_students','users.last_name as last_name_students','list_students.name as name_list','homework.id as id_homework','homework.limit_time','homework_course.id as id_homework_course','parcial_notes.value as nota')
                                 ->where('teacher_course.id_subjects',$subject)
                                 ->where('teacher_course.id_users',$id_user)
                                 ->where('homework.id_theme_time',$theme)
@@ -169,7 +190,9 @@ class RepositorioController extends Controller
             foreach ($tareas as $key => $val) {
                 $val->name_students = $val->name_students.' '.$val->last_name_students;
                 $val->limit_time = date('Y-m-d',strtotime($val->limit_time));
-                if($val->id_homework_course && $val->id_homework_course_2){
+                if($val->nota){
+                    $val->status = "Calificado";
+                }elseif($val->id_homework_course){
                     $val->status = "Entregado";
                 }elseif(date('Y-m-d',strtotime($val->limit_time)) < date('Y-m-d')){
                     $val->status = "Vencido";
@@ -178,7 +201,7 @@ class RepositorioController extends Controller
                 }
                 $data[] = $val;
                 $val->id_homework = encrypt($val->id_homework);
-                if($val->id_homework_course && $val->id_homework_course_2){
+                if($val->id_homework_course){
                     $val->id_homework_course = encrypt($val->id_homework_course);
                 }else{
                     $val->id_homework_course = null;
@@ -191,7 +214,7 @@ class RepositorioController extends Controller
 
     public function search_homework($id)
     {
-        $id = tt($id);
+        $id = decrypt($id);
         $tarea = Homework::find($id);
         $archivos = Archives_homework::where('id_homework',$id)->get();
 
@@ -271,7 +294,7 @@ class RepositorioController extends Controller
         $remove = '<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>';
 
         $tareas = new Homework_course();
-        $tareas->id_homework = $request->id_homework;
+        $tareas->id_homework = decrypt($request->id_homework);
         $tareas->id_course = $course->id;
         $tareas->id_student = $id_user;
         $tareas->description = str_replace($remove,'',$request->description);
@@ -287,6 +310,21 @@ class RepositorioController extends Controller
         }
 
         return 1;
+    }
+
+    public function store_note_homework(Request $request)
+    {
+        $nota = new Parcial_notes();
+        $nota->value = $request->note;
+        $nota->save();
+
+        $nota_tarea = new Notes_homework();
+        $nota_tarea->id_homework = decrypt($request->homework);
+        $nota_tarea->id_student = $request->user;
+        $nota_tarea->id_parcial_notes = $nota->id;
+        $nota_tarea->save();
+
+        return $request->note;
     }
 
     public function store_homework(Request $request)
@@ -532,6 +570,19 @@ class RepositorioController extends Controller
         return json_encode($data);
     }
 
+    public function view_questions_exams(Request $request)
+    {
+        $id_exam = decrypt($request->id);
+        $examen = Exam::find($id_exam);
+        $preguntas = Questions::where('id_exam',$id_exam)->get();
+        $preguntas_multiples = Question_multiple::join('questions','questions.id','question_multiple.id_question')
+                                                ->select('question_multiple.*')
+                                                ->where('questions.id_exam',$id_exam)
+                                                ->get();
+
+        return view('repositorio.view_questions_exam',array('examen'=>$examen, 'preguntas'=>$preguntas, 'preguntas_multiples'=>$preguntas_multiples));
+    }
+
     public function index_exam()
     {
         $id_user = Auth::user()->id;
@@ -616,9 +667,15 @@ class RepositorioController extends Controller
                             ->join('list_students','list_students.id','course.id_list_students')
                             ->leftJoin('users_list_students','users_list_students.id_list_students','list_students.id')
                             ->join('users','users.id','teacher_course.id_users')
-                            ->leftJoin('questions_students','questions_students.id_exam','exam.id')
-                            ->leftJoin('questions_students as questions_students_2','questions_students_2.id_users','users_list_students.id_users')
-                            ->select('themes_time.name as name_theme','users_list_students.id_users as id_students','users.name as name_students','users.last_name as last_name_students','exam.id as id_exam','exam.date_end','questions_students.id as id_questions_students','questions_students_2.id as id_questions_students_2')
+                            ->leftJoin('questions_students', function ($join) {
+                                $join->on('questions_students.id_exam', '=', 'exam.id');
+                                $join->on('questions_students.id_users', '=', 'users_list_students.id_users');
+                            })
+                            ->leftJoin('notes_exam', function ($join) {
+                                $join->on('notes_exam.id_exam', '=', 'exam.id');
+                                $join->on('notes_exam.id_student', '=', 'users_list_students.id_users');
+                            })
+                            ->select('themes_time.name as name_theme','users_list_students.id_users as id_students','users.name as name_students','users.last_name as last_name_students','exam.id as id_exam','exam.date_end','questions_students.id as id_questions_students','notes_exam.id as id_nota')
                             ->where('themes_time.id_subject',$subject)
                             ->where('users_list_students.id_users',Auth::user()->id)
                             ->where('exam.date_start','<=',$hoy)
@@ -627,7 +684,9 @@ class RepositorioController extends Controller
             foreach ($tareas as $key => $val) {
                 $val->name_teacher = $val->name_students.' '.$val->last_name_students;
                 $val->date_end = date('Y-m-d',strtotime($val->date_end));
-                if($val->id_questions_students && $val->id_questions_students_2){
+                if($val->id_nota){
+                    $val->status = "Calificado";
+                }elseif($val->id_questions_students){
                     $val->status = "Entregado";
                 }elseif(date('Y-m-d',strtotime($val->date_end)) < date('Y-m-d')){
                     $val->status = "Vencido";
@@ -636,7 +695,7 @@ class RepositorioController extends Controller
                 }
                 $data[] = $val;
                 $val->id_exam = encrypt($val->id_exam);
-                if($val->id_questions_students && $val->id_questions_students_2){
+                if($val->id_questions_students){
                     $val->id_questions_students = encrypt($val->id_questions_students);
                 }else{
                     $val->id_questions_students = null;
@@ -651,9 +710,15 @@ class RepositorioController extends Controller
                             ->join('list_students','list_students.id','course.id_list_students')
                             ->leftJoin('users_list_students','users_list_students.id_list_students','list_students.id')
                             ->join('users','users.id','users_list_students.id_users')
-                            ->leftJoin('questions_students','questions_students.id_exam','exam.id')
-                            ->leftJoin('questions_students as questions_students_2','questions_students_2.id_users','users.id')
-                            ->select('themes_time.name as name_theme','subjects.name as name_subject','users.id as id_students','users.name as name_students','users.last_name as last_name_students','list_students.name as name_list','exam.id as id_exam','exam.date_end','questions_students.id as id_questions_students','questions_students_2.id as id_questions_students_2')
+                            ->leftJoin('questions_students', function ($join) {
+                                $join->on('questions_students.id_exam', '=', 'exam.id');
+                                $join->on('questions_students.id_users', '=', 'users.id');
+                            })
+                            ->leftJoin('notes_exam', function ($join) {
+                                $join->on('notes_exam.id_exam', '=', 'exam.id');
+                                $join->on('notes_exam.id_student', '=', 'users.id');
+                            })
+                            ->select('themes_time.name as name_theme','subjects.name as name_subject','users.id as id_students','users.name as name_students','users.last_name as last_name_students','list_students.name as name_list','exam.id as id_exam','exam.date_end','questions_students.id as id_questions_students','notes_exam.id as id_nota')
                             ->where('teacher_course.id_subjects',$subject)
                             ->where('teacher_course.id_users',$id_user)
                             ->where('exam.id_theme_time',$theme)
@@ -662,7 +727,9 @@ class RepositorioController extends Controller
             foreach ($tareas as $key => $val) {
                 $val->name_students = $val->name_students.' '.$val->last_name_students;
                 $val->date_end = date('Y-m-d',strtotime($val->date_end));
-                if($val->id_questions_students && $val->id_questions_students_2){
+                if($val->id_nota){
+                    $val->status = "Calificado";
+                }elseif($val->id_questions_students){
                     $val->status = "Entregado";
                 }elseif(date('Y-m-d',strtotime($val->date_end)) < date('Y-m-d')){
                     $val->status = "Vencido";
@@ -671,8 +738,8 @@ class RepositorioController extends Controller
                 }
                 $data[] = $val;
                 $val->id_exam = encrypt($val->id_exam);
-                if($val->id_questions_students && $val->id_questions_students){
-                    $val->id_questions_students = encrypt($val->id_questions_students_2);
+                if($val->id_questions_students){
+                    $val->id_questions_students = encrypt($val->id_questions_students);
                 }else{
                     $val->id_questions_students = null;
                 }
@@ -680,6 +747,42 @@ class RepositorioController extends Controller
             }
         }
         return json_encode($data);
+    }
+
+    public function view_answers_exams($id, $user)
+    {
+        $id = decrypt($id);
+        $info = Questions_students::find($id);
+        $examen = Exam::find($info->id_exam);
+        $preguntas = Questions::leftJoin('questions_students', function ($join) use ($user) {
+                                    $join->on('questions_students.id_questions', '=', 'questions.id');
+                                    $join->on('questions_students.id_users', '=', DB::raw("'".$user."'"));
+                                })
+                                ->select('questions.*', 'questions_students.status')
+                                ->where('questions.id_exam',$info->id_exam)
+                                ->groupBy('questions.id')
+                                ->get();
+        $preguntas_multiples = Question_multiple::join('questions','questions.id','question_multiple.id_question')
+                                                ->leftJoin('questions_students', function ($join) use ($user) {
+                                                    $join->on('questions_students.answer', '=', 'question_multiple.id');
+                                                    $join->on('questions_students.id_users', '=', DB::raw("'".$user."'"));
+                                                })
+                                                ->select('question_multiple.*', 'questions_students.answer')
+                                                ->where('questions.id_exam',$info->id_exam)
+                                                ->get();
+        $respuestas = Questions_students::leftJoin('question_multiple','question_multiple.id','questions_students.answer')
+                                        ->select('questions_students.*')
+                                        ->where('questions_students.id_exam',$info->id_exam)
+                                        ->where('questions_students.id_course',$info->id_course)
+                                        ->where('questions_students.id_users',$user)
+                                        ->get();
+        // dd($preguntas);
+        $nota = Notes_exam::join('parcial_notes','parcial_notes.id','notes_exam.id_parcial_notes')
+                            ->where('id_exam',$info->id_exam)
+                            ->where('id_student',$user)
+                            ->first();
+         
+        return view('repositorio.view_answers_exam',array('preguntas'=>$preguntas, 'preguntas_multiples'=>$preguntas_multiples, 'respuestas'=>$respuestas, 'nota'=>$nota, 'examen'=>$examen, 'info'=>$info));
     }
 
     public function perform_exam(Request $request)

@@ -37,10 +37,8 @@
                                             <div class="dataTables_wrapper no-footer">
                                                 <div class="dataTables_filter">
                                                     <label class="">
+                                                        <i class="ti-search"></i>
                                                         <input type="search" name="search_rubric" id="search_rubric" placeholder="Búsqueda rápida">
-                                                        <a id="search_button">
-                                                            <span class="ti-search"></span>
-                                                        </a>
                                                     </label>
                                                 </div>
                                             </div>
@@ -56,7 +54,6 @@
                                             <thead>
                                             <tr>
                                                 <th>Nombre</th>
-                                                <?php if(1 === 1): ?> <th>Institución</th> <?php endif; ?>
                                                 <th>Acciones</th>
                                             </tr>
                                             </thead>
@@ -99,4 +96,4 @@
         <script type="text/javascript" src="<?php echo e(asset('js/rubrics/index.js')); ?>"></script>
     </body>
 </html>
-<?php /**PATH C:\Users\Desarrollo1\Desktop\Goova\repository_salon365\goova\resources\views/rubricas.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/rubrics/rubricas.blade.php ENDPATH**/ ?>

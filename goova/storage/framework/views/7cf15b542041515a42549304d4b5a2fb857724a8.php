@@ -19,7 +19,7 @@
                 </section>
                 <section class="admin-visitor-area up_st_admin_visitor">
                     <div class="container-fluid p-0">
-                        <form method="POST" action="/store_cursos" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="POST" action="/update_cursos" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             <?php echo csrf_field(); ?>
                             <div class="row">
                                 <div class="col-lg-12">
@@ -30,18 +30,15 @@
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
-                                                                <input class="primary-input form-control" type="text" name="name" value="" required>
+                                                                <input type="hidden" name="id" value="<?php echo e($course->id); ?>">
+                                                                <input class="primary-input form-control" type="text" name="name" value="<?php echo e($course->name); ?>" required>
                                                                 <label>Nombre <span>*</span></label>
                                                                 <span class="focus-border"></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-lg-3">
-                                                    <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <button type="button" class="btn btn-primary plus">Añadir Materia</button>
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                             
                                         </div>
@@ -63,47 +60,12 @@
         </div>
         <?php echo $__env->make('includes.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <script>
-            function subjects(id){
-                var data = []
-                var id_subjects = []
-                $('select[name^=id_subjects]').each(function(k, v){
-                    id_subjects[k] = $(v).val()
-                })
-                var i = 0
-                <?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    if(id_subjects.indexOf("<?php echo e($val->id); ?>") < 0){
-                        data[i] = [<?php echo e($val->id); ?>, '<?php echo e($val->name); ?>']
-                        i++
-                    }
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                var html = `<option data-display="Seleccionar Materia *" value="">Select</option>`
-                $(data).each(function(k, v){
-                    html += `<option value="${v[0]}">${v[1]}</option>`
-                })
-                $('select[name^=id_subjects]').each(function(k, v){
-                    if(!$(v).val()){
-                        $(this).html(html)
-                    }
-                    if(id == $(v).val()){
-                        $(this).html(html)
-                    }
-                })
-                $('select.niceSelect').niceSelect('update');
-            }
-            $(document).on('change','select[name^=id_subjects]',function(){
-                var id = $(this).val()
-                var html = $(this).html()
-                subjects($(this).val())
-                $(this).html(html).val(id)
-                $('select.niceSelect').niceSelect('update');
-
-            })
             $(document).on('click','.plus',function(){
                 var html = `<div class="row mb-30">
                                 <div class="form-group col-lg-5">
                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                         <select class="niceSelect w-100 bb form-control" name="id_subjects[]" id="classSelectStudent" required>
-                                            <option data-display="Seleccionar Materia *" value="">Select</option>
+                                            <option data-display="Seleccionar Asignatura *" value="">Select</option>
                                             <?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <option value="<?php echo e($val->id); ?>"><?php echo e($val->name); ?></option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -129,7 +91,6 @@
                                 </div>
                             </div>`
                 $('#append_campos').append(html)
-                subjects(0)
                 $('select.niceSelect').niceSelect();
             })
             $(document).on('click','.minus',function(){
@@ -138,4 +99,4 @@
         </script>
     </body>
 </html>
-<?php /**PATH C:\Users\Desarrollo1\Desktop\Goova\repository_salon365\goova\resources\views/cursos/create.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/cursos/edit.blade.php ENDPATH**/ ?>

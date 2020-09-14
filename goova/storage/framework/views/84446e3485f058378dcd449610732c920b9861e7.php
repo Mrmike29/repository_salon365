@@ -12,7 +12,7 @@
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
-                            <h1>Agragar Tarea</h1>
+                            <h1>Agregar Tarea</h1>
                         </div>
                     </div>
                 </section>
@@ -39,7 +39,7 @@
                                                 <div class="form-group col-lg-6">
                                                     <div class="input-effect sm2_mb_20 md_mb_20" id="sectionStudentDiv">
                                                         <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects" id="sectionSelectStudent">
-                                                            <option data-display="Seleccionar Materia *" value="">Section *</option>
+                                                            <option data-display="Seleccionar Asignatura *" value="">Section *</option>
                                                         </select>
                                                         <span class="focus-border"></span>
                                                     </div>
@@ -207,7 +207,7 @@
                     url: '/materias_tereas/'+id,
                     type: 'get',
                     success:function(dato){
-                        var html = '<option data-display="Seleccionar Materia *" value="">Section *</option>'
+                        var html = '<option data-display="Seleccionar Asignatura *" value="">Section *</option>'
                         $(dato).each(function(k,v){
                             html += `<option value="${v.id}">${v.subjects} - ${v.teacher} ${v.last_name}</option>`
                         })

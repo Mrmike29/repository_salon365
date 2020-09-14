@@ -74,16 +74,13 @@
             Repositorio
          </a>
          <ul class="collapse list-unstyled" id="subMenuRepositorio">
-            <li>
-               <a href="/tareas">Ver tareas</a>
-            </li>
             @if(Auth::user()->id_rol == 4)
                <li>
                   <a href="/agregar_tareas">Crear tarea</a>
                </li>
             @endif
             <li>
-               <a href="/foros">Ver foros</a>
+               <a href="/tareas">Ver tareas</a>
             </li>
             @if(Auth::user()->id_rol == 4)
                <li>
@@ -91,13 +88,27 @@
                </li>
             @endif
             <li>
-               <a href="/examenes">Ver examenes</a>
+               <a href="/foros">Ver foros</a>
             </li>
             @if(Auth::user()->id_rol == 4)
                <li>
                   <a href="/agregar_examen">Crear examen</a>
                </li>
             @endif
+            @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2 || Auth::user()->id_rol == 4)
+               <li>
+                  <a href="/exams">Ver examenes</a>
+               </li>
+            @endif
+            <li>
+               <a href="/examenes">
+                  @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2 || Auth::user()->id_rol == 4)
+                     Revisar examenes
+                  @else
+                     Ver examenes
+                  @endif
+               </a>
+            </li>
          </ul>
       </li>
       <li>

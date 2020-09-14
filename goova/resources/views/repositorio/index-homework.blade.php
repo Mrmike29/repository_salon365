@@ -25,12 +25,12 @@
                                     <div class="white-box">
                                         <div class="">
                                             <div class="row">
-                                                @if(Auth::user()->id_rol != 4 || Auth::user()->id_rol == 3)
+                                                @if(Auth::user()->id_rol == 2 || Auth::user()->id_rol == 3)
                                                     <div class="form-group col-lg-4">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
                                                             <select class="niceSelect w-100 bb form-control" name="id_teacher" id="id_teacher">
                                                                 <option data-display="Seleccionar Profesor *" value="">Section *</option>
-                                                                @foreach($teacher as $key => $value)
+                                                                @foreach($profesores as $key => $value)
                                                                     <option value="{{$value->id}}">{{$value->name}} {{$value->last_name}}</option>
                                                                 @endforeach
                                                             </select>
@@ -38,7 +38,7 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                <!-- @if(Auth::user()->id_rol <> 5)
+                                                {{-- <!-- @if(Auth::user()->id_rol <> 5)
                                                     <div class="form-group col-lg-4">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
                                                             <select class="niceSelect w-100 bb form-control" name="id_curso" id="id_theme_time">
@@ -50,7 +50,7 @@
                                                             <span class="focus-border"></span>
                                                         </div>
                                                     </div>
-                                                @endif -->
+                                                @endif --> --}}
                                                 <div class="form-group col-lg-4">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects">
@@ -250,8 +250,8 @@
                                     data: "id_homework_course",
                                     render: function (data, type, row, meta) {
                                         @if(Auth::user()->id_rol == 5)
-                                            if(row.status == "Entregado" || row.status == "Vencido"){
-                                                return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
+                                            if(row.status == "Entregado" || row.status == "Vencido" || row.status == "Calificado"){
+                                                return `<button data-id='${data}' data-n=${row.nota} type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
                                             }
                                             if(row.status == "Pendiente"){
                                                 if(data){
@@ -261,7 +261,11 @@
                                                 }
                                             }
                                         @else
-                                            return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
+                                            if(row.status == "Entregado" || row.status == "Vencido" || row.status == "Calificado"){
+                                                return `<button data-id='${data}' data-homework='${row.id_homework}' data-user='${row.id_user}' data-n=${row.nota} type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
+                                            }else{
+                                                return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
+                                            }
                                         @endif
                                     }
                                 },
@@ -394,6 +398,46 @@
             })
             $(document).on('click','.view_homework_course',function(){
                 var id = $(this).data('id')
+                var homework = $(this).data('homework')
+                var user = $(this).data('user')
+                var nota = $(this).data('n')
+                if(nota){
+                    var footer =    `<div class="modal-footer" style="justify-content: unset; display: block;">
+                                        <center>
+                                            <h2>Nota: ${nota}</h2>
+                                        </center>
+                                    </div>`
+                    $('#homeworkCourseModal .modal-footer').remove()
+                    $('#homeworkCourseModal .modal-body').append(footer)
+                }else{
+                    if(homework && user){
+                            var footer =    `<div class="modal-footer" style="justify-content: unset; display: block;">
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <div class="row no-gutters input-right-icon">
+                                                            <div class="col">
+                                                                <div class="input-effect sm2_mb_20 md_mb_20">
+                                                                    <input class="primary-input form-control valid-request" type="text" name="note">
+                                                                    <label>Nota <span></span></label>
+                                                                    <span class="focus-border"></span>
+                                                                </div>
+                                                                <span class="modal_input_validation red_alert"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <button type="button" data-h='${homework}' data-u='${user}' class="primary-btn small goova-bt note-homework" data-toggle="tooltip" title="">
+                                                            Guardar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>`
+                        $('#homeworkCourseModal .modal-footer').remove()
+                        $('#homeworkCourseModal .modal-body').append(footer)
+                    }else{
+                        $('#homeworkCourseModal .modal-footer').remove()
+                    }
+                }
                 if(id){
                     $.ajax({
                         url: '/buscar_tarea_curso/'+id,
@@ -413,6 +457,7 @@
                     $('#homeworkCourseModal .modal-body #archivos').html('')
                     $('#homeworkCourseModal').modal()
                 }
+                $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
             })
             function option_homework()
             {
@@ -511,6 +556,25 @@
                             $('#submit-all').trigger('click')
                             $('#goUpHomeworkCourseModal').modal('hide')
                         }
+                    }
+                })
+            })
+            $(document).on('click','button.note-homework',function(){
+                var homework = $(this).data('h')
+                var user = $(this).data('u')
+                var note = $(this).parent().parent().find('input[name=note]').val()
+                var _token =  $('input[name="_token"]').val()
+                var thiss = $(this)
+                $.ajax({
+                    url: '/crear_nota_tarea',
+                    type: 'post',
+                    data: {homework, user, note, _token},
+                    success:function(dato){
+                        $('#submit-all').trigger('click')
+                        var html = `<center>
+                                        <h2>Nota: ${dato}</h2>
+                                    </center>`
+                        $(thiss).parent().parent().parent().html(html)
                     }
                 })
             })

@@ -44,9 +44,12 @@
                                                         <div class="radio-btn-flex ml-40 row">
                                                             @foreach($respuestas as $k => $v)
                                                                 @if($v->id_questions == $value->id)
-                                                                    @if(!empty($v->description))
+                                                                    {{-- @if(!empty($v->description))
                                                                         <span>{{$v->description}}</span> <span>{{$v->status}}</span><br>
-                                                                    @else
+                                                                    @else --}}
+                                                                        <div class="col-lg-12">
+                                                                            <span>{{$value->answer}}</span>
+                                                                        </div>
                                                                         <div class="col-lg-8">
                                                                             <span>{{$v->answer}}</span>
                                                                         </div>
@@ -60,8 +63,8 @@
                                                                                 <span class="focus-border"></span>
                                                                             </div>
                                                                             <span class="modal_input_validation red_alert"></span>
-                                                                        </div>
-                                                                    @endif
+                                                                        {{-- </div>
+                                                                    @endif --}}
                                                                 @endif
                                                             @endforeach
                                                         </div>

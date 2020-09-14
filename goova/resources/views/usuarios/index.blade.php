@@ -30,7 +30,7 @@
                                                 <th>Nombre</th>
                                                 <th>Correo</th>
                                                 <th>Rol</th>
-                                                <th>Estado</th>
+                                                {{-- <th>Estado</th> --}}
                                                 <th>Telefono</th>
                                                 <th>Dirrección</th>
                                                 <th class="noExport">Acciones</th>
@@ -44,7 +44,7 @@
                                                     <td>{{$val->name}} {{$val->last_name}}</td>
                                                     <td>{{$val->email}}</td>
                                                     <td>{{$val->rol}}</td>
-                                                    <td>{{$val->state}}</td>
+                                                    {{-- <td>{{$val->state}}</td> --}}
                                                     <td>{{$val->phone}}</td>
                                                     <td>{{$val->address}}</td>
                                                     <td>
@@ -54,11 +54,11 @@
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right">
                                                                 <a class="dropdown-item" href="/editar_usuario/{{$val->id}}">Editar</a>
-                                                                @if($val->state == "HABILITADO")
+                                                                {{-- @if($val->state == "HABILITADO")
                                                                     <a class="dropdown-item inhabilitar_user" data-id="{{$val->id}}" data-toggle="modal" data-target="#inhabilitarUserModal" href="#">Inhabilitar</a>
                                                                 @else
                                                                     <a class="dropdown-item habilitar_user" data-id="{{$val->id}}" data-toggle="modal" data-target="#habilitarUserModal" href="#">Habilitar</a>
-                                                                @endif
+                                                                @endif --}}
                                                             </div>
                                                         </div>
                                                     </td>

@@ -38,13 +38,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-lg-3">
+                                                {{-- <div class="form-group col-lg-3">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <button type="button" class="btn btn-primary plus">Añadir Asignatura</button>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
-                                            @foreach($info as $keys => $value)
+                                            {{-- @foreach($info as $keys => $value)
                                                 <div class="row mb-30">
                                                     <div class="form-group col-lg-5">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
@@ -74,7 +74,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endforeach
+                                            @endforeach --}}
                                         </div>
                                         <div class="row mt-40">
                                             <div class="col-lg-12 text-center">

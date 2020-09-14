@@ -76,18 +76,17 @@ class CursosController extends Controller
         $lista->name = $request->name;
         $lista->update();
 
-        Teacher_course::where('id_course',$request->id)->delete();
+        // Teacher_course::where('id_course',$request->id)->delete();
 
-        
-        if(isset($request->id_subjects) && !empty($request->id_subjects)){
-            foreach ($request->id_subjects as $key => $val) {
-                $teacher = new Teacher_course();
-                $teacher->id_users = $request->id_teacher[$key];
-                $teacher->id_subjects = $val;
-                $teacher->id_course = $request->id;
-                $teacher->save();
-            }
-        }
+        // if(isset($request->id_subjects) && !empty($request->id_subjects)){
+        //     foreach ($request->id_subjects as $key => $val) {
+        //         $teacher = new Teacher_course();
+        //         $teacher->id_users = $request->id_teacher[$key];
+        //         $teacher->id_subjects = $val;
+        //         $teacher->id_course = $request->id;
+        //         $teacher->save();
+        //     }
+        // }
 
         return redirect('/cursos');
     }

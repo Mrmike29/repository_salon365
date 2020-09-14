@@ -205,8 +205,14 @@
         </div>
     </div>
 </nav>
-
-<!--<div class="sidebar-colors">
+@if($_SERVER['REQUEST_URI'] !== '/home')
+    <div class="row mb-9">
+        <div class="col-lg-12">
+            <i class="icofont icofont-arrow-left" title="Volver" style="font-size: 25px; color: var(--g-third); cursor: pointer;"></i>
+        </div>
+    </div>
+@endif
+{{-- <div class="sidebar-colors">
     <div class="toggle"></div>
     <div class="scroll">
         <div class="templates-header">
@@ -236,4 +242,4 @@
             </tbody>
         </table>
     </div>
-</div>-->
+</div> --}}

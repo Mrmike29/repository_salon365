@@ -1,3 +1,5 @@
+
+
 <nav class="navbar navbar-expand-lg up_navbar">
     <div class="container-fluid">
         <div class="row">
@@ -48,8 +50,8 @@
                                                         view profile
                                                     </a>
                                                 </li>
-                                                <li>
-                                                    <a href="change-password">
+                                                <li id="password_change">
+                                                    <a href="#change">
                                                         <span class="ti-key"></span>
                                                         Password
                                                     </a>
@@ -76,36 +78,11 @@
         </div>
     </div>
 </nav>
-
-<div class="sidebar-colors">
-    <div class="toggle"></div>
-    <div class="scroll">
-        <div class="templates-header">
-            <h2>Temas</h2>
+<?php if($_SERVER['REQUEST_URI'] !== '/home'): ?>
+    <div class="row mb-9">
+        <div class="col-lg-12">
+            <i class="icofont icofont-arrow-left" title="Volver" style="font-size: 25px; color: var(--g-third); cursor: pointer;"></i>
         </div>
-        <table>
-            <tbody>
-                <tr>
-                    <td><a class="template template-orange" onclick="changeColor('orange')"></a></td>
-                    <td><a class="template template-blue" onclick="changeColor('blue')"></a></td>
-                </tr>
-                <tr>
-                    <td><a class="template template-purple" onclick="changeColor('purple')"></a></td>
-                    <td><a class="template template-red" onclick="changeColor('red')"></a></td>
-                </tr>
-                <tr>
-                    <td><a class="template template-green" onclick="changeColor('green')"></a></td>
-                    <td><a class="template template-cyan" onclick="changeColor('cyan')"></a></td>
-                </tr>
-                <tr>
-                    <td><a class="template template-columbia" onclick="changeColor('columbia')"></a></td>
-                    <td><a class="template template-grey" onclick="changeColor('grey')"></a></td>
-                </tr>
-                <tr>
-                    <td><a class="template template-mixed" onclick="changeColor('mixed')"></a></td>
-                </tr>
-            </tbody>
-        </table>
     </div>
-</div>
+<?php endif; ?>
 <?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/includes/header.blade.php ENDPATH**/ ?>

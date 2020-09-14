@@ -92,6 +92,10 @@
                 </section>
             </div>
         </div>
+        <form style="display: none" action="/ver_preguntas_examen" method="POST" id="form">
+            @csrf
+            <input type="hidden" id="id" name="id" value=""/>
+        </form>
         @include('includes.footer')
         <script>
             $('#show-table').hide()
@@ -143,7 +147,7 @@
                                 { 
                                     data: "id_exam",
                                     render: function (data, type, row, meta) {
-                                        return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_exam_course'>Ver</button>`
+                                        return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_questions_exam'>Ver</button>`
                                     }
                                 }
                             ],
@@ -228,26 +232,15 @@
                     }
                 })
             })
-            // $(document).on('change','select[name=id_subjects]',function(){
-            //     var id = $(this).val()
-            //     if(($('select[name=id_teacher]').length > 0)){
-            //         var teacher = $('select[name=id_teacher]').val()
-            //     }else{
-            //         var teacher = 0
-            //     }
-            //     $.ajax({
-            //         url: '/temas_materias_exam/'+id+'/'+teacher,
-            //         type: 'get',
-            //         success:function(dato){
-            //             var html = '<option data-display="Seleccionar Tema *" value="">Section *</option>'
-            //             $(dato).each(function(k,v){
-            //                 html += `<option value="${v.id}">${v.name} ${v.name_list}</option>`
-            //             })
-            //             $('select[name=id_theme_time]').html(html)
-            //             $('select[name=id_theme_time]').niceSelect('update');
-            //         }
-            //     })
-            // })
+            $(document).on('click','.view_questions_exam',function(){
+                var id = $(this).data('id')
+                $('#form input[name=id]').val(id)
+                $('#form').submit()
+            })
+            $(document).on('change','select[name=id_subjects]',function(){
+                var id = $(this).val()
+                localStorage.setItem('f', id);
+            })
             $(document).on('click','#submit-all',function(){
                 
                 if(table){
@@ -256,6 +249,24 @@
                 tables()
                 $('#show-table').show()
             })
+
+            let filters = localStorage.getItem('f')
+
+            $(document).on('click','.icofont-arrow-left',function(){
+                localStorage.removeItem('f')
+            })
+            // localStorage.setItem('f', 1);
+            // window.onhashchange(function(){
+            //     if(window.history.back()){
+            //         localStorage.removeItem('f')
+            //     }
+            // })
+
+            if(filters !== null) {
+               $('#id_subjects').val(filters); 
+               $('#id_subjects').niceSelect('update')
+               $('#submit-all').trigger('click');
+            }
         </script>
     </body>
 </html>

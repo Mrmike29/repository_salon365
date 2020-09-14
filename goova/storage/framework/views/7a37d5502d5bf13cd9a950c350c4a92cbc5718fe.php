@@ -44,9 +44,10 @@
                                                         <div class="radio-btn-flex ml-40 row">
                                                             <?php $__currentLoopData = $respuestas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k => $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                 <?php if($v->id_questions == $value->id): ?>
-                                                                    <?php if(!empty($v->description)): ?>
-                                                                        <span><?php echo e($v->description); ?></span> <span><?php echo e($v->status); ?></span><br>
-                                                                    <?php else: ?>
+                                                                    
+                                                                        <div class="col-lg-12">
+                                                                            <span><?php echo e($value->answer); ?></span>
+                                                                        </div>
                                                                         <div class="col-lg-8">
                                                                             <span><?php echo e($v->answer); ?></span>
                                                                         </div>
@@ -60,8 +61,7 @@
                                                                                 <span class="focus-border"></span>
                                                                             </div>
                                                                             <span class="modal_input_validation red_alert"></span>
-                                                                        </div>
-                                                                    <?php endif; ?>
+                                                                        
                                                                 <?php endif; ?>
                                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                         </div>

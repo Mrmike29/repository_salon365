@@ -30,7 +30,7 @@
                                                 <th>Nombre</th>
                                                 <th>Correo</th>
                                                 <th>Rol</th>
-                                                <th>Estado</th>
+                                                
                                                 <th>Telefono</th>
                                                 <th>Dirrección</th>
                                                 <th class="noExport">Acciones</th>
@@ -44,7 +44,7 @@
                                                     <td><?php echo e($val->name); ?> <?php echo e($val->last_name); ?></td>
                                                     <td><?php echo e($val->email); ?></td>
                                                     <td><?php echo e($val->rol); ?></td>
-                                                    <td><?php echo e($val->state); ?></td>
+                                                    
                                                     <td><?php echo e($val->phone); ?></td>
                                                     <td><?php echo e($val->address); ?></td>
                                                     <td>
@@ -54,11 +54,7 @@
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right">
                                                                 <a class="dropdown-item" href="/editar_usuario/<?php echo e($val->id); ?>">Editar</a>
-                                                                <?php if($val->state == "HABILITADO"): ?>
-                                                                    <a class="dropdown-item inhabilitar_user" data-id="<?php echo e($val->id); ?>" data-toggle="modal" data-target="#inhabilitarUserModal" href="#">Inhabilitar</a>
-                                                                <?php else: ?>
-                                                                    <a class="dropdown-item habilitar_user" data-id="<?php echo e($val->id); ?>" data-toggle="modal" data-target="#habilitarUserModal" href="#">Habilitar</a>
-                                                                <?php endif; ?>
+                                                                
                                                             </div>
                                                         </div>
                                                     </td>

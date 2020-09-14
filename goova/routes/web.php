@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/buscar_tarea/{id}','RepositorioController@search_homework');
     Route::get('/buscar_tarea_curso/{id}','RepositorioController@search_homework_course');
     Route::post('/subir_tarea','RepositorioController@go_up_homework');
+    Route::post('/crear_nota_tarea','RepositorioController@store_note_homework');
     Route::post('/crear_tarea','RepositorioController@store_homework');
 
     Route::get('/foros', 'RepositorioController@index_foro');
@@ -62,6 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/post_usuario','UsuariosController@update');
     Route::post('/inhabilitar_usuario','UsuariosController@inhabilitar');
     Route::post('/habilitar_usuario','UsuariosController@habilitar');
+
     Route::get('/cursos','CursosController@index');
     Route::get('/crear_cursos','CursosController@create');
     Route::post('/store_cursos','CursosController@store');
@@ -69,7 +71,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update_cursos','CursosController@update');
     Route::get('/view_students_course/{id}','CursosController@view_students');
     Route::get('/view_teachers_course/{id}','CursosController@view_teachers');
+
     Route::get('/exams', 'RepositorioController@exams');
+    Route::post('/ver_preguntas_examen', 'RepositorioController@view_questions_exams');
     Route::get('/examenes', 'RepositorioController@index_exam');
     Route::get('/materias_profesores_exam/{id}', 'RepositorioController@subjects_teacher_exam');
     Route::get('/temas_materias_exam/{id}/{teacher}', 'RepositorioController@themes_subjects_exam');
@@ -78,6 +82,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/realizar_examen', 'RepositorioController@perform_exam');
     Route::post('/crear_realizar_examen', 'RepositorioController@store_perform_exam');
     Route::get('/respuestas_examen/{id}', 'RepositorioController@answer_exam');
+    Route::get('/ver_respuestas_examen/{id}/{user}', 'RepositorioController@view_answers_exams');
     Route::post('/crear_nota', 'RepositorioController@store_answer_exam');
     Route::get('/ver_nota/{id}/{user}', 'RepositorioController@view_note');
     Route::get('/agregar_examen', 'RepositorioController@create_exam');
@@ -90,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/post_usuario', 'UsuariosController@update');
     Route::post('/inhabilitar_usuario', 'UsuariosController@inhabilitar');
     Route::post('/habilitar_usuario', 'UsuariosController@habilitar');
+
     Route::get('/cursos', 'CursosController@index');
     Route::get('/crear_cursos', 'CursosController@create');
     Route::post('/store_cursos', 'CursosController@store');

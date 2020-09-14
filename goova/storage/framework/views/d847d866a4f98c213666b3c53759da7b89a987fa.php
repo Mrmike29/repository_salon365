@@ -74,16 +74,13 @@
             Repositorio
          </a>
          <ul class="collapse list-unstyled" id="subMenuRepositorio">
-            <li>
-               <a href="/tareas">Ver tareas</a>
-            </li>
             <?php if(Auth::user()->id_rol == 4): ?>
                <li>
                   <a href="/agregar_tareas">Crear tarea</a>
                </li>
             <?php endif; ?>
             <li>
-               <a href="/foros">Ver foros</a>
+               <a href="/tareas">Ver tareas</a>
             </li>
             <?php if(Auth::user()->id_rol == 4): ?>
                <li>
@@ -91,24 +88,35 @@
                </li>
             <?php endif; ?>
             <li>
-               <a href="/examenes">Ver examenes</a>
+               <a href="/foros">Ver foros</a>
             </li>
             <?php if(Auth::user()->id_rol == 4): ?>
                <li>
                   <a href="/agregar_examen">Crear examen</a>
                </li>
             <?php endif; ?>
+            <?php if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2 || Auth::user()->id_rol == 4): ?>
+               <li>
+                  <a href="/exams">Ver examenes</a>
+               </li>
+            <?php endif; ?>
+            <li>
+               <a href="/examenes">
+                  <?php if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2 || Auth::user()->id_rol == 4): ?>
+                     Revisar examenes
+                  <?php else: ?>
+                     Ver examenes
+                  <?php endif; ?>
+               </a>
+            </li>
          </ul>
       </li>
       <li>
          <a href="#subMenuNotas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-            <span class=""></span>
+             <span class="flaticon-resume"></span>
             Notas y Reportes
          </a>
          <ul class="collapse list-unstyled" id="subMenuNotas">
-            <li>
-               <a href="/rubricas_mostrar">Rúbricas</a>
-            </li>
             <li>
                <a href="/notas">Notas Parciales</a>
             </li>
@@ -116,10 +124,10 @@
                <a href="#reportes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">oTRO</a>
                <ul class="collapse list-unstyled" id="reportes">
                   <li>
-                     <a href="/reporte_anual">Reporte Anual</a>
+                     <a href="/reporte-anual">Reporte Anual</a>
                   </li>
                   <li>
-                     <a href="/reporte_periodo">Reporte por Periodo</a>
+                     <a href="/reporte-periodo">Reporte por Periodo</a>
                   </li>
                </ul>
             </li>
@@ -156,4 +164,5 @@
          </li>
       <?php endif; ?>
    </ul>
-</nav><?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/includes/sidebar.blade.php ENDPATH**/ ?>
+</nav>
+<?php /**PATH C:\Users\Desarrollo3\Documents\Goova\repository_salon365\goova\resources\views/includes/sidebar.blade.php ENDPATH**/ ?>

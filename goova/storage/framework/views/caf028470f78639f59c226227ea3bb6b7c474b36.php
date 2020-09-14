@@ -36,6 +36,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css">
 
+
+    
+
+    
     <style>
         .dataTables_wrapper .dataTables_paginate .paginate_button.current,
         .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
@@ -141,6 +145,8 @@
         }
     </style>
 
+    <script type="text/javascript" src="<?php echo e(asset('js/jquery-3.2.1.min.js')); ?>"></script>
+
     <script type="text/javascript">
         const cl = [], root = document.documentElement, t = localStorage.getItem('template');
 
@@ -156,12 +162,27 @@
         cl['pink'] = {1: '#FF00FF', 2: '#BF00BF', 3: '#800080', 4: '#727373'}
         cl['yellow'] = {1: '#FFFF00', 2: '#E6E600', 3: '#bfbf00', 4: '#727373'}
 
-        if(t !== null){
-            root.style.setProperty('--g-first', cl[t][1]);
-            root.style.setProperty('--g-second', cl[t][2]);
-            root.style.setProperty('--g-third', cl[t][3]);
-            root.style.setProperty('--g-fourth', cl[t][4]);
-        }
+        $.ajax({
+            type: 'GET',
+            url: '/get-e-c'
+        }).done(function(data) {
+            const e = data.e.color;
+            if(t !== null) {
+                root.style.setProperty('--g-first', cl[e][1]);
+                root.style.setProperty('--g-second', cl[e][2]);
+                root.style.setProperty('--g-third', cl[e][3]);
+                root.style.setProperty('--g-fourth', cl[e][4]);
+            } else {
+                if(t === e) return false;
+
+                localStorage.setItem('template', e);
+
+                root.style.setProperty('--g-first', cl[e][1]);
+                root.style.setProperty('--g-second', cl[e][2]);
+                root.style.setProperty('--g-third', cl[e][3]);
+                root.style.setProperty('--g-fourth', cl[e][4]);
+            }
+        });
 
         function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : (event.keyCode);

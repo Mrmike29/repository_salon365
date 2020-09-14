@@ -102,7 +102,9 @@
             $("#selectSectionss").trigger("change");
         }
     });
-
+    $(document).on('click','.icofont-arrow-left',function(){
+        window.history.back();
+    })
 
 </script>
 <script>

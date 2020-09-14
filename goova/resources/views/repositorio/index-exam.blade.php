@@ -12,7 +12,11 @@
                 <section class="sms-breadcrumb mb-40 white-box">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
-                            <h1>Ver Examenes</h1>
+                            @if(Auth::user()->id_rol == 2 || Auth::user()->id_rol == 3 || Auth::user()->id_rol == 4)
+                                <h1>Revisar Examenes</h1>
+                            @else
+                                <h1>Ver Examenes</h1>
+                            @endif
                         </div>
                     </div>
                 </section>
@@ -198,12 +202,12 @@
                                     data: "id_questions_students",
                                     render: function (data, type, row, meta) {
                                         @if(Auth::user()->id_rol == 5)
-                                            if(row.status == "Entregado" || row.status == "Vencido"){
-                                                return `<button data-id='${data}' data-s='${row.id_students}' type='button' class='primary-btn small goova-bt view_exam_course'>Listo</button>`
+                                            if(row.status == "Entregado" || row.status == "Vencido" || row.status == "Calificado"){
+                                                return `<button data-id='${data}' data-s='${row.id_students}' type='button' class='primary-btn small goova-bt view_exam_course'>Ver</button>`
                                             }
                                             if(row.status == "Pendiente"){
                                                 if(data){
-                                                    return `<button data-id='${data}' data-s='${row.id_students}' type='button' class='primary-btn small goova-bt view_exam_course'>Listo</button>`
+                                                    return `<button data-id='${data}' data-s='${row.id_students}' type='button' class='primary-btn small goova-bt view_exam_course'>Ver</button>`
                                                 }else{
                                                     return `<button data-id='${data}' data-exam='${row.id_exam}' type='button' class='primary-btn small goova-bt go_up_exam_course'>Realizar</button>`
                                                 }
@@ -338,9 +342,11 @@
                         url: '/ver_nota/'+id+'/'+user,
                         type: 'get',
                         success:function(dato){
+                            console.log(dato)
                             if(dato){
-                                $('#examCourseModal .modal-body #descripcion').html(`<h3>${dato.value}</h3>`)
-                                $('#examCourseModal').modal()
+                                window.location.href = '/ver_respuestas_examen/'+id+'/'+user
+                                // $('#examCourseModal .modal-body #descripcion').html(`<h3>${dato.value}</h3>`)
+                                // $('#examCourseModal').modal()
                             }else{
                                 @if(Auth::user()->id_rol == 4)
                                     window.location.href = '/respuestas_examen/'+id
