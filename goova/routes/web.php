@@ -71,6 +71,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update_cursos','CursosController@update');
     Route::get('/view_students_course/{id}','CursosController@view_students');
     Route::get('/view_teachers_course/{id}','CursosController@view_teachers');
+    Route::post('/previsualizarImagen','UsuariosController@previsualizarImagen');
 
     Route::get('/exams', 'RepositorioController@exams');
     Route::post('/ver_preguntas_examen', 'RepositorioController@view_questions_exams');

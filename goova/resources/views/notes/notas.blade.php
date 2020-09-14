@@ -19,11 +19,6 @@
                                     <h1>Notas</h1>
                                 </div>
                             </div>
-                            <div class="col-lg-6 text-right">
-                                <a href="#" class="primary-btn small goova-bt" data-toggle="tooltip" onclick="openModalCreateTheme()" title="Agregar Tema">
-                                    <span class="ti-plus"></span>
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </section>

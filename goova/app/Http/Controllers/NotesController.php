@@ -32,7 +32,9 @@ class NotesController
 
         if ($search !== '' && $search !== null) {
             $notes = $notes->where('users.name', 'LIKE', '%' . $search . '%');
+            $notes = $notes->orWhere('users.last_name', 'LIKE', '%' . $search . '%');
             $notesCounter = $notesCounter->where('users.name', 'LIKE', '%' . $search . '%');
+            $notesCounter = $notesCounter->orWhere('users.last_name', 'LIKE', '%' . $search . '%');
         }
 
         if ($course !== '' && $course !== null) {
@@ -40,8 +42,13 @@ class NotesController
             $notesCounter = $notesCounter->where('C.id', $course);
         }
 
-        $notes = $notes->select('users.id', 'LS.name AS course', 'users.name', 'last_name')->where('id_rol', 5)->skip($prev)->take(20)->get();
-        $notesCounter = $notesCounter->where('id_rol', 5)->count();
+        if (Auth::user()->id_rol==5) {
+            $notes = $notes->select('users.id', 'LS.name AS course', 'users.name', 'last_name')->where('id_rol', 5)->where('users.id',Auth::user()->id)->skip($prev)->take(20)->get();
+            $notesCounter = $notesCounter->where('id_rol', 5)->where('users.id',Auth::user()->id)->count();
+        }else{
+            $notes = $notes->select('users.id', 'LS.name AS course', 'users.name', 'last_name')->where('id_rol', 5)->skip($prev)->take(20)->get();
+            $notesCounter = $notesCounter->where('id_rol', 5)->count();
+        }
 
         return [ 'notes' => $notes, 'counter' => $notesCounter ];
     }

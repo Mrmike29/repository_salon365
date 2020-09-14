@@ -39,14 +39,11 @@
                     <div class="dataTables_wrapper no-footer">
                         <table id="table_themes" class="table school-table" style="border-radius: 10px; box-shadow: 0 10px 15px rgba(181, 181, 181, 0.8);">
                             <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Asignatura</th>
-                                <th>Curso</th>
-                                <th>Nº Periodo/Ciclo</th>
-                                <th>Descripción</th>
-                                <th>Acciones</th>
-                            </tr>
+                                <tr>
+                                    <th>Curso</th>
+                                    <th>Estudiante</th>
+                                    <th>Notas</th>
+                                </tr>
                             </thead>
                             <tbody id="tbody_themes">
 

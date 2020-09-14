@@ -153,14 +153,22 @@
                             <li class="nav-item setting-area">
                                 <div class="dropdown">
                                     <button type="button" class="dropdown-toggle" data-toggle="dropdown">
-                                        <img class="rounded-circle" src="https://media-exp1.licdn.com/dms/image/C560BAQHMnA03XDdf3w/company-logo_200_200/0?e=2159024400&v=beta&t=C7KMOtnrJwGrMXmgIk2u1B8a7VRfgxMwXng9cdP9kZk" alt="">
+                                        @if(!empty(Auth::user()->picture))
+                                            <img class="rounded-circle" src="{{Auth::user()->picture}}" alt="">
+                                        @else
+                                            <img class="rounded-circle" src="https://media-exp1.licdn.com/dms/image/C560BAQHMnA03XDdf3w/company-logo_200_200/0?e=2159024400&v=beta&t=C7KMOtnrJwGrMXmgIk2u1B8a7VRfgxMwXng9cdP9kZk " alt="">
+                                        @endif
                                     </button>
                                     <div class="dropdown-menu profile-box">
                                         <div class="white-box">
                                             <a class="dropdown-item" href="#">
                                                 <div class="">
                                                     <div class="d-flex">
-                                                        <img class="client_img" src="https://media-exp1.licdn.com/dms/image/C560BAQHMnA03XDdf3w/company-logo_200_200/0?e=2159024400&v=beta&t=C7KMOtnrJwGrMXmgIk2u1B8a7VRfgxMwXng9cdP9kZk " alt="">
+                                                        @if(!empty(Auth::user()->picture))
+                                                            <img class="client_img" src="{{Auth::user()->picture}}" alt="">
+                                                        @else
+                                                            <img class="client_img" src="https://media-exp1.licdn.com/dms/image/C560BAQHMnA03XDdf3w/company-logo_200_200/0?e=2159024400&v=beta&t=C7KMOtnrJwGrMXmgIk2u1B8a7VRfgxMwXng9cdP9kZk " alt="">
+                                                        @endif
                                                         <div class="d-flex ml-10">
                                                             <div class="">
                                                                 <h5 class="name text-uppercase">{{Auth::user()->name}} {{Auth::user()->last_name}}</h5>

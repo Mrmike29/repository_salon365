@@ -19,13 +19,20 @@
                 </section>
                 <section class="admin-visitor-area up_st_admin_visitor">
                     <div class="container-fluid p-0">
-                        <form method="POST" action="/store_usuarios" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="POST" action="/store_usuarios" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" id="formularioImagen">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="white-box">
                                         <div class="">
                                             <div class="row mb-30">
+                                                <div class="form-group col-lg-6" >
+                                                    <div class="col-lg-6 col-sm-6 col-xs-6 col-6">Imagen perfil</div>
+                                                    <div class="col-lg-6 col-sm-6 col-xs-6 col-6" style="text-align: unset;">
+                                                        <div style="text-align:center;display: none;width: 55%;height: 150px;border: 1px solid gainsboro;margin-bottom: 10px;margin-left: 20px;" id="imgPrev2"><img class="img_a" src="" style="width: auto;height: 145px;"></div>
+                                                        <label class="filebutton"><span><input onchange="$(this).parents('tr').find('b').html('Archivo cargado');" type="file" id="id1" name="picture" style="display: none;"></span><b id="1" class="btn btn-primary btn-sm" style="width: 100%"><i class="tam fa fa-upload"></i> Seleccionar Archivo...</b></label>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group col-lg-6">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_type_document" id="classSelectStudent" required>
@@ -161,6 +168,22 @@
         </div>
         @include('includes.footer')
         <script>
+            $(document).on('change','input[name=picture]',function(){
+                $.ajax({
+                    url:'/previsualizarImagen',
+                    type:'POST',
+                    data: new FormData($('#formularioImagen')[0]),
+                    processData: false,
+                    contentType: false,
+                    success:function(data){
+                        console.log(data.nm2)
+                        if (data.nm2!="") {
+                            $('#imgPrev2').html(`<img class="img_a" src="${data.nm2}" style="width: auto;height: 145px;">`)
+                            $('#imgPrev2').css('display','block')
+                        }
+                    }
+                })
+            })
             var password = true
             $(document).on('change, keyup','input[name=password], input[name=c-password]',function(){
                 var pass = $('input[name=password]').val()

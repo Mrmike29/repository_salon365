@@ -32,6 +32,8 @@ class SalaController extends Controller
 
     public function index()
     {
+        
+
 
         $tipo=DB::table('users')->join('rol','users.id_rol','rol.id')->where('users.id',Auth::user()->id)->first()->name;
         if ($tipo=="Estudiante") {
@@ -51,14 +53,21 @@ class SalaController extends Controller
             ->join('users_list_students as ul','ul.id','course.id_list_students')
             ->where('ul.id_users',Auth::user()->id)
             ->get();
-        }else{
+        }else
+        if($tipo=="Profesor"){
             $room=$room->where('room.id_teacher',Auth::user()->id);
             $asignatura=DB::table('subjects')
             ->join('room','subjects.id','room.id_subject')
             ->select('subjects.*')
             ->groupBy('subjects.id')
             ->where('room.id_teacher',Auth::user()->id)->get();
+        }else{
+            $asignatura=DB::table('subjects')
+            ->join('room','subjects.id','room.id_subject')
+            ->select('subjects.*')
+            ->groupBy('subjects.id')->get();
         }
+
         $curso=DB::table('list_students')->get();
         $teacher=DB::table('users')->where('id_rol',4)->get();
         $room=$room->select('u.name as nombre','u.last_name as apellido','ls.name as listado','s.name as asignatura','vc.code',DB::raw('IF(vc.status=1,"HABILITADO","INHABILITADO") as status'),'vc.start_date as fecha','room.id','t.name as materia')
@@ -106,19 +115,26 @@ class SalaController extends Controller
             ->join('users_list_students as ul','ul.id','course.id_list_students')
             ->where('ul.id_users',Auth::user()->id)
             ->get();
-        }else{
+        }else
+        if($tipo=="Profesor"){
             $room=$room->where('room.id_teacher',Auth::user()->id);
             $asignatura=DB::table('subjects')
             ->join('room','subjects.id','room.id_subject')
             ->select('subjects.*')
             ->groupBy('subjects.id')
             ->where('room.id_teacher',Auth::user()->id)->get();
+        }else{
+            $asignatura=DB::table('subjects')
+            ->join('room','subjects.id','room.id_subject')
+            ->select('subjects.*')
+            ->groupBy('subjects.id')->get();
         }
         $curso=DB::table('list_students')->get();
         $materia=DB::table('themes_time')->get();
         $teacher=DB::table('users')->where('id_rol',4)->get();
         $room=$room->select('u.name as nombre','u.last_name as apellido','ls.name as listado','s.name as asignatura','vc.code',DB::raw('IF(vc.status=1,"HABILITADO","INHABILITADO") as status'),'vc.start_date as fecha','room.id','t.name as materia','room.id_list_students')
         ->get();
+        dd($room);
         return view('horario.index',compact('room','tipo','asignatura','curso','teacher','materia'));
     }
 

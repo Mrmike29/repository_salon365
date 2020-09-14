@@ -36,7 +36,8 @@ class UsuariosController extends Controller
     public function store(Request $request)
     {
         $entity = Auth::user()->id_info_entity;
-        $usuario = new User($request->except(['c-password','password','id_list_students']));
+        $usuario = new User($request->except(['c-password','password','id_list_students','picture']));
+        $usuario->picture='/previsualizador/imagen_'.Auth::user()->document.'.png';
         $usuario->id_info_entity = $entity;
         $usuario->password = Hash::make($request->password);
         $usuario->save();
@@ -52,7 +53,7 @@ class UsuariosController extends Controller
     }
 
     public function edit($id)
-    {
+    {   
         $usuario = User::find($id);
         $roles = Rol::where('id','<>',1)->get();
         $type_document = Type_document::get();
@@ -62,13 +63,30 @@ class UsuariosController extends Controller
         return view('usuarios.edit',array('usuario'=>$usuario,'roles'=>$roles,'type_document'=>$type_document,'list_students'=>$list_students,'user_list'=>$user_list));
     }
 
+
+    public function previsualizarImagen(){
+      
+      $nm2='';
+      if(!empty($_FILES['picture']['tmp_name']))
+      {
+        $nm2='previsualizador/imagen_'.Auth::user()->document.'.png';
+        if(move_uploaded_file($_FILES['picture']['tmp_name'], $nm2))
+        {
+          $nm2='/'.$nm2;
+        }
+      }
+     
+      return compact('nm2');
+    }
+
     public function update(Request $request)
     {
         $usuario = User::find($request->id);
         if(!empty($request->password)){
             $usuario->password = Hash::make($request->password);
         }
-        $usuario->update($request->except(['password','c-password','id_list_students']));
+        $usuario->picture='/previsualizador/imagen_'.Auth::user()->document.'.png';
+        $usuario->update($request->except(['password','c-password','id_list_students','picture']));
 
         $user_list = User_list_students::where('id_users',$request->id)->first();
 

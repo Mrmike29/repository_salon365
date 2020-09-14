@@ -18,7 +18,6 @@
                         </div>
                     </div>
                 </section>
-
                 @include('reports.list')
             </div>
         </div>

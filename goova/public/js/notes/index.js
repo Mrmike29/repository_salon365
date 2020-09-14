@@ -365,7 +365,6 @@ $(document).ready(function(){
     filterStudents($.trim(search.val()), course.val(), previous, next)
 
     search.keyup(function(e) {
-        if($(this).val().length > 0 && $(this).val().length < 4) return false;
         page = 1;
         next.attr('data-id', 20);
         previous.attr('data-id', 0);
