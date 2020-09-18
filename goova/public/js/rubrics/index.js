@@ -91,7 +91,7 @@ const
                 }
 
                 $('#tbody_rubrics').html(html);
-                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
             }
         })
     },
@@ -213,7 +213,7 @@ function openModalCreateRubric() {
     $('[name^="option_create_rubric"]').change(function () { doCalculate('create') });
     $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } });
     $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
 }
 
 function addOptionRubric(type){
@@ -254,7 +254,7 @@ function addOptionRubric(type){
     $(`[name^="option_${type}_rubric"]`).change(function () { doCalculate(type) });
     $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } });
     $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
 }
 
 function removeOptionRubric(id, type, idE = 0, exists = false) {
@@ -514,7 +514,7 @@ function openModalEditRubric(id){
         $('[name^="option_edit_rubric"]').change(function () { doCalculate('edit') });
         $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } });
         $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
     }).fail( function(data) {
         $("body").overhang({
             type: "error",

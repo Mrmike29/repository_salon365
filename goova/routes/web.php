@@ -1,6 +1,8 @@
 <?php
 session_start();
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfController;
+use App\Http\Controllers\BulletinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,7 +122,9 @@ Route::middleware(['auth'])->group(function () {
     /** CICLO O PERIODO */
     Route::get('/ciclo-o-periodo', function () { return view('times/ciclo_o_periodo'); });
     Route::get('/get-times-list', 'TimesController@getTimesList');
+
     Route::post('/post-save-time', 'TimesController@postSaveTime');
+
 
     /** TEMAS */
     Route::get('/temas', 'ThemesController@getThemesView');
@@ -129,8 +133,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-themes-list', 'ThemesController@getThemesList');
     Route::get('/get-data-create-theme', 'ThemesController@getDataCreateTheme');
     Route::get('/get-data-edit-theme', 'ThemesController@getDataEditTheme');
+
     Route::post('/post-save-theme', 'ThemesController@postSaveTheme');
+
     Route::put('/put-edit-theme', 'ThemesController@putEditTheme');
+
 
     /** FECHAS IMPORTANTES */
     Route::get('/fechas-importantes', 'ImportantDatesController@getImportantDatesView');
@@ -138,7 +145,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-held-events', 'ImportantDatesController@getHeldEvents');
     Route::get('/get-event', 'ImportantDatesController@getEvent');
     Route::get('/get-calendar-events', 'ImportantDatesController@getCalendarEvents');
+
     Route::post('/post-save-event', 'ImportantDatesController@postSaveEvent');
+
     Route::put('/put-edit-event', 'ImportantDatesController@putEditEvent');
 
     /** NOTAS */
@@ -149,14 +158,33 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-course-filter', 'NotesController@getCourseFilter');
     Route::get('/get-teacher-filter', 'NotesController@getTeacherFilter');
 
+
     /** REPORTES */
     Route::get('/reporte-anual', 'ReportsController@getAnualReport');
     Route::get('/reporte-periodo', 'ReportsController@getPeriodReport');
 
 
+    /** BOLETIN */
+    Route::get('/cursos-boletines', [BulletinController::class, 'getCursosBoletinesView']);
+    Route::get('/mis-cursos', [BulletinController::class, 'getMisCursosView']);
+    Route::get('/consultar-boletines', [BulletinController::class, 'getConsultarBoletinesView']);
+    Route::get('/get-students-bulletin', [BulletinController::class, 'getStudentsBulletin']);
+    Route::get('/get-list-students-bulletin', [BulletinController::class, 'getListStudentsBulletin']);
+    Route::get('/get-my-students-bulletin', [BulletinController::class, 'getMyStudentsBulletin']);
+    Route::get('/get-student-to-report', [BulletinController::class, 'getStudentToReport']);
+    Route::get('/get-reports-student', [BulletinController::class, 'getReportsStudent']);
+    Route::get('/get-reports-my-student', [BulletinController::class, 'getReportsMyStudent']);
+
+    Route::post('/post-save-report', [BulletinController::class, 'postSaveReport']);
+    Route::post('/post-save-general-report', [BulletinController::class, 'postSaveGeneralReport']);
+
+    Route::put('/put-save-report', [BulletinController::class, 'putSaveReport']);
+    Route::put('/put-save-general-report', [BulletinController::class, 'putSaveGeneralReport']);
+
+
     /** PDF */
-    Route::get('/pdf', 'PdfController@getPdf');
-    Route::get('/pdf-view', function () { return view('boletin/bulletin'); });
+    Route::get('/get-bulletin', 'PdfController@getBulletin');
+    Route::get('/get-c-d', [PdfController::class, 'getCryptData']);
 
     /* VIDEOCHAT */
     Route::get('/listar/sala','SalaController@index');

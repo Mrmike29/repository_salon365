@@ -95,6 +95,6 @@
         <script type="text/javascript">
             const _token = "{{ csrf_token() }}";
         </script>
-        <script type="text/javascript" src="{{asset('js/times/index.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/times/courses-index.js')}}"></script>
     </body>
 </html>

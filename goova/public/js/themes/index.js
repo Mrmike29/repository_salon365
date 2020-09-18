@@ -128,7 +128,7 @@ const
                 }
 
                 $('#tbody_themes').html(html);
-                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
             }
         });
     },

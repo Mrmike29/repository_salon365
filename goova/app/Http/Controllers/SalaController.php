@@ -12,8 +12,8 @@ class SalaController extends Controller
 {
 
     public function getBoletin(){
-        $view = view('boletin')->render();
-        
+        $view = view('bulletin')->render();
+
         $pdf = new Dompdf();
 
         $pdf->loadHTML($view);
@@ -45,7 +45,7 @@ class SalaController extends Controller
         ->join('subjects as s','s.id','room.id_subject')
         ->join('video_chat as vc','vc.id','room.id_video_chat')
         ->join('themes_time as t','t.id','room.id_themes_time');
-       
+
         if ($tipo=="Estudiante") {
             $room=$room->where('room.id_list_students',$users_list_students);
             $asignatura=DB::table('subjects')
@@ -107,7 +107,7 @@ class SalaController extends Controller
         ->join('subjects as s','s.id','room.id_subject')
         ->join('video_chat as vc','vc.id','room.id_video_chat')
         ->join('themes_time as t','t.id','room.id_themes_time');
-       
+
         if ($tipo=="Estudiante") {
             $room=$room->where('room.id_list_students',$users_list_students);
             $asignatura=DB::table('subjects')
@@ -145,7 +145,7 @@ class SalaController extends Controller
 
         $code= md5(sha1(date('Y-m-d H:i:s')."-".Auth::user()->id));
         $fecha_videochat=date('Y-m-d H:i:s',strtotime($start_date." ".$hora));
-        
+
         $id_video_chat=DB::table('video_chat')
         ->insertGetId([
             'id_teacher'=>Auth::user()->id,

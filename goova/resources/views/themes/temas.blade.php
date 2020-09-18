@@ -116,6 +116,6 @@
         <script type="text/javascript">
             const _token = "{{ csrf_token() }}";
         </script>
-        <script type="text/javascript" src="{{asset('js/themes/index.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/themes/courses-index.js')}}"></script>
     </body>
 </html>

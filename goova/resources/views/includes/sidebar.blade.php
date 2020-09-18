@@ -117,19 +117,37 @@
             Notas y Reportes
          </a>
          <ul class="collapse list-unstyled" id="subMenuNotas">
-            <li>
-               <a href="/notas">Notas Parciales</a>
-            </li>
-            <li>
-               <a href="#reportes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">oTRO</a>
-               <ul class="collapse list-unstyled" id="reportes">
-                  <li>
-                     <a href="/reporte-anual">Reporte Anual</a>
-                  </li>
-                  <li>
-                     <a href="/reporte-periodo">Reporte por Periodo</a>
-                  </li>
-               </ul>
+             <li>
+                 <a href="/notas">Notas Parciales</a>
+             </li>
+             <li>
+                 <a href="#boletin" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Boletin</a>
+                 <ul class="collapse list-unstyled" id="boletin">
+                     @if(Auth::user()->id_rol == 4)
+                     <li>
+                         <a href="/cursos-boletines">Cursos</a>
+                     </li>
+                     @endif
+                     @if(Auth::user()->id_rol == 4)
+                         <li>
+                             <a href="/mis-cursos">Mis Cursos</a>
+                         </li>
+                     @endif
+                     <li>
+                         <a href="/consultar-boletines">Consultar Boletines</a>
+                     </li>
+                 </ul>
+             </li>
+             <li>
+                 <a href="#reportes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">oTRO</a>
+                 <ul class="collapse list-unstyled" id="reportes">
+                     <li>
+                         <a href="/reporte-anual">Reporte Anual</a>
+                     </li>
+                     <li>
+                         <a href="/reporte-periodo">Reporte por Periodo</a>
+                     </li>
+                 </ul>
             </li>
          </ul>
       </li>
