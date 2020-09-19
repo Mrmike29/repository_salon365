@@ -328,7 +328,7 @@ class RepositorioController extends Controller
         $nota_tarea = new Notes_homework();
         $nota_tarea->id_homework = decrypt($request->homework);
         $nota_tarea->id_student = $request->user;
-        $nota_tarea->id_teacher = 2;
+        $nota_tarea->id_teacher = Auth::user()->id;
         $nota_tarea->id_parcial_notes = $nota->id;
         $nota_tarea->save();
 
@@ -846,6 +846,15 @@ class RepositorioController extends Controller
                                     ->select('course.id')
                                     ->where('users_list_students.id_users',$id_user)
                                     ->first();
+
+        $teacher = Exam::join('themes_time','themes_time.id','exam.id_theme_time')
+                        ->join('subjects','subjects.id','themes_time.id_subject')
+                        ->join('teacher_course','teacher_course.id_course','exam.id_course')
+                        ->join('users','users.id','teacher_course.id_users')
+                        ->where('exam.id',decrypt($request->id_exam))
+                        ->groupBy('exam.id')
+                        ->first();
+
         foreach ($request->respuesta as $keys => $value) {
             foreach ($value as $k => $v) {
                 $respuestas = new Questions_students();
@@ -906,7 +915,7 @@ class RepositorioController extends Controller
             $nota_examen = new Notes_exam();
             $nota_examen->id_exam = decrypt($request->id_exam);
             $nota_examen->id_course = $curso->id;
-            $nota_examen->id_teacher = 2;
+            $nota_examen->id_teacher = $teacher->id_users;
             $nota_examen->id_student = $id_user;
             $nota_examen->id_parcial_notes = $nota->id;
             $nota_examen->save();
@@ -972,6 +981,7 @@ class RepositorioController extends Controller
         $nota_examen = new Notes_exam();
         $nota_examen->id_exam = decrypt($request->id_exam);
         $nota_examen->id_course = decrypt($request->id_course);
+        $nota_examen->id_teacher = Auth::user()->id;
         $nota_examen->id_student = decrypt($request->id_students);
         $nota_examen->id_parcial_notes = $nota->id;
         $nota_examen->save();
@@ -1072,6 +1082,7 @@ class RepositorioController extends Controller
                 $nota_examen = new Notes_exam();
                 $nota_examen->id_exam = $val->id_exam;
                 $nota_examen->id_course = $val->id_course;
+                $nota_examen->id_teacher = 0;
                 $nota_examen->id_student = $val->id_student;
                 $nota_examen->id_parcial_notes = $nota->id;
                 $nota_examen->save();
