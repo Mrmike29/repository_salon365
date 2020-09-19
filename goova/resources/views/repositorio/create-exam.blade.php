@@ -143,6 +143,7 @@
                                             <div class="form-group col-lg-12">
                                                 
                                             </div>
+                                            <span class="form-group col-md-12 modal_input_validation red_alert"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -178,9 +179,7 @@
         <script>
             /** Mi función, la utilizo para hacer mis validaciones y la voy a patentar */
             (function( $ ){ 
-                $.fn.mValid = function(data) { 
-                    console.log($(this).attr('name') + ' = ' + $(this).val());
-
+                $.fn.mValid = function(data) {
                     data.text = $.trim($(this).val()) === ''? data.text : ''; 
                     $(this).parents('div.input-effect').siblings('span').text(data.text); 
                     return ($.trim($(this).val()) === ''); 
@@ -353,6 +352,7 @@
                                             <div class="form-group col-lg-12">
                                                 
                                             </div>
+                                            <span class="form-group col-md-12 modal_input_validation red_alert"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -452,6 +452,45 @@
                     })
                 }
             })
+            function valid_questions(){
+                var status = false
+                $('select[name^=type_question]').each(function(){
+                    var id = $(this).val()
+                    if(id == 1){
+                        var val = $(this).parent().parent().parent().find('.col-lg-12 input.primary-input').val()
+                        var can = $(this).parent().parent().parent().find('.col-lg-12 select[name^=status]')
+                        var i = 0
+                        $(can).each(function(){
+                            if($(this).val() == 'true'){
+                                i++
+                            }
+                        })
+                        console.log(val+'- - - -'+i)
+                        if(val != i){
+                            status = true
+                            $(this).parent().parent().parent().find('span.form-group.col-md-12.modal_input_validation.red_alert').css('text-align','center').html('Falta una o mas respuestas verdaderas').show()
+                        }else{
+                            $(this).parent().parent().parent().find('span.form-group.col-md-12.modal_input_validation.red_alert').html('').hide()
+                        }
+                    }
+                    if(id == 2){
+                        var can = $(this).parent().parent().parent().find('.col-lg-12 select[name^=status]')
+                        var i = 0
+                        $(can).each(function(){
+                            if($(this).val() == 'true'){
+                                i++
+                            }
+                        })
+                        if(i != 1){
+                            status = true
+                            $(this).parent().parent().parent().find('span.form-group.col-md-12.modal_input_validation.red_alert').css('text-align','center').html('Falta una o mas respuestas verdaderas').show()
+                        }else{
+                            $(this).parent().parent().parent().find('span.form-group.col-md-12.modal_input_validation.red_alert').html('').hide()
+                        }
+                    }
+                })
+                return status
+            }
             $('form.form-horizontal').submit(function(e){
                 var res = false
                 $('select.valid-request, input.valid-request, textarea.valid-request').each(function(){
@@ -462,7 +501,8 @@
                         res = true
                     }
                 })
-                if(res){
+                var valid = valid_questions()
+                if(res || valid){
                     e.preventDefault()
                 }
             })

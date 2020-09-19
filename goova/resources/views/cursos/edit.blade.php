@@ -26,7 +26,7 @@
                                     <div class="white-box">
                                         <div class="" id="append_campos">
                                             <div class="row mb-30">
-                                                <div class="form-group col-lg-9">
+                                                <div class="form-group col-lg-5">
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
@@ -38,17 +38,28 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{-- <div class="form-group col-lg-3">
+                                                <div class="form-group col-lg-4">
+                                                    <div class="input-effect sm2_mb_20 md_mb_20">
+                                                        <select class="niceSelect w-100 bb form-control" name="id_leader_group" id="classSelectStudent" required>
+                                                            <option data-display="Seleccionar Lide de Grupo *" value="">Select</option>
+                                                            @foreach($teachers as $key => $val)
+                                                                <option value="{{$val->id}}" @if($val->id == $course->id_leader_group){{'selected'}}@endif>{{$val->name}} {{$val->last_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span class="focus-border"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-lg-3">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <button type="button" class="btn btn-primary plus">Añadir Asignatura</button>
                                                     </div>
-                                                </div> --}}
+                                                </div>
                                             </div>
-                                            {{-- @foreach($info as $keys => $value)
+                                            @foreach($info as $keys => $value)
                                                 <div class="row mb-30">
-                                                    <div class="form-group col-lg-5">
+                                                    <div class="form-group col-lg-3">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
-                                                            <select class="niceSelect w-100 bb form-control" name="id_subjects[]" id="classSelectStudent" required>
+                                                            <select class="niceSelect w-100 bb form-control" name="id_subjects[{{$value->id}}]" id="classSelectStudent" required>
                                                                 <option data-display="Seleccionar Asignatura *" value="">Select</option>
                                                                 @foreach($subjects as $key => $val)
                                                                     <option value="{{$val->id}}" @if($val->id == $value->id_subjects){{'selected'}}@endif>{{$val->name}}</option>
@@ -57,9 +68,9 @@
                                                             <span class="focus-border"></span>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group col-lg-5">
+                                                    <div class="form-group col-lg-4">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
-                                                            <select class="niceSelect w-100 bb form-control" name="id_teacher[]" id="classSelectStudent" required>
+                                                            <select class="niceSelect w-100 bb form-control" name="id_teacher[{{$value->id}}]" id="classSelectStudent" required>
                                                                 <option data-display="Seleccionar Profesor *" value="">Select</option>
                                                                 @foreach($teachers as $key => $val)
                                                                     <option value="{{$val->id}}" @if($val->id == $value->id_users){{'selected'}}@endif>{{$val->name}} {{$val->last_name}}</option>
@@ -68,13 +79,19 @@
                                                             <span class="focus-border"></span>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group col-lg-2">
-                                                        <div class="input-effect sm2_mb_20 md_mb_20">
-                                                            <button type="button" class="btn btn-danger minus"><i class="icofont icofont-minus"></i></button>
+                                                    <div class="form-group col-lg-3">
+                                                        <div class="row no-gutters input-right-icon">
+                                                            <div class="col">
+                                                                <div class="input-effect sm2_mb_20 md_mb_20">
+                                                                    <input class="primary-input form-control" type="text" name="hour_week[{{$value->id}}]" value="{{$value->hour_week}}" required>
+                                                                    <label>Horas Semanales <span>*</span></label>
+                                                                    <span class="focus-border"></span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endforeach --}}
+                                            @endforeach
                                         </div>
                                         <div class="row mt-40">
                                             <div class="col-lg-12 text-center">
@@ -94,9 +111,36 @@
         </div>
         @include('includes.footer')
         <script>
+            function subjects(id){
+                var data = []
+                var id_subjects = []
+                $('select[name^=id_subjects]').each(function(k, v){
+                    id_subjects[k] = $(v).val()
+                })
+                var i = 0
+                @foreach($subjects as $key => $val)
+                    if(id_subjects.indexOf("{{$val->id}}") < 0){
+                        data[i] = [{{$val->id}}, '{{$val->name}}']
+                        i++
+                    }
+                @endforeach
+                var html = `<option data-display="Seleccionar Asignatura *" value="">Select</option>`
+                $(data).each(function(k, v){
+                    html += `<option value="${v[0]}">${v[1]}</option>`
+                })
+                $('select[name^=id_subjects]').each(function(k, v){
+                    if(!$(v).val()){
+                        $(this).html(html)
+                    }
+                    if(id == $(v).val()){
+                        $(this).html(html)
+                    }
+                })
+                $('select.niceSelect').niceSelect('update');
+            }
             $(document).on('click','.plus',function(){
                 var html = `<div class="row mb-30">
-                                <div class="form-group col-lg-5">
+                                <div class="form-group col-lg-3">
                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                         <select class="niceSelect w-100 bb form-control" name="id_subjects[]" id="classSelectStudent" required>
                                             <option data-display="Seleccionar Asignatura *" value="">Select</option>
@@ -107,7 +151,7 @@
                                         <span class="focus-border"></span>
                                     </div>
                                 </div>
-                                <div class="form-group col-lg-5">
+                                <div class="form-group col-lg-4">
                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                         <select class="niceSelect w-100 bb form-control" name="id_teacher[]" id="classSelectStudent" required>
                                             <option data-display="Seleccionar Profesor *" value="">Select</option>
@@ -118,6 +162,17 @@
                                         <span class="focus-border"></span>
                                     </div>
                                 </div>
+                                <div class="form-group col-lg-3">
+                                    <div class="row no-gutters input-right-icon">
+                                        <div class="col">
+                                            <div class="input-effect sm2_mb_20 md_mb_20">
+                                                <input class="primary-input form-control" type="text" name="hour_week[]" value="" required>
+                                                <label>Horas Semanales <span>*</span></label>
+                                                <span class="focus-border"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group col-lg-2">
                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                         <button type="button" class="btn btn-danger minus"><i class="icofont icofont-minus"></i></button>
@@ -125,7 +180,9 @@
                                 </div>
                             </div>`
                 $('#append_campos').append(html)
+                subjects(0)
                 $('select.niceSelect').niceSelect();
+                $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
             })
             $(document).on('click','.minus',function(){
                 $(this).parent().parent().parent().remove()

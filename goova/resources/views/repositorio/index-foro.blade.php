@@ -34,7 +34,7 @@
                                                 @endif
                                                 <th>Fecha Inicio</th>
                                                 <th>Fecha Fin</th>
-                                                <th>Acciones</th>
+                                                <th class="noExport">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>

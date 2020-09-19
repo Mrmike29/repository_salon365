@@ -26,7 +26,7 @@
                                     <div class="white-box">
                                         <div class="" id="append_campos">
                                             <div class="row mb-30">
-                                                <div class="form-group col-lg-9">
+                                                <div class="form-group col-lg-5">
                                                     <div class="row no-gutters input-right-icon">
                                                         <div class="col">
                                                             <div class="input-effect sm2_mb_20 md_mb_20">
@@ -35,6 +35,17 @@
                                                                 <span class="focus-border"></span>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-lg-4">
+                                                    <div class="input-effect sm2_mb_20 md_mb_20">
+                                                        <select class="niceSelect w-100 bb form-control" name="id_leader_group" id="classSelectStudent" required>
+                                                            <option data-display="Seleccionar Lide de Grupo *" value="">Select</option>
+                                                            @foreach($teachers as $key => $val)
+                                                                <option value="{{$val->id}}">{{$val->name}} {{$val->last_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span class="focus-border"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-lg-3">
@@ -128,7 +139,7 @@
             })
             $(document).on('click','.plus',function(){
                 var html = `<div class="row mb-30">
-                                <div class="form-group col-lg-5">
+                                <div class="form-group col-lg-3">
                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                         <select class="niceSelect w-100 bb form-control" name="id_subjects[]" id="classSelectStudent" required>
                                             <option data-display="Seleccionar Asignatura *" value="">Select</option>
@@ -139,7 +150,7 @@
                                         <span class="focus-border"></span>
                                     </div>
                                 </div>
-                                <div class="form-group col-lg-5">
+                                <div class="form-group col-lg-4">
                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                         <select class="niceSelect w-100 bb form-control" name="id_teacher[]" id="classSelectStudent" required>
                                             <option data-display="Seleccionar Profesor *" value="">Select</option>
@@ -148,6 +159,17 @@
                                             @endforeach
                                         </select>
                                         <span class="focus-border"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <div class="row no-gutters input-right-icon">
+                                        <div class="col">
+                                            <div class="input-effect sm2_mb_20 md_mb_20">
+                                                <input class="primary-input form-control" type="text" name="hour_week[]" value="" required>
+                                                <label>Horas Semanales <span>*</span></label>
+                                                <span class="focus-border"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-2">
@@ -159,6 +181,7 @@
                 $('#append_campos').append(html)
                 subjects(0)
                 $('select.niceSelect').niceSelect();
+                $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
             })
             $(document).on('click','.minus',function(){
                 $(this).parent().parent().parent().remove()

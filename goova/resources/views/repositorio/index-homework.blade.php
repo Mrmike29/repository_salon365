@@ -28,7 +28,7 @@
                                                 @if(Auth::user()->id_rol == 2 || Auth::user()->id_rol == 3)
                                                     <div class="form-group col-lg-4">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
-                                                            <select class="niceSelect w-100 bb form-control" name="id_teacher" id="id_teacher">
+                                                            <select class="niceSelect w-100 bb form-control valid-request" name="id_teacher" id="id_teacher">
                                                                 <option data-display="Seleccionar Profesor *" value="">Section *</option>
                                                                 @foreach($profesores as $key => $value)
                                                                     <option value="{{$value->id}}">{{$value->name}} {{$value->last_name}}</option>
@@ -36,6 +36,7 @@
                                                             </select>
                                                             <span class="focus-border"></span>
                                                         </div>
+                                                        <span class="modal_input_validation red_alert"></span>
                                                     </div>
                                                 @endif
                                                 {{-- <!-- @if(Auth::user()->id_rol <> 5)
@@ -53,7 +54,7 @@
                                                 @endif --> --}}
                                                 <div class="form-group col-lg-4">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects">
+                                                        <select class="niceSelect w-100 bb form-control valid-request" name="id_subjects" id="id_subjects">
                                                             <option data-display="Seleccionar Asignatura *" value="">Section *</option>
                                                             @if(empty($profesores))
                                                                 @foreach($materias as $key => $val)
@@ -63,15 +64,17 @@
                                                         </select>
                                                         <span class="focus-border"></span>
                                                     </div>
+                                                    <span class="modal_input_validation red_alert"></span>
                                                 </div>
                                                 @if(Auth::user()->id_rol <> 5)
                                                     <div class="form-group @if(!empty($profesores)){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
-                                                            <select class="niceSelect w-100 bb form-control" name="id_theme_time" id="id_theme_time">
+                                                            <select class="niceSelect w-100 bb form-control valid-request" name="id_theme_time" id="id_theme_time">
                                                                 <option data-display="Seleccionar Tema *" value="">Section *</option>
                                                             </select>
                                                             <span class="focus-border"></span>
                                                         </div>
+                                                        <span class="modal_input_validation red_alert"></span>
                                                     </div>
                                                 @endif
                                             </div>
@@ -184,6 +187,16 @@
         </div>
         @include('includes.footer')
         <script>
+            /** Mi función, la utilizo para hacer mis validaciones y la voy a patentar */
+            (function( $ ){ 
+                $.fn.mValid = function(data) { 
+                    console.log($(this).attr('name') + ' = ' + $(this).val());
+
+                    data.text = $.trim($(this).val()) === ''? data.text : ''; 
+                    $(this).parents('div.input-effect').siblings('span').text(data.text); 
+                    return ($.trim($(this).val()) === ''); 
+                }; 
+            })( jQuery );
             $('#show-table').hide()
             var table = null
             function tables() {
@@ -260,12 +273,14 @@
                                                     return `<button data-id='${data}' data-homework='${row.id_homework}' type='button' class='primary-btn small goova-bt go_up_homework_course'>Subir</button>`
                                                 }
                                             }
-                                        @else
+                                        @elseif(Auth::user()->id_rol == 4)
                                             if(row.status == "Entregado" || row.status == "Vencido" || row.status == "Calificado"){
                                                 return `<button data-id='${data}' data-homework='${row.id_homework}' data-user='${row.id_user}' data-n=${row.nota} type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
                                             }else{
                                                 return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
                                             }
+                                        @else
+                                            return `<button data-id='${data}' type='button' class='primary-btn small goova-bt view_homework_course'>Ver</button>`
                                         @endif
                                     }
                                 },
@@ -373,12 +388,22 @@
                 })
             })
             $(document).on('click','#submit-all',function(){
-                
-                if(table){
-                    table.destroy();
+                var res = true
+                $('select.valid-request').each(function(){
+                    var sel =   $(this).mValid({
+                                    text: 'Campo vacío'
+                                })
+                    if(sel == true){
+                        res = false
+                    }
+                })
+                if(res){
+                    if(table){
+                        table.destroy();
+                    }
+                    tables()
+                    $('#show-table').show()
                 }
-                tables()
-                $('#show-table').show()
             })
             $(document).on('click','.view_homework',function(){
                 var id = $(this).data('id')
@@ -401,7 +426,7 @@
                 var homework = $(this).data('homework')
                 var user = $(this).data('user')
                 var nota = $(this).data('n')
-                if(nota){
+                if(nota != 'undefined' && nota != null){
                     var footer =    `<div class="modal-footer" style="justify-content: unset; display: block;">
                                         <center>
                                             <h2>Nota: ${nota}</h2>
@@ -563,18 +588,22 @@
                 var homework = $(this).data('h')
                 var user = $(this).data('u')
                 var note = $(this).parent().parent().find('input[name=note]').val()
-                var _token =  $('input[name="_token"]').val()
+                var _token = $('input[name="_token"]').val()
                 var thiss = $(this)
                 $.ajax({
                     url: '/crear_nota_tarea',
                     type: 'post',
                     data: {homework, user, note, _token},
                     success:function(dato){
-                        $('#submit-all').trigger('click')
-                        var html = `<center>
-                                        <h2>Nota: ${dato}</h2>
-                                    </center>`
-                        $(thiss).parent().parent().parent().html(html)
+                        if(note > dato){
+                            $(thiss).parent().parent().find('span.modal_input_validation.red_alert').html(`La nota debe variar entre 0 y ${dato}`).show()
+                        }else{
+                            $('#submit-all').trigger('click')
+                            var html = `<center>
+                                            <h2>Nota: ${note}</h2>
+                                        </center>`
+                            $(thiss).parent().parent().parent().html(html)
+                        }
                     }
                 })
             })

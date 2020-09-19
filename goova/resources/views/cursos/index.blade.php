@@ -28,6 +28,7 @@
                                                 <th>Nombre</th>
                                                 <th>Estudiantes</th>
                                                 <th>Profesores</th>
+                                                <th>Lider de Grupo</th>
                                                 <th class="noExport">Acciones</th>
                                             </tr>
                                         </thead>
@@ -37,6 +38,7 @@
                                                     <td>{{$val->name}}</td>
                                                     <td><button data-id="{{$val->id_list}}" type="button" class="primary-btn small goova-bt view_students">Visualizar Estudiantes</button></td>
                                                     <td><button data-id="{{$val->id_course}}" type="button" class="primary-btn small goova-bt view_teachers">Visualizar Profesores</button></td>
+                                                    <td>{{$val->name_leader}} {{$val->last_name_leader}}</td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
@@ -118,7 +120,7 @@
             </div>
         </div>
         <div class="modal fade admin-query" id="teachersModal" >
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">PROFESORES</h4>
@@ -281,6 +283,7 @@
                                                 <th>Documento</th>
                                                 <th>Nombre</th>
                                                 <th>Asignatura</th>
+                                                <th>Horas Semanas</th>
                                             </tr>
                                         </thead>
                                         <tbody>`
@@ -290,6 +293,7 @@
                                                 <td>${v.document}</td>
                                                 <td>${v.name} ${v.last_name}</td>
                                                 <td>${v.subject}</td>
+                                                <td>${v.hour_week}</td>
                                             </tr>`
                                 })
                             }else{

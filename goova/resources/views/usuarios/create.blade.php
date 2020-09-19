@@ -206,19 +206,35 @@
             })
             $(document).on('change','select[name=id_rol]',function(){
                 var id = $(this).val()
-                var html = `<div class="input-effect sm2_mb_20 md_mb_20">
-                                <select class="niceSelect w-100 bb form-control" name="id_list_students" id="classSelectStudent" required>
-                                    <option data-display="Seleccionar Curso *" value="">Select</option>
-                                    @foreach($list_students as $key => $val)
-                                        <option value="{{$val->id}}">{{$val->name}}</option>
-                                    @endforeach
-                                </select>
-                                <span class="focus-border"></span>
-                            </div>`
                 if(id == 5){
+                    var html = `<div class="input-effect sm2_mb_20 md_mb_20">
+                                    <select class="niceSelect w-100 bb form-control" name="id_list_students" id="classSelectStudent" required>
+                                        <option data-display="Seleccionar Curso *" value="">Select</option>
+                                        @foreach($list_students as $key => $val)
+                                            <option value="{{$val->id}}">{{$val->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="focus-border"></span>
+                                </div>`
                     $('#list_students').html(html).addClass('col-md-6')
                     $('select[name=id_list_students]').niceSelect();
-                }else{
+                }
+                {{--else if(id == 6){
+                    var html = `<div class="form-group col-md-12">
+                                    <div class="input-effect sm2_mb_20 md_mb_20">
+                                        <select class="niceSelect w-100 bb form-control" name="id_students" id="classSelectStudent" required>
+                                            <option data-display="Seleccionar  *" value="">Select</option>
+                                            @foreach($students as $key => $val)
+                                                <option value="{{$val->id}}">{{$val->document}}-{{$val->name}} {{$val->last_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="focus-border"></span>
+                                    </div>
+                                </div>`
+                    $('#list_students').html(html).addClass('col-md-6')
+                    $('select[name=id_students]').niceSelect();
+                }--}}
+                else{
                     $('#list_students').removeClass('col-md-6').html("")
                 }
             })

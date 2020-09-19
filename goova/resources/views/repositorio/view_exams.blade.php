@@ -28,7 +28,7 @@
                                                 @if(!empty($profesores))
                                                     <div class="form-group col-lg-6">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
-                                                            <select class="niceSelect w-100 bb form-control" name="id_teacher" id="id_teacher">
+                                                            <select class="niceSelect w-100 bb form-control valid-request" name="id_teacher" id="id_teacher">
                                                                 <option data-display="Seleccionar Profesor *" value="">Section *</option>
                                                                 @foreach($profesores as $key => $val)
                                                                     <option value="{{$val->id}}">{{$val->name}} {{$val->last_name}}</option>
@@ -36,11 +36,12 @@
                                                             </select>
                                                             <span class="focus-border"></span>
                                                         </div>
+                                                        <span class="modal_input_validation red_alert"></span>
                                                     </div>
                                                 @endif
                                                 <div class="form-group col-lg-6">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects">
+                                                        <select class="niceSelect w-100 bb form-control valid-request" name="id_subjects" id="id_subjects">
                                                             <option data-display="Seleccionar Asignatura *" value="">Section *</option>
                                                             @if(empty($profesores))
                                                                 @foreach($materias as $key => $val)
@@ -50,6 +51,7 @@
                                                         </select>
                                                         <span class="focus-border"></span>
                                                     </div>
+                                                    <span class="modal_input_validation red_alert"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -79,7 +81,7 @@
                                                 <th>Asignatura</th>
                                                 <th>Curso</th>
                                                 <th>Fecha Limite de Entrega</th>
-                                                <th>Acciones</th>
+                                                <th class="noExport">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -98,6 +100,16 @@
         </form>
         @include('includes.footer')
         <script>
+            /** Mi función, la utilizo para hacer mis validaciones y la voy a patentar */
+            (function( $ ){ 
+                $.fn.mValid = function(data) { 
+                    console.log($(this).attr('name') + ' = ' + $(this).val());
+
+                    data.text = $.trim($(this).val()) === ''? data.text : ''; 
+                    $(this).parents('div.input-effect').siblings('span').text(data.text); 
+                    return ($.trim($(this).val()) === ''); 
+                }; 
+            })( jQuery );
             $('#show-table').hide()
             var table = null
             function tables() {
@@ -239,26 +251,36 @@
             })
             $(document).on('change','select[name=id_subjects]',function(){
                 var id = $(this).val()
-                localStorage.setItem('f', id);
+                localStorage.setItem('v_e', id);
             })
             $(document).on('click','#submit-all',function(){
-                
-                if(table){
-                    table.destroy();
+                var res = true
+                $('select.valid-request').each(function(){
+                    var sel =   $(this).mValid({
+                                    text: 'Campo vacío'
+                                })
+                    if(sel == true){
+                        res = false
+                    }
+                })
+                if(res){
+                    if(table){
+                        table.destroy();
+                    }
+                    tables()
+                    $('#show-table').show()
                 }
-                tables()
-                $('#show-table').show()
             })
 
-            let filters = localStorage.getItem('f')
+            let filters = localStorage.getItem('v_e')
 
             $(document).on('click','.icofont-arrow-left',function(){
-                localStorage.removeItem('f')
+                localStorage.removeItem('v_e')
             })
-            // localStorage.setItem('f', 1);
+            // localStorage.setItem('v_e', 1);
             // window.onhashchange(function(){
             //     if(window.history.back()){
-            //         localStorage.removeItem('f')
+            //         localStorage.removeItem('v_e')
             //     }
             // })
 

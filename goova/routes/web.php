@@ -1,8 +1,22 @@
 <?php
 session_start();
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PdfController;
 use App\Http\Controllers\BulletinController;
+use App\Http\Controllers\RepositorioController;
+use App\Http\Controllers\CursosController;
+use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\AreasController;
+use App\Http\Controllers\SubjectsController;
+use App\Http\Controllers\FrontController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SalaController;
+use App\Http\Controllers\RubricsController;
+use App\Http\Controllers\ThemesController;
+use App\Http\Controllers\ImportantDatesController;
+use App\Http\Controllers\NotesController;
+use App\Http\Controllers\TimesController;
+use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\PdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,145 +33,146 @@ Auth::routes();
 Route::get('/', function () { return view('front/index'); });
 
 /** FRONT */
-Route::get('/get-entities', 'FrontController@getEntities');
-Route::get('/get-e-c', 'FrontController@getEC');
+Route::get('/get-entities', [FrontController::class, 'getEntities']);
+Route::get('/get-e-c', [FrontController::class, 'getEC']);
 
 Route::middleware(['auth'])->group(function () {
     // Route::get('/home', function () {
     //     return view('welcome');
     // });
-    Route::get('/home', 'HomeController@home');
 
-    Route::get('/getBoletin','SalaController@getBoletin');
+    /**  */
+    Route::get('/home', [HomeController::class, 'home']);
+    
+    /**  */
+    Route::get('/getBoletin', [SalaController::class, 'getBoletin']);
 
-    Route::get('/tareas','RepositorioController@index_homework');
-    Route::get('/temas_materias/{id}/{teacher}','RepositorioController@themes_subjects');
-    Route::get('/materias_profesores/{id}','RepositorioController@subjects_teacher');
-    Route::get('/buscar_tema/{subject}/{theme}/{teacher}','RepositorioController@search_themes');
-    Route::get('/agregar_tareas','RepositorioController@create_homework');
-    Route::get('/materias_tereas/{id}','RepositorioController@subjetcs_homework');
-    Route::get('/temas_tereas/{id}/{con}','RepositorioController@themes_homework');
-    Route::get('/buscar_tarea/{id}','RepositorioController@search_homework');
-    Route::get('/buscar_tarea_curso/{id}','RepositorioController@search_homework_course');
-    Route::post('/subir_tarea','RepositorioController@go_up_homework');
-    Route::post('/crear_nota_tarea','RepositorioController@store_note_homework');
-    Route::post('/crear_tarea','RepositorioController@store_homework');
+    /** TAREAS */
+    Route::get('/tareas', [RepositorioController::class, 'index_homework']);
+    Route::get('/temas_materias/{id}/{teacher}', [RepositorioController::class, 'themes_subjects']);
+    Route::get('/materias_profesores/{id}', [RepositorioController::class, 'subjects_teacher']);
+    Route::get('/buscar_tema/{subject}/{theme}/{teacher}', [RepositorioController::class, 'search_themes']);
+    Route::get('/agregar_tareas', [RepositorioController::class, 'create_homework']);
+    Route::get('/materias_tereas/{id}', [RepositorioController::class, 'subjetcs_homework']);
+    Route::get('/temas_tereas/{id}/{con}', [RepositorioController::class, 'themes_homework']);
+    Route::get('/buscar_tarea/{id}', [RepositorioController::class, 'search_homework']);
+    Route::get('/buscar_tarea_curso/{id}', [RepositorioController::class, 'search_homework_course']);
+    Route::post('/subir_tarea', [RepositorioController::class, 'go_up_homework']);
+    Route::post('/crear_nota_tarea', [RepositorioController::class, 'store_note_homework']);
+    Route::post('/crear_tarea', [RepositorioController::class, 'store_homework']);
 
-    Route::get('/foros', 'RepositorioController@index_foro');
-    Route::get('/info_foro/{id}', 'RepositorioController@info_foro');
-    Route::get('/info_foro_responder/{id}', 'RepositorioController@info_foro_answer');
-    Route::post('/crear_respuest_foro', 'RepositorioController@store_info_foro_answer');
-    Route::get('/agregar_foro', 'RepositorioController@create_foro');
-    Route::get('/materias_curso/{id}', 'RepositorioController@subjects_course');
-    Route::post('/crear_foro', 'RepositorioController@store_foro');
+    /** FOROS */
+    Route::get('/foros', [RepositorioController::class, 'index_foro']);
+    Route::get('/info_foro/{id}', [RepositorioController::class, 'info_foro']);
+    Route::get('/info_foro_responder/{id}', [RepositorioController::class, 'info_foro_answer']);
+    Route::post('/crear_respuest_foro', [RepositorioController::class, 'store_info_foro_answer']);
+    Route::get('/agregar_foro', [RepositorioController::class, 'create_foro']);
+    Route::get('/materias_curso/{id}', [RepositorioController::class, 'subjects_course']);
+    Route::post('/crear_foro', [RepositorioController::class, 'store_foro']);
 
-    Route::post('/archivo', 'RepositorioController@archivos_store');
-    Route::post('/upload_image', 'RepositorioController@upload_image');
-    Route::post('/delete_archivo', 'RepositorioController@archivos_delete');
+    /** ARCHIVOS */
+    Route::post('/archivo', [RepositorioController::class, 'archivos_store']);
+    Route::post('/upload_image', [RepositorioController::class, 'upload_image']);
+    Route::post('/delete_archivo', [RepositorioController::class, 'archivos_delete']);
 
+    /**  */
+    Route::post('/probandoAndo', [UsuariosController::class, 'changePassword']);
 
-    Route::post('/probandoAndo','UsuariosController@changePassword');
     Route::get('/getFilteUser','UsuariosController@getFilteUser');
+    /** USUARIOS */
+    Route::get('/usuarios', [UsuariosController::class, 'index']);
+    Route::get('/crear_usuarios', [UsuariosController::class, 'create']);
+    Route::post('/store_usuarios', [UsuariosController::class, 'store']);
+    Route::get('/editar_usuario/{id}', [UsuariosController::class, 'edit']);
+    Route::post('/post_usuario', [UsuariosController::class, 'update']);
+    Route::post('/inhabilitar_usuario', [UsuariosController::class, 'inhabilitar']);
+    Route::post('/habilitar_usuario', [UsuariosController::class, 'habilitar']);
+    Route::get('/estudientes_padres/{id_course}', [UsuariosController::class, 'students_parents']);
 
-    Route::get('/usuarios','UsuariosController@index');
-    Route::get('/crear_usuarios','UsuariosController@create');
-    Route::post('/store_usuarios','UsuariosController@store');
-    Route::get('/editar_usuario/{id}','UsuariosController@edit');
-    Route::post('/post_usuario','UsuariosController@update');
-    Route::post('/inhabilitar_usuario','UsuariosController@inhabilitar');
-    Route::post('/habilitar_usuario','UsuariosController@habilitar');
+    /** CURSOS */
+    Route::get('/cursos', [CursosController::class, 'index']);
+    Route::get('/crear_cursos', [CursosController::class, 'create']);
+    Route::post('/store_cursos', [CursosController::class, 'store']);
+    Route::get('/editar_cursos/{id}', [CursosController::class, 'edit']);
+    Route::post('/update_cursos', [CursosController::class, 'update']);
+    Route::get('/view_students_course/{id}', [CursosController::class, 'view_students']);
+    Route::get('/view_teachers_course/{id}', [CursosController::class, 'view_teachers']);
 
-    Route::get('/cursos','CursosController@index');
-    Route::get('/crear_cursos','CursosController@create');
-    Route::post('/store_cursos','CursosController@store');
-    Route::get('/editar_cursos/{id}','CursosController@edit');
-    Route::post('/update_cursos','CursosController@update');
-    Route::get('/view_students_course/{id}','CursosController@view_students');
-    Route::get('/view_teachers_course/{id}','CursosController@view_teachers');
     Route::post('/previsualizarImagen','UsuariosController@previsualizarImagen');
+    /** EXAMENES */
+    Route::get('/exams', [RepositorioController::class, 'exams']);
+    Route::post('/ver_preguntas_examen', [RepositorioController::class, 'view_questions_exams']);
+    Route::get('/examenes', [RepositorioController::class, 'index_exam']);
+    Route::get('/materias_profesores_exam/{id}', [RepositorioController::class, 'subjects_teacher_exam']);
+    Route::get('/temas_materias_exam/{id}/{teacher}', [RepositorioController::class, 'themes_subjects_exam']);
+    Route::get('/buscar_exam/{subject}/{teacher}', [RepositorioController::class, 'search_exam']);
+    Route::get('/buscar_tema_exam/{subject}/{theme}/{teacher}', [RepositorioController::class, 'search_themes_exam']);
+    Route::post('/realizar_examen', [RepositorioController::class, 'perform_exam']);
+    Route::post('/crear_realizar_examen', [RepositorioController::class, 'store_perform_exam']);
+    Route::get('/respuestas_examen/{id}', [RepositorioController::class, 'answer_exam']);
+    Route::get('/ver_respuestas_examen/{id}/{user}', [RepositorioController::class, 'view_answers_exams']);
+    Route::post('/crear_nota', [RepositorioController::class, 'store_answer_exam']);
+    Route::get('/ver_nota/{id}/{user}', [RepositorioController::class, 'view_note']);
+    Route::get('/agregar_examen', [RepositorioController::class, 'create_exam']);
+    Route::post('/crear_examen', [RepositorioController::class, 'store_exam']);
+    Route::get('/calificar_examenes_vencidos', [RepositorioController::class, 'qualify_exams_defeated']);
 
-    Route::get('/exams', 'RepositorioController@exams');
-    Route::post('/ver_preguntas_examen', 'RepositorioController@view_questions_exams');
-    Route::get('/examenes', 'RepositorioController@index_exam');
-    Route::get('/materias_profesores_exam/{id}', 'RepositorioController@subjects_teacher_exam');
-    Route::get('/temas_materias_exam/{id}/{teacher}', 'RepositorioController@themes_subjects_exam');
-    Route::get('/buscar_exam/{subject}/{teacher}', 'RepositorioController@search_exam');
-    Route::get('/buscar_tema_exam/{subject}/{theme}/{teacher}', 'RepositorioController@search_themes_exam');
-    Route::post('/realizar_examen', 'RepositorioController@perform_exam');
-    Route::post('/crear_realizar_examen', 'RepositorioController@store_perform_exam');
-    Route::get('/respuestas_examen/{id}', 'RepositorioController@answer_exam');
-    Route::get('/ver_respuestas_examen/{id}/{user}', 'RepositorioController@view_answers_exams');
-    Route::post('/crear_nota', 'RepositorioController@store_answer_exam');
-    Route::get('/ver_nota/{id}/{user}', 'RepositorioController@view_note');
-    Route::get('/agregar_examen', 'RepositorioController@create_exam');
-    Route::post('/crear_examen', 'RepositorioController@store_exam');
+    /** AREAS */
+    Route::get('/areas', [AreasController::class, 'index']);
+    Route::get('/view_areas', [AreasController::class, 'view_areas']);
+    Route::post('/store_areas', [AreasController::class, 'store']);
+    Route::get('/edit_area/{id}', [AreasController::class, 'edit']);
+    Route::post('/update_area', [AreasController::class, 'update']);
 
-    Route::get('/usuarios', 'UsuariosController@index');
-    Route::get('/crear_usuarios', 'UsuariosController@create');
-    Route::post('/store_usuarios', 'UsuariosController@store');
-    Route::get('/editar_usuario/{id}', 'UsuariosController@edit');
-    Route::post('/post_usuario', 'UsuariosController@update');
-    Route::post('/inhabilitar_usuario', 'UsuariosController@inhabilitar');
-    Route::post('/habilitar_usuario', 'UsuariosController@habilitar');
-
-    Route::get('/cursos', 'CursosController@index');
-    Route::get('/crear_cursos', 'CursosController@create');
-    Route::post('/store_cursos', 'CursosController@store');
-    Route::get('/editar_cursos/{id}', 'CursosController@edit');
-    Route::post('/update_cursos', 'CursosController@update');
-    Route::get('/view_students_course/{id}', 'CursosController@view_students');
-    Route::get('/view_teachers_course/{id}', 'CursosController@view_teachers');
+    /** ASIGNATURAS */
+    Route::get('/asignaturas', [SubjectsController::class, 'index']);
+    Route::get('/view_subjects', [SubjectsController::class, 'view_subjects']);
+    Route::post('/store_subjects', [SubjectsController::class, 'store']);
+    Route::get('/edit_subject/{id}', [SubjectsController::class, 'edit']);
+    Route::post('/update_subject', [SubjectsController::class, 'update']);
 
     /** RÚBRICAS */
     Route::get('/gestionar-rubricas', function () { return view('rubrics/rubricas'); });
     Route::get('/rubricas', function () { return view('rubrics/rubricas'); });
-    Route::get('/get-rubrics-list', 'RubricsController@getRubricsList');
-    Route::get('/get-data-edit-rubric', 'RubricsController@getDataEditRubric');
-    Route::get('/get-rule-rubric', 'RubricsController@getRuleRubric');
-
-    Route::post('/post-save-rubric', 'RubricsController@postSaveRubric');
-
-    Route::put('/put-save-edited-rubric', 'RubricsController@putSaveEditedRubric');
-
+    Route::get('/get-rubrics-list', [RubricsController::class, 'getRubricsList']);
+    Route::get('/get-data-edit-rubric', [RubricsController::class, 'getDataEditRubric']);
+    Route::get('/get-rule-rubric', [RubricsController::class, 'getRuleRubric']);
+    Route::post('/post-save-rubric', [RubricsController::class, 'postSaveRubric']);
+    Route::put('/put-save-edited-rubric', [RubricsController::class, 'putSaveEditedRubric']);
 
     /** CICLO O PERIODO */
     Route::get('/ciclo-o-periodo', function () { return view('times/ciclo_o_periodo'); });
-    Route::get('/get-times-list', 'TimesController@getTimesList');
-
-    Route::post('/post-save-time', 'TimesController@postSaveTime');
+    Route::get('/get-times-list', [TimesController::class, 'getTimesList']);
+    Route::post('/post-save-time', [TimesController::class, 'postSaveTime']);
 
 
     /** TEMAS */
-    Route::get('/temas', 'ThemesController@getThemesView');
-    Route::get('/get-subject-filter', 'ThemesController@getSubjectFilter');
-    Route::get('/get-times-filter', 'ThemesController@getTimesFilter');
-    Route::get('/get-themes-list', 'ThemesController@getThemesList');
-    Route::get('/get-data-create-theme', 'ThemesController@getDataCreateTheme');
-    Route::get('/get-data-edit-theme', 'ThemesController@getDataEditTheme');
-
-    Route::post('/post-save-theme', 'ThemesController@postSaveTheme');
-
-    Route::put('/put-edit-theme', 'ThemesController@putEditTheme');
+    Route::get('/temas', [ThemesController::class, 'getThemesView']);
+    Route::get('/get-subject-filter', [ThemesController::class, 'getSubjectFilter']);
+    Route::get('/get-times-filter', [ThemesController::class, 'getTimesFilter']);
+    Route::get('/get-themes-list', [ThemesController::class, 'getThemesList']);
+    Route::get('/get-data-create-theme', [ThemesController::class, 'getDataCreateTheme']);
+    Route::get('/get-data-edit-theme', [ThemesController::class, 'getDataEditTheme']);
+    Route::post('/post-save-theme', [ThemesController::class, 'postSaveTheme']);
+    Route::put('/put-edit-theme', [ThemesController::class, 'putEditTheme']);
 
 
     /** FECHAS IMPORTANTES */
-    Route::get('/fechas-importantes', 'ImportantDatesController@getImportantDatesView');
-    Route::get('/get-pending-events', 'ImportantDatesController@getPendingEvents');
-    Route::get('/get-held-events', 'ImportantDatesController@getHeldEvents');
-    Route::get('/get-event', 'ImportantDatesController@getEvent');
-    Route::get('/get-calendar-events', 'ImportantDatesController@getCalendarEvents');
-
-    Route::post('/post-save-event', 'ImportantDatesController@postSaveEvent');
-
-    Route::put('/put-edit-event', 'ImportantDatesController@putEditEvent');
+    Route::get('/fechas-importantes', [ImportantDatesController::class, 'getImportantDatesView']);
+    Route::get('/get-pending-events', [ImportantDatesController::class, 'getPendingEvents']);
+    Route::get('/get-held-events', [ImportantDatesController::class, 'getHeldEvents']);
+    Route::get('/get-event', [ImportantDatesController::class, 'getEvent']);
+    Route::get('/get-calendar-events', [ImportantDatesController::class, 'getCalendarEvents']);
+    Route::post('/post-save-event', [ImportantDatesController::class, 'postSaveEvent']);
+    Route::put('/put-edit-event', [ImportantDatesController::class, 'putEditEvent']);
 
     /** NOTAS */
-    Route::get('/notas', 'NotesController@getNotesView');
-    Route::get('/get-student', 'NotesController@getStudent');
-    Route::get('/get-notes-list', 'NotesController@getNotesList');
-    Route::get('/get-students-list', 'NotesController@getStudentsList');
-    Route::get('/get-course-filter', 'NotesController@getCourseFilter');
-    Route::get('/get-teacher-filter', 'NotesController@getTeacherFilter');
+    Route::get('/notas', [NotesController::class, 'getNotesView']);
+    Route::get('/get-student', [NotesController::class, 'getStudent']);
+    Route::get('/get-notes-list', [NotesController::class, 'getNotesList']);
+    Route::get('/get-students-list', [NotesController::class, 'getStudentsList']);
+    Route::get('/get-course-filter', [NotesController::class, 'getCourseFilter']);
+    Route::get('/get-teacher-filter', [NotesController::class, 'getTeacherFilter']);
 
 
     /** REPORTES */
@@ -194,18 +209,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-c-d', [PdfController::class, 'getCryptData']);
 
     /* VIDEOCHAT */
-    Route::get('/listar/sala','SalaController@index');
-    Route::get('/crear/sala','SalaController@getCrearSala');
-    Route::post('/crear/sala','SalaController@crearSala')->name('crearSala');
-    Route::get('/editar/sala/{id}','SalaController@getEditarSala');
-    Route::post('/editar/sala','SalaController@editarSala')->name('editarSala');
-    Route::post('/cambiar-estado/sala','SalaController@cambiarEstado');
-    Route::get('/ingresar/sala/{id}','SalaController@ingresarSala');
-    Route::get('/room_filter','SalaController@room_filter');
-    Route::post('/saveAssist','SalaController@saveAssist');
-
+    Route::get('/listar/sala', [SalaController::class, 'index']);
+    Route::get('/crear/sala', [SalaController::class, 'getCrearSala']);
+    Route::post('/crear/sala', [SalaController::class, 'crearSala'])->name('crearSala');
+    Route::get('/editar/sala/{id}', [SalaController::class, 'getEditarSala']);
+    Route::post('/editar/sala', [SalaController::class, 'editarSala'])->name('editarSala');
+    Route::post('/cambiar-estado/sala', [SalaController::class, 'cambiarEstado']);
+    Route::get('/ingresar/sala/{id}', [SalaController::class, 'ingresarSala']);
+    Route::get('/room_filter', [SalaController::class, 'room_filter']);
+    Route::post('/saveAssist', [SalaController::class, 'saveAssist']);
 
     /* SECRETARIA */
-    Route::get('/getHorarios','SalaController@getHorario');
-
+    Route::get('/getHorarios', [SalaController::class, 'getHorario']);
 });

@@ -35,6 +35,19 @@
                <a href="/gestionar-rubricas">Gestionar Rúbricas</a>
             </li>
             <li>
+               <a href="#subMenuProgramaticContentAreas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                  Gestionar Asignaturas
+               </a>
+               <ul class="collapse list-unstyled" id="subMenuProgramaticContentAreas">
+                  <li>
+                     <a href="/areas"> Areas</a>
+                  </li>
+                  <li>
+                     <a href="/asignaturas"> Asignaturas</a>
+                  </li>
+               </ul>
+            </li>
+            <li>
                <a href="#subMenuProgramaticContentTimes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                   Tiempos y Temas
                </a>

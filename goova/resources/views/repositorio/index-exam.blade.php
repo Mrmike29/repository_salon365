@@ -32,7 +32,7 @@
                                                 @if(!empty($profesores))
                                                     <div class="form-group col-lg-4">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
-                                                            <select class="niceSelect w-100 bb form-control" name="id_teacher" id="id_teacher">
+                                                            <select class="niceSelect w-100 bb form-control valid-request" name="id_teacher" id="id_teacher">
                                                                 <option data-display="Seleccionar Profesor *" value="">Section *</option>
                                                                 @foreach($profesores as $key => $val)
                                                                     <option value="{{$val->id}}">{{$val->name}} {{$val->last_name}}</option>
@@ -40,11 +40,12 @@
                                                             </select>
                                                             <span class="focus-border"></span>
                                                         </div>
+                                                        <span class="modal_input_validation red_alert"></span>
                                                     </div>
                                                 @endif
                                                 <div class="form-group @if(!empty($profesores) && Auth::user()->id_rol <> 5){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
-                                                        <select class="niceSelect w-100 bb form-control" name="id_subjects" id="id_subjects">
+                                                        <select class="niceSelect w-100 bb form-control valid-request" name="id_subjects" id="id_subjects">
                                                             <option data-display="Seleccionar Asignatura *" value="">Section *</option>
                                                             @if(empty($profesores))
                                                                 @foreach($materias as $key => $val)
@@ -54,15 +55,17 @@
                                                         </select>
                                                         <span class="focus-border"></span>
                                                     </div>
+                                                    <span class="modal_input_validation red_alert"></span>
                                                 </div>
                                                 @if(Auth::user()->id_rol <> 5)
                                                     <div class="form-group @if(!empty($profesores)){{'col-lg-4'}}@else{{'col-lg-6'}}@endif">
                                                         <div class="input-effect sm2_mb_20 md_mb_20">
-                                                            <select class="niceSelect w-100 bb form-control" name="id_theme_time" id="id_theme_time">
+                                                            <select class="niceSelect w-100 bb form-control valid-request" name="id_theme_time" id="id_theme_time">
                                                                 <option data-display="Seleccionar Tema *" value="">Section *</option>
                                                             </select>
                                                             <span class="focus-border"></span>
                                                         </div>
+                                                        <span class="modal_input_validation red_alert"></span>
                                                     </div>
                                                 @endif
                                             </div>
@@ -94,7 +97,7 @@
                                                     <th>Profesor</th>
                                                     <th>Fecha Limite de Entrega</th>
                                                     <th>Estado</th>
-                                                    <th>Acciones</th>
+                                                    <th class="noExport">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -110,7 +113,7 @@
                                                     <th>Grado</th>
                                                     <th>Fecha Limite de Entrega</th>
                                                     <th>Estado</th>
-                                                    <th>Acciones</th>
+                                                    <th class="noExport">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -139,8 +142,29 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade admin-query" id="modal-msg-student" >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center" id="descripcion">
+                            <?=session('status')?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @include('includes.footer')
         <script>
+            /** Mi función, la utilizo para hacer mis validaciones y la voy a patentar */
+            (function( $ ){ 
+                $.fn.mValid = function(data) { 
+                    // console.log($(this).attr('name') + ' = ' + $(this).val());
+
+                    data.text = $.trim($(this).val()) === ''? data.text : ''; 
+                    $(this).parents('div.input-effect').siblings('span').text(data.text); 
+                    return ($.trim($(this).val()) === ''); 
+                }; 
+            })( jQuery );
             $('#show-table').hide()
             var table = null
             function tables() {
@@ -202,7 +226,10 @@
                                     data: "id_questions_students",
                                     render: function (data, type, row, meta) {
                                         @if(Auth::user()->id_rol == 5)
-                                            if(row.status == "Entregado" || row.status == "Vencido" || row.status == "Calificado"){
+                                            if(row.status == "Calificado"){
+                                                return `<button data-id='${data}' data-s='${row.id_students}' data-n='${row.note}' type='button' class='primary-btn small goova-bt view_exam_course'>Ver Nota</button>`
+                                            }
+                                            if(row.status == "Entregado" || row.status == "Vencido"){
                                                 return `<button data-id='${data}' data-s='${row.id_students}' type='button' class='primary-btn small goova-bt view_exam_course'>Ver</button>`
                                             }
                                             if(row.status == "Pendiente"){
@@ -213,7 +240,11 @@
                                                 }
                                             }
                                         @else
-                                            return `<button data-id='${data}' data-s='${row.id_students}' type='button' class='primary-btn small goova-bt view_exam_course'>Ver</button>`
+                                            if(row.status == "Calificado"){
+                                                return `<button data-id='${data}' data-s='${row.id_students}' data-n='${row.note}' type='button' class='primary-btn small goova-bt view_exam_course'>Ver</button>`
+                                            }else{
+                                                return `<button data-id='${data}' data-s='${row.id_students}' type='button' class='primary-btn small goova-bt view_exam_course'>Ver</button>`
+                                            }
                                         @endif
                                     }
                                 }
@@ -320,12 +351,22 @@
                 })
             })
             $(document).on('click','#submit-all',function(){
-                
-                if(table){
-                    table.destroy();
+                var res = true
+                $('select.valid-request').each(function(){
+                    var sel =   $(this).mValid({
+                                    text: 'Campo vacío'
+                                })
+                    if(sel == true){
+                        res = false
+                    }
+                })
+                if(res){
+                    if(table){
+                        table.destroy();
+                    }
+                    tables()
+                    $('#show-table').show()
                 }
-                tables()
-                $('#show-table').show()
             })
             $(document).on('click','.go_up_exam_course',function(){
                 var id = $(this).data('id')
@@ -337,16 +378,14 @@
             $(document).on('click','.view_exam_course',function(){
                 var id = $(this).data('id')
                 var user = $(this).data('s')
+                var note = $(this).data('n')
                 if(id && id !== 'undefined'){
                     $.ajax({
                         url: '/ver_nota/'+id+'/'+user,
                         type: 'get',
                         success:function(dato){
-                            console.log(dato)
                             if(dato){
                                 window.location.href = '/ver_respuestas_examen/'+id+'/'+user
-                                // $('#examCourseModal .modal-body #descripcion').html(`<h3>${dato.value}</h3>`)
-                                // $('#examCourseModal').modal()
                             }else{
                                 @if(Auth::user()->id_rol == 4)
                                     window.location.href = '/respuestas_examen/'+id
@@ -357,11 +396,17 @@
                             }
                         }
                     })
+                }else if(note !== 'undefined'){
+                    $('#examCourseModal .modal-body #descripcion').html(`<h4>Nota: ${note}</h4><h5 style="color: red;">Este examne no se presento</h5>`)
+                    $('#examCourseModal').modal()
                 }else{
                     $('#examCourseModal .modal-body #descripcion').html('<h4>Aún no lo ha realizado</h4>')
                     $('#examCourseModal').modal()
                 }
             })
+            @if(session('status'))
+                $('#modal-msg-student').modal('show')
+            @endif
         </script>
     </body>
 </html>

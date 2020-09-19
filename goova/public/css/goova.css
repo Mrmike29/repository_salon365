@@ -1645,7 +1645,7 @@ html[dir="rtl"] .to-do-list.up_buttom {
 
 /* line 47, /Applications/MAMP/htdocs/InfixEduTheme/public/backEnd/scss/1_default/admin/_component.scss */
 .white-box.single-summery:hover {
-    background: url(../../img/summery-bg1.png) no-repeat center;
+    background: var(--g-third);
     box-shadow: 0px 10px 30px var(--g-third);
     background-size: 100% 100%;
 }

@@ -5,7 +5,7 @@
         <style>
             .admin-visitor-area {
                 width: 100%;
-                height: 91%;
+                height: 86%;
                 overflow-y: scroll;
                 padding: 0px 5px;
             }
@@ -25,14 +25,16 @@
     		<!-- Sidebar  -->
     		@include('includes.sidebar')
             <div id="main-content">
-    		    @include('includes.header')
-                {{-- <section class="sms-breadcrumb mb-40 white-box">
-                    <div class="container-fluid">
-                        <div class="row justify-content-between">
-                            <h1>Ver Foros</h1>
+                @include('includes.header')
+                @if($foro->date_end < date('Y-m-d 00:00:00'))
+                    <section class="sms-breadcrumb mb-40 white-box">
+                        <div class="container-fluid">
+                            <div class="row justify-content-between">
+                                <h1 style="color: red">Este foro finalizo {{date('d/m/Y',strtotime($foro->date_end))}}</h1>
+                            </div>
                         </div>
-                    </div>
-                </section> --}}
+                    </section>
+                @endif
                 <section id="show-table" class="admin-visitor-area up_st_admin_visitor">
                     <div class="container-fluid p-0">
                         @foreach($contenido as $key => $val)

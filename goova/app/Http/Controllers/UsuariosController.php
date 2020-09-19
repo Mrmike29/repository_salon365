@@ -30,6 +30,7 @@ class UsuariosController extends Controller
         $roles = Rol::where('id','<>',1)->get();
         $type_document = Type_document::get();
         $list_students = List_students::get();
+        $students = User::where('id_rol',5)->get();
         // $entity = Entity::get();
 
         return view('usuarios.create',array('roles'=>$roles,'type_document'=>$type_document, 'list_students'=>$list_students));
@@ -44,12 +45,21 @@ class UsuariosController extends Controller
         $usuario->password = Hash::make($request->password);
         $usuario->save();
 
-        if(isset($request->id_list_students) && !empty($request->id_list_students)){
-            $lista = new User_list_students();
-            $lista->id_users = $usuario->id;
-            $lista->id_list_students = $request->id_list_students;
-            $lista->save();
+        if($request->id_rol == 5){
+            if(isset($request->id_list_students) && !empty($request->id_list_students)){
+                $lista = new User_list_students();
+                $lista->id_users = $usuario->id;
+                $lista->id_list_students = $request->id_list_students;
+                $lista->save();
+            }
         }
+        // if($request->id_rol == 6){
+        //     if(isset($request->id_students) && !empty($request->id_students)){
+        //         foreach ($request->id_students as $key => $val) {
+        //             # code...
+        //         }
+        //     }
+        // }
 
         return redirect('/usuarios');
     }
@@ -125,6 +135,14 @@ class UsuariosController extends Controller
         ]);
 
         return redirect('/usuarios');
+    }
+
+    public function students_parents($id_course)
+    {
+        $students = User_list_students::join('users','users.id','users_list_students.id_users')
+                                        ->where('users_list_students.id_list_students',$id_course)
+                                        ->get();
+        return $students;
     }
 
     public function changePassword(Request $request) {

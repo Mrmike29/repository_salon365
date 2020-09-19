@@ -24,6 +24,7 @@ use App\Questions_students;
 use App\Parcial_notes;
 use App\Notes_exam;
 use App\Notes_homework;
+use App\Entity;
 use DB;
 use Auth;
 use Mail;
@@ -143,7 +144,7 @@ class RepositorioController extends Controller
             foreach ($tareas as $key => $val) {
                 $val->name_teacher = $val->name_students.' '.$val->last_name_students;
                 $val->limit_time = date('Y-m-d',strtotime($val->limit_time));
-                if($val->nota){
+                if($val->nota != null){
                     $val->status = "Calificado";
                 }elseif($val->id_homework_course){
                     $val->status = "Entregado";
@@ -190,7 +191,7 @@ class RepositorioController extends Controller
             foreach ($tareas as $key => $val) {
                 $val->name_students = $val->name_students.' '.$val->last_name_students;
                 $val->limit_time = date('Y-m-d',strtotime($val->limit_time));
-                if($val->nota){
+                if($val->nota != null){
                     $val->status = "Calificado";
                 }elseif($val->id_homework_course){
                     $val->status = "Entregado";
@@ -314,6 +315,12 @@ class RepositorioController extends Controller
 
     public function store_note_homework(Request $request)
     {
+        $entity = Entity::where('id',Auth::user()->id_info_entity)
+                        ->first();
+        if($request->note > $entity->max_score){
+            return $entity->max_score;
+        }
+
         $nota = new Parcial_notes();
         $nota->value = $request->note;
         $nota->save();
@@ -325,7 +332,7 @@ class RepositorioController extends Controller
         $nota_tarea->id_parcial_notes = $nota->id;
         $nota_tarea->save();
 
-        return $request->note;
+        return $entity->max_score;
     }
 
     public function store_homework(Request $request)
@@ -538,11 +545,11 @@ class RepositorioController extends Controller
         if(Auth::user()->id_rol <> 4){
             $tareas = Exam::join('teacher_course','teacher_course.id_course','exam.id_course')
                             ->join('themes_time','themes_time.id','exam.id_theme_time')
-                            ->join('subjects','subjects.id','teacher_course.id_subjects')
+                            ->join('subjects','subjects.id','themes_time.id_subject')
                             ->join('course','course.id','exam.id_course')
                             ->join('list_students','list_students.id','course.id_list_students')
                             ->select('themes_time.name as name_theme','subjects.name as name_subject','list_students.name as name_list','exam.id as id_exam','exam.date_end')
-                            ->where('teacher_course.id_subjects',$subject)
+                            ->where('subjects.id',$subject)
                             ->where('teacher_course.id_users',$id_user)
                             ->groupBy('exam.id')
                             ->get();
@@ -554,11 +561,11 @@ class RepositorioController extends Controller
         }else{
             $tareas = Exam::join('teacher_course','teacher_course.id_course','exam.id_course')
                             ->join('themes_time','themes_time.id','exam.id_theme_time')
-                            ->join('subjects','subjects.id','teacher_course.id_subjects')
+                            ->join('subjects','subjects.id','themes_time.id_subject')
                             ->join('course','course.id','exam.id_course')
                             ->join('list_students','list_students.id','course.id_list_students')
                             ->select('themes_time.name as name_theme','subjects.name as name_subject','list_students.name as name_list','exam.id as id_exam','exam.date_end')
-                            ->where('teacher_course.id_subjects',$subject)
+                            ->where('subjects.id',$subject)
                             ->where('teacher_course.id_users',$id_user)
                             ->groupBy('exam.id')
                             ->get();
@@ -676,7 +683,8 @@ class RepositorioController extends Controller
                                 $join->on('notes_exam.id_exam', '=', 'exam.id');
                                 $join->on('notes_exam.id_student', '=', 'users_list_students.id_users');
                             })
-                            ->select('themes_time.name as name_theme','users_list_students.id_users as id_students','users.name as name_students','users.last_name as last_name_students','exam.id as id_exam','exam.date_end','questions_students.id as id_questions_students','notes_exam.id as id_nota')
+                            ->leftJoin('parcial_notes','parcial_notes.id','notes_exam.id_parcial_notes')
+                            ->select('themes_time.name as name_theme','users_list_students.id_users as id_students','users.name as name_students','users.last_name as last_name_students','exam.id as id_exam','exam.date_end','questions_students.id as id_questions_students','notes_exam.id as id_nota','parcial_notes.value as note')
                             ->where('themes_time.id_subject',$subject)
                             ->where('users_list_students.id_users',Auth::user()->id)
                             ->where('exam.date_start','<=',$hoy)
@@ -719,7 +727,8 @@ class RepositorioController extends Controller
                                 $join->on('notes_exam.id_exam', '=', 'exam.id');
                                 $join->on('notes_exam.id_student', '=', 'users.id');
                             })
-                            ->select('themes_time.name as name_theme','subjects.name as name_subject','users.id as id_students','users.name as name_students','users.last_name as last_name_students','list_students.name as name_list','exam.id as id_exam','exam.date_end','questions_students.id as id_questions_students','notes_exam.id as id_nota')
+                            ->leftJoin('parcial_notes','parcial_notes.id','notes_exam.id_parcial_notes')
+                            ->select('themes_time.name as name_theme','subjects.name as name_subject','users.id as id_students','users.name as name_students','users.last_name as last_name_students','list_students.name as name_list','exam.id as id_exam','exam.date_end','questions_students.id as id_questions_students','notes_exam.id as id_nota','parcial_notes.value as note')
                             ->where('teacher_course.id_subjects',$subject)
                             ->where('teacher_course.id_users',$id_user)
                             ->where('exam.id_theme_time',$theme)
@@ -829,6 +838,8 @@ class RepositorioController extends Controller
 
     public function store_perform_exam(Request $request)
     {
+        $entity = Entity::where('id',Auth::user()->id_info_entity)
+                        ->first();
         $id_user = Auth::user()->id;
         $curso = User_list_students::join('list_students','list_students.id','users_list_students.id_list_students')
                                     ->join('course','course.id_list_students','list_students.id')
@@ -881,8 +892,10 @@ class RepositorioController extends Controller
             }
         }
 
+        $status = '<h3>Espera hasta que el profesor lo califique</h3>';
+
         if($valid){
-            $res = 5 / $p;
+            $res = $entity->max_score / $p;
             $res = $res * $s;
             $res = number_format($res, 2);
 
@@ -897,9 +910,11 @@ class RepositorioController extends Controller
             $nota_examen->id_student = $id_user;
             $nota_examen->id_parcial_notes = $nota->id;
             $nota_examen->save();
+
+            $status = '<h2>Nota: '.$res.'</h2>';
         }
 
-        return redirect('/examenes');
+        return redirect('/examenes')->with('status',$status);
     }
 
     public function answer_exam($id)
@@ -919,6 +934,8 @@ class RepositorioController extends Controller
 
     public function store_answer_exam(Request $request)
     {
+        $entity = Entity::where('id',Auth::user()->id_info_entity)
+                        ->first();
         foreach ($request->status as $key => $value) {
             $respuesta = Questions_students::find($key);
             $respuesta->status = $value;
@@ -944,7 +961,7 @@ class RepositorioController extends Controller
             }
         }
         
-        $res = 5 / $p;
+        $res = $entity->max_score / $p;
         $res = $res * $s;
         $res = number_format($res, 2);
 
@@ -1031,6 +1048,35 @@ class RepositorioController extends Controller
         }
 
         return redirect('/examenes');
+    }
+
+    public function qualify_exams_defeated()
+    {
+        $examenes = Exam::join('course','course.id','exam.id_course')
+                        ->join('list_students','list_students.id','course.id_list_students')
+                        ->join('users_list_students','users_list_students.id_list_students','list_students.id')
+                        ->join('users','users.id','users_list_students.id_users')
+                        ->leftJoin('notes_exam', function ($join) {
+                            $join->on('notes_exam.id_exam', '=', 'exam.id');
+                            $join->on('notes_exam.id_student', '=', 'users_list_students.id_users');
+                        })
+                        ->select('exam.id as id_exam','course.id as id_course','users.id as id_student','exam.date_end','notes_exam.id as id_note')
+                        ->get();
+
+        foreach($examenes as $key => $val){
+            if($val->date_end < date('Y-m-d 00:00:00') && empty($val->id_note)){
+                $nota = new Parcial_notes();
+                $nota->value = '0';
+                $nota->save();
+
+                $nota_examen = new Notes_exam();
+                $nota_examen->id_exam = $val->id_exam;
+                $nota_examen->id_course = $val->id_course;
+                $nota_examen->id_student = $val->id_student;
+                $nota_examen->id_parcial_notes = $nota->id;
+                $nota_examen->save();
+            }
+        }
     }
 
     public function archivos_store(Request $request)
