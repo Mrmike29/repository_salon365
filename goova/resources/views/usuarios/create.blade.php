@@ -168,6 +168,10 @@
         </div>
         @include('includes.footer')
         <script>
+
+            /** Isset */
+            const isset = (v) => { return (typeof v != "undefined" && v != null); }
+
             $(document).on('change','input[name=picture]',function(){
                 $.ajax({
                     url:'/previsualizarImagen',
@@ -238,65 +242,80 @@
                     $('#list_students').removeClass('col-md-6').html("")
                 }
             })
-            
+
             $('[name="id_rol"]').change(function () {
-
                 $('#parent_students').remove();
-
                 if ($(this).val()*1 !== 6) return false;
 
                 let c = 1;
 
-                let html =
-                    '<div class="form-group col-12" style="height: 300px; max-height: 300px; overflow-y: auto;" id="parent_students">' +
-                        '<div style="display: flex">' +
-                            '<div class="form-group col-5">' +
-                                '<div class="row no-gutters input-right-icon">' +
-                                    '<div class="col">' +
-                                        '<div class="input-effect sm2_mb_20 md_mb_20">' +
-                                            '<select class="niceSelect w-100 bb form-control" name="course_' + c + '" id="course_' + c + '" required>' +
-                                                '<option data-display="Seleccione Curso" value="">Seleccione Curso</option>' +
-                                                '<option value="1">11</option>' +
-                                            '</select>' +
-                                            '<span class="focus-border"></span>' +
+                $.ajax({
+                    type: 'GET',
+                    url: '/get-courses-parents',
+                }).done((data) => {
+                    let co = data.courses;
+
+                    let html =
+                        '<div class="form-group col-12" style="height: 300px; max-height: 300px; overflow-y: auto;" id="parent_students">' +
+                            '<div style="display: flex">' +
+                                '<div class="form-group col-5">' +
+                                    '<div class="row no-gutters input-right-icon">' +
+                                        '<div class="col">' +
+                                            '<div class="input-effect sm2_mb_20 md_mb_20">' +
+                                                '<input type="hidden" name="c" id="c" value="' + c + '">' +
+                                                '<select class="niceSelect w-100 bb form-control" name="course_' + c + '" id="course_' + c + '" required>' +
+                                                    '<option data-display="Seleccione Curso" value="">Seleccione Curso</option>';
+                    co.forEach((item) => { html += '<option value="' + item.id +'">' + item.name +'</option>' })
+                        html +=                 '</select>' +
+                                                '<span class="focus-border"></span>' +
+                                            '</div>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
-                            '</div>' +
-                            '<div class="form-group col-5">' +
-                                '<div class="row no-gutters input-right-icon">' +
-                                    '<div class="col">' +
-                                        '<div class="input-effect sm2_mb_20 md_mb_20">' +
-                                            '<select class="niceSelect w-100 bb form-control" name="student_' + c + '" id="student_' + c + '" required>' +
+                                '<div class="form-group col-5">' +
+                                    '<div class="row no-gutters input-right-icon">' +
+                                        '<div class="col">' +
+                                            '<div class="input-effect sm2_mb_20 md_mb_20">' +
+                                                '<select class="niceSelect w-100 bb form-control" name="student_' + c + '" id="student_' + c + '" required>' +
 
-                                            '</select>' +
-                                            '<span class="focus-border"></span>' +
+                                                '</select>' +
+                                                '<span class="focus-border"></span>' +
+                                            '</div>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
+                                '<div class="form-group col-2">' +
+
+                                '</div>' +
                             '</div>' +
-                            '<div class="form-group col-2">' +
+                        '</div>';
 
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+                    $(html).insertAfter($('#rols'));
+                    $('#course_' + c).niceSelect('destroy').niceSelect();
+                    $('#student_' + c).niceSelect('destroy').niceSelect();
 
-                $(html).insertAfter($('#rols'));
-                $('#course_' + c).niceSelect('destroy').niceSelect();
-                $('#student_' + c).niceSelect('destroy').niceSelect();
-
-                $('[id^="course_"]').change(function () {
-                    searchStudents($(this).attr('id').split('_').pop());
-                })
+                    $('[id^="course_"]').change(function () { searchStudents($(this).attr('id').split('_').pop()*1, $(this).val()); })
+                });
             });
 
-            const searchStudents = (id) => {
+            const searchStudents = (id, val) => {
+
+                if(!isset(id) || id === 0) return false;
+
                 $.ajax({
                     type: 'GET',
                     url: '/get-students-per-course',
-                    data: { id }
+                    data: { val }
                 }).done((data) => {
-                    
+                    let html = '<option data-display="Seleccione Alumno" value="">Seleccione Alumno</option>',
+                        s = data.students;
+
+                    s.forEach((item) => {
+                        html +=
+                            '<option value="' + item.id + '">' + item.name + ' ' + item.last_name + '</option>'
+                    })
+
+                    $('#student_' + id).html(html).niceSelect('destroy').niceSelect();
                 })
             }
         </script>

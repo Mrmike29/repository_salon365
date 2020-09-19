@@ -130,6 +130,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/store_subjects', [SubjectsController::class, 'store']);
     Route::get('/edit_subject/{id}', [SubjectsController::class, 'edit']);
     Route::post('/update_subject', [SubjectsController::class, 'update']);
+    Route::get('/usuarios', 'UsuariosController@index');
+    Route::get('/crear_usuarios', 'UsuariosController@create');
+    Route::post('/store_usuarios', 'UsuariosController@store');
+    Route::get('/editar_usuario/{id}', 'UsuariosController@edit');
+    Route::get('/get-courses-parents', 'UsuariosController@getCoursesParents');
+    Route::get('/get-students-per-course', 'UsuariosController@getStudentsPerCourse');
+    Route::post('/post_usuario', 'UsuariosController@update');
+    Route::post('/inhabilitar_usuario', 'UsuariosController@inhabilitar');
+    Route::post('/habilitar_usuario', 'UsuariosController@habilitar');
 
     /** RÚBRICAS */
     Route::get('/gestionar-rubricas', function () { return view('rubrics/rubricas'); });

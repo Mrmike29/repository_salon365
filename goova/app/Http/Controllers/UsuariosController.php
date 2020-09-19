@@ -9,6 +9,9 @@ use App\Rol;
 use App\Entity;
 use App\List_students;
 use App\User_list_students;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Hash;
 use Auth;
 use Mail;
@@ -38,8 +41,20 @@ class UsuariosController extends Controller
 
     public function store(Request $request)
     {
+        $rol = $request->get('id_rol');
         $entity = Auth::user()->id_info_entity;
-        $usuario = new User($request->except(['c-password','password','id_list_students','picture']));
+        $except = ['c-password','password','id_list_students','picture'];
+
+        if ($rol == 6) {
+            $c = $request->get('c');
+            array_push($except, 'c');
+            for ($i = 1; $i <= $c; $i++) {
+                array_push($except, 'course_' . $i);
+                array_push($except, 'student_' . $i);
+            }
+        }
+
+        $usuario = new User($request->except($except));
         $usuario->picture='/previsualizador/imagen_'.Auth::user()->document.'.png';
         $usuario->id_info_entity = $entity;
         $usuario->password = Hash::make($request->password);
@@ -61,11 +76,19 @@ class UsuariosController extends Controller
         //     }
         // }
 
+
+        if ($rol == 6) {
+            $c = $request->get('c');
+            for ($i = 1; $i <= $c; $i++){
+                DB::table('parent_student')->insert([ 'id_parent' => $usuario->id, 'id_student' => $request->get('student_' . $i) ]);
+            }
+        }
+
         return redirect('/usuarios');
     }
 
     public function edit($id)
-    {   
+    {
         $usuario = User::find($id);
         $roles = Rol::where('id','<>',1)->get();
         $type_document = Type_document::get();
@@ -77,7 +100,7 @@ class UsuariosController extends Controller
 
 
     public function previsualizarImagen(){
-      
+
       $nm2='';
       if(!empty($_FILES['picture']['tmp_name']))
       {
@@ -87,7 +110,7 @@ class UsuariosController extends Controller
           $nm2='/'.$nm2;
         }
       }
-     
+
       return compact('nm2');
     }
 
@@ -203,5 +226,24 @@ class UsuariosController extends Controller
 
         $view= view('usuarios.tables.user-table',compact('usuarios'))->render();
         return $view;
+    }
+
+    function getCoursesParents () { return [ 'courses' => DB::table('list_students')->select('id', 'name')->get() ]; }
+
+    function getStudentsPerCourse (Request $request) {
+
+        $id = $request->get('val', null);
+
+        if ($id === null) { return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 500); }
+
+        $students = DB::table('users AS U')
+            ->join('users_list_students AS ULS', 'ULS.id_users', 'U.id')
+            ->join('list_students AS LS', 'LS.id', 'ULS.id_list_students')
+            ->where('id_rol', 5)
+            ->where('LS.id', $id)
+            ->select('U.id', 'U.name', 'U.last_name')
+            ->get();
+
+        return [ 'students' => $students ];
     }
 }
