@@ -77,7 +77,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-lg-6">
+                                                <div class="form-group col-lg-6" id="rols">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_rol" id="classSelectStudent" required>
                                                             <option data-display="Tipo de Rol *" value="">Select</option>
@@ -222,6 +222,67 @@
                     $('#list_students').removeClass('col-md-6').html("")
                 }
             })
+            
+            $('[name="id_rol"]').change(function () {
+
+                $('#parent_students').remove();
+
+                if ($(this).val()*1 !== 6) return false;
+
+                let c = 1;
+
+                let html =
+                    '<div class="form-group col-12" style="height: 300px; max-height: 300px; overflow-y: auto;" id="parent_students">' +
+                        '<div style="display: flex">' +
+                            '<div class="form-group col-5">' +
+                                '<div class="row no-gutters input-right-icon">' +
+                                    '<div class="col">' +
+                                        '<div class="input-effect sm2_mb_20 md_mb_20">' +
+                                            '<select class="niceSelect w-100 bb form-control" name="course_' + c + '" id="course_' + c + '" required>' +
+                                                '<option data-display="Seleccione Curso" value="">Seleccione Curso</option>' +
+                                                '<option value="1">11</option>' +
+                                            '</select>' +
+                                            '<span class="focus-border"></span>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="form-group col-5">' +
+                                '<div class="row no-gutters input-right-icon">' +
+                                    '<div class="col">' +
+                                        '<div class="input-effect sm2_mb_20 md_mb_20">' +
+                                            '<select class="niceSelect w-100 bb form-control" name="student_' + c + '" id="student_' + c + '" required>' +
+
+                                            '</select>' +
+                                            '<span class="focus-border"></span>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="form-group col-2">' +
+
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+
+                $(html).insertAfter($('#rols'));
+                $('#course_' + c).niceSelect('destroy').niceSelect();
+                $('#student_' + c).niceSelect('destroy').niceSelect();
+
+                $('[id^="course_"]').change(function () {
+                    searchStudents($(this).attr('id').split('_').pop());
+                })
+            });
+
+            const searchStudents = (id) => {
+                $.ajax({
+                    type: 'GET',
+                    url: '/get-students-per-course',
+                    data: { id }
+                }).done((data) => {
+                    
+                })
+            }
         </script>
     </body>
 </html>
