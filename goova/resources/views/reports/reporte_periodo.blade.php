@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('includes.head')
+        <link rel="stylesheet" href="{{asset('css/notes/index.css')}}">
     </head>
     <body class="admin">
 
@@ -18,11 +19,14 @@
                         </div>
                     </div>
                 </section>
-
                 @include('reports.list')
             </div>
         </div>
 
         @include('includes.footer')
+        <script type="text/javascript">
+            const _token = "{{ csrf_token() }}";
+        </script>
+        <script type="text/javascript" src="{{asset('js/reports/index.js')}}"></script>
     </body>
 </html>

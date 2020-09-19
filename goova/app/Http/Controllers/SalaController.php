@@ -32,7 +32,6 @@ class SalaController extends Controller
 
     public function index()
     {
-        
 
 
         $tipo=DB::table('users')->join('rol','users.id_rol','rol.id')->where('users.id',Auth::user()->id)->first()->name;
@@ -140,7 +139,7 @@ class SalaController extends Controller
 
     public function crearSala(){
         extract($_POST);
-        $id_list_students=DB::table('course')->where('id_list_students',$id_list_students)->first()->id_list_students;
+        $id_list_students=DB::table('course')->where('id',$id_list_students)->first()->id_list_students;
         $id_subject=DB::table('teacher_course')->where('id',$id_subject)->first()->id_subjects;
 
         $code= md5(sha1(date('Y-m-d H:i:s')."-".Auth::user()->id));
@@ -222,7 +221,6 @@ class SalaController extends Controller
         ->where('room.id',$id)
         ->select('room.*','vc.start_date','vc.code')
         ->first();
-
         $listado=DB::table('room')
         ->join('list_students as ls','ls.id','room.id_list_students')
         ->join('users_list_students as ul','ul.id_list_students','ls.id')

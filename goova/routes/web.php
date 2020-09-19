@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::post('/probandoAndo','UsuariosController@changePassword');
+    Route::get('/getFilteUser','UsuariosController@getFilteUser');
 
     Route::get('/usuarios','UsuariosController@index');
     Route::get('/crear_usuarios','UsuariosController@create');
@@ -162,6 +163,12 @@ Route::middleware(['auth'])->group(function () {
     /** REPORTES */
     Route::get('/reporte-anual', 'ReportsController@getAnualReport');
     Route::get('/reporte-periodo', 'ReportsController@getPeriodReport');
+    Route::get('/get-reports', 'ReportsController@getReports');
+    Route::get('/get-reports-period', 'ReportsController@getReportsPeriod');
+    Route::get('/get-reports-anual', 'ReportsController@getReportsAnual');
+    Route::get('/get-reports-subjects', 'ReportsController@getSubjectReport');
+    Route::get('/get-period-filter', 'ReportsController@getPeriodFilter');
+    
 
 
     /** BOLETIN */

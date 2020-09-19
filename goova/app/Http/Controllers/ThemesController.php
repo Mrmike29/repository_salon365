@@ -34,11 +34,11 @@ class ThemesController {
     }
 
     function postSaveTheme(Request $request){
-        $time = $request->get('time');
+        $time = $request->get('timeN');
         $name = $request->get('name');
         $exam = $request->get('exam');
         $course = $request->get('course');
-        $subject = $request->get('subject');
+        $subject = $request->get('subjectN');
         $homework = $request->get('homework');
         $description = $request->get('description');
 

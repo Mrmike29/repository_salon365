@@ -17,6 +17,50 @@
                         </div>
                     </div>
                 </section>
+                <section class="admin-visitor-area">
+                    <div class="container-fluid p-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="white-box">
+                                    <div class="">
+                                        <div class="row">
+                                            <div class="form-group col-lg-3">
+                                                <div class="input-effect sm2_mb_20 md_mb_20">
+                                                    <select class="niceSelect w-100 bb form-control" name="type_document" id="type_document">
+                                                        <option data-display="Seleccionar Tipo Documento *" value="">Section *</option>
+                                                        @foreach($type_document as $key => $value)
+                                                            <option value="{{$value->name}}">{{$value->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="focus-border"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <div class="input-effect sm2_mb_20 md_mb_20">
+                                                    <select class="niceSelect w-100 bb form-control" name="rol" id="rol">
+                                                        <option data-display="Seleccionar Rol *" value="">Section *</option>
+                                                        @foreach($roles as $key => $value)
+                                                            <option value="{{$value->name}}">{{$value->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="focus-border"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="primary-btn small goova-bt" id="filter_search" data-toggle="tooltip" title="">
+                                                <span class="ti-search"></span>
+                                                Buscar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <section class="admin-visitor-area up_st_admin_visitor">
                     <div class="container-fluid p-0">
                         <div class="row m-0">
@@ -38,7 +82,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($usuarios as $key => $val)
-                                                <tr>
+                                                <tr id="data-search" data-rol="{{$val->rol}}" data-tipo="{{$val->type_document}}" data-nombre="{{$val->name}}" data-email="{{$val->email}}" data-doc="{{$val->document}}">
                                                     <td>{{$val->type_document}}</td>
                                                     <td>{{$val->document}}</td>
                                                     <td>{{$val->name}} {{$val->last_name}}</td>
@@ -121,103 +165,127 @@
         </div>
         @include('includes.footer')
         <script>
-            $('#table_users').DataTable({
-                bLengthChange: false,
-                // paging: true,
-                "bDestroy": true,
-                language: {
-                    search: "<i class='ti-search'></i>",
-                    searchPlaceholder: 'Búsqueda rápida',
-                    decimal: ",",
-                    thousands: ".",
-                    info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    infoPostFix: "",
-                    infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                    loadingRecords: "Cargando...",
-                    lengthMenu: "Mostrar _MENU_ registros",
-                    paginate: {
-                        first: "Primero",
-                        last: "Último",
-                        next: "Siguiente",
-                        previous: "Anterior"
+            var table="";
+            $(document).on('click','#filter_search',function(){
+                var tipo=$('#type_document').val();
+                var rol=$('#rol').val();
+                $.ajax({
+                    url:'/getFilteUser',
+                    data:{tipo,rol},
+                    type:'get',
+                    beforeSend:function(){
+                        $('tbody').html('<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">Cargando...</td></tr>')
                     },
-                    processing: "Procesando...",
-                    zeroRecords: "No se encontraron resultados",
-                    emptyTable: "Ningún dato disponible en esta tabla",
-                    aria: {
-                        sortAscending:  ": Activar para ordenar la columna de manera ascendente",
-                        sortDescending: ": Activar para ordenar la columna de manera descendente"
+                    success:function(data){
+                        $('tbody').html(data)
                     }
-                },
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copyHtml5',
-                        text: '<i class="fa fa-files-o"></i>',
-                        titleAttr: 'Copiar',
-                        title : $("#logo_title").val(),
-                        exportOptions: {
-                            columns: ':visible',
-                        }
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="fa fa-file-excel-o"></i>',
-                        titleAttr: 'Excel',
-                        title : $("#logo_title").val(),
-                        exportOptions: {
-                            columns: ':visible',
-                            order: 'applied'
-                        }
-                    },
-                    {
-                        extend: 'csvHtml5',
-                        text: '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',
-                        title : $("#logo_title").val(),
-                        exportOptions: {
-                            columns: ':visible',
-                        }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',
-                        exportOptions: {
-                            columns: "thead th:not(.noExport)",
-                            order: 'applied',
-                            columnGap: 20
+                })
+                table.destroy();
+                setTimeout(function(){
+                    reloadTable();
+                },200)
+            })
+            function reloadTable(){
+                table=$('#table_users').DataTable({
+                    bLengthChange: false,
+                    paging: true,
+                    "bDestroy": true,
+                    language: {
+                        search: "<i class='ti-search'></i>",
+                        searchPlaceholder: 'Búsqueda rápida',
+                        decimal: ",",
+                        thousands: ".",
+                        info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        infoPostFix: "",
+                        infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                        loadingRecords: "Cargando...",
+                        lengthMenu: "Mostrar _MENU_ registros",
+                        paginate: {
+                            first: "Primero",
+                            last: "Último",
+                            next: "Siguiente",
+                            previous: "Anterior"
                         },
-                        pageSize: 'A4',
-                        fontSize:10,
-                        alignment: 'center',
-                        header: true,
-                        title : $("#logo_title").val(),
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="fa fa-print"></i>',
-                        titleAttr: 'Imprimir',
-                        title : $("#logo_title").val(),
-                        exportOptions: {
-                            columns: ':visible',
+                        processing: "Procesando...",
+                        zeroRecords: "No se encontraron resultados",
+                        emptyTable: "Ningún dato disponible en esta tabla",
+                        aria: {
+                            sortAscending:  ": Activar para ordenar la columna de manera ascendente",
+                            sortDescending: ": Activar para ordenar la columna de manera descendente"
                         }
                     },
-                    {
-                        extend: 'colvis',
-                        text: '<i class="fa fa-columns"></i>',
-                        postfixButtons: ['colvisRestore']
-                    }
-                ],
-                columnDefs: [{
-                    visible: false
-                }],
-                responsive: true,
-            });
-            setTimeout( function() {
-                $('#table_users').parent().parent().parent().removeClass('col-md-11').addClass('col-md-12')
-            }, 80);
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'copyHtml5',
+                            text: '<i class="fa fa-files-o"></i>',
+                            titleAttr: 'Copiar',
+                            title : $("#logo_title").val(),
+                            exportOptions: {
+                                columns: ':visible',
+                            }
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            text: '<i class="fa fa-file-excel-o"></i>',
+                            titleAttr: 'Excel',
+                            title : $("#logo_title").val(),
+                            exportOptions: {
+                                columns: ':visible',
+                                order: 'applied'
+                            }
+                        },
+                        {
+                            extend: 'csvHtml5',
+                            text: '<i class="fa fa-file-text-o"></i>',
+                            titleAttr: 'CSV',
+                            title : $("#logo_title").val(),
+                            exportOptions: {
+                                columns: ':visible',
+                            }
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: '<i class="fa fa-file-pdf-o"></i>',
+                            titleAttr: 'PDF',
+                            exportOptions: {
+                                columns: "thead th:not(.noExport)",
+                                order: 'applied',
+                                columnGap: 20
+                            },
+                            pageSize: 'A4',
+                            fontSize:10,
+                            alignment: 'center',
+                            header: true,
+                            title : $("#logo_title").val(),
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fa fa-print"></i>',
+                            titleAttr: 'Imprimir',
+                            title : $("#logo_title").val(),
+                            exportOptions: {
+                                columns: ':visible',
+                            }
+                        },
+                        {
+                            extend: 'colvis',
+                            text: '<i class="fa fa-columns"></i>',
+                            postfixButtons: ['colvisRestore']
+                        }
+                    ],
+                    columnDefs: [{
+                        visible: false
+                    }],
+                    responsive: true,
+                });
+                setTimeout( function() {
+                    $('#table_users').parent().parent().parent().removeClass('col-md-11').addClass('col-md-12')
+                }, 80);
+            }
+            reloadTable();
+
             $('.inhabilitar_user').click(function(){
                 var id = $(this).data('id')
                 $('.modal#inhabilitarUserModal form input[name=id]').val(id)

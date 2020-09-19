@@ -208,9 +208,25 @@
                         $('tbody').html(data)
                     }
                 })
-                $('#table_users').DataTable({
+
+                table.destroy();
+                setTimeout(function(){
+                    reloadTable();
+                },200)
+                
+            }
+
+            // $('tbody').html('<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">Cargando...</td></tr>')
+
+
+            $('#filter_search').click(function(){
+                search_filter()
+            })
+
+            function reloadTable(){
+                table=$('#table_users').DataTable({
                     bLengthChange: false,
-                    // paging: true,
+                    paging: true,
                     "bDestroy": true,
                     language: {
                         search: "<i class='ti-search'></i>",
@@ -302,112 +318,11 @@
                     }],
                     responsive: true,
                 });
+                setTimeout( function() {
+                    $('#table_users').parent().parent().parent().removeClass('col-md-11').addClass('col-md-12')
+                }, 80);
             }
-
-            // $('tbody').html('<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">Cargando...</td></tr>')
-
-
-            $('#filter_search').click(function(){
-                search_filter()
-            })
-
-            $('#table_users').DataTable({
-                bLengthChange: false,
-                // paging: true,
-                "bDestroy": true,
-                language: {
-                    search: "<i class='ti-search'></i>",
-                    searchPlaceholder: 'Búsqueda rápida',
-                    decimal: ",",
-                    thousands: ".",
-                    info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    infoPostFix: "",
-                    infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                    loadingRecords: "Cargando...",
-                    lengthMenu: "Mostrar _MENU_ registros",
-                    paginate: {
-                        first: "Primero",
-                        last: "Último",
-                        next: "Siguiente",
-                        previous: "Anterior"
-                    },
-                    processing: "Procesando...",
-                    zeroRecords: "No se encontraron resultados",
-                    emptyTable: "Ningún dato disponible en esta tabla",
-                    aria: {
-                        sortAscending:  ": Activar para ordenar la columna de manera ascendente",
-                        sortDescending: ": Activar para ordenar la columna de manera descendente"
-                    }
-                },
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copyHtml5',
-                        text: '<i class="fa fa-files-o"></i>',
-                        titleAttr: 'Copiar',
-                        title : $("#logo_title").val(),
-                        exportOptions: {
-                            columns: ':visible',
-                        }
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="fa fa-file-excel-o"></i>',
-                        titleAttr: 'Excel',
-                        title : $("#logo_title").val(),
-                        exportOptions: {
-                            columns: ':visible',
-                            order: 'applied'
-                        }
-                    },
-                    {
-                        extend: 'csvHtml5',
-                        text: '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',
-                        title : $("#logo_title").val(),
-                        exportOptions: {
-                            columns: ':visible',
-                        }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',
-                        exportOptions: {
-                            columns: "thead th:not(.noExport)",
-                            order: 'applied',
-                            columnGap: 20
-                        },
-                        pageSize: 'A4',
-                        fontSize:10,
-                        alignment: 'center',
-                        header: true,
-                        title : $("#logo_title").val(),
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="fa fa-print"></i>',
-                        titleAttr: 'Imprimir',
-                        title : $("#logo_title").val(),
-                        exportOptions: {
-                            columns: ':visible',
-                        }
-                    },
-                    {
-                        extend: 'colvis',
-                        text: '<i class="fa fa-columns"></i>',
-                        postfixButtons: ['colvisRestore']
-                    }
-                ],
-                columnDefs: [{
-                    visible: false
-                }],
-                responsive: true,
-            });
-            setTimeout( function() {
-                $('#table_users').parent().parent().parent().removeClass('col-md-11').addClass('col-md-12')
-            }, 80);
+            reloadTable();
             $('.inhabilitar_sala').click(function(){
                 var id = $(this).data('id')
                 $('.modal#inhabilitarSalaModal form input[name=id]').val(id)

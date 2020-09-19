@@ -53,11 +53,12 @@ class NotesController
         return [ 'notes' => $notes, 'counter' => $notesCounter ];
     }
 
+
+    
+
     function getStudent(Request $request) {
         $id = $request->get('id');
-
         $student = DB::table('users')->where('id', $id)->first();
-
         return [ 's' => $student ];
     }
 
@@ -67,7 +68,80 @@ class NotesController
         $search = $request->get('search');
         $teacher = $request->get('teacher');
         $subject = $request->get('subject');
+        $student = $request->get('id_student');
 
+        $exam=DB::table('notes_exam as NE')
+            ->join('parcial_notes as PN','PN.id','NE.id_parcial_notes')
+            ->join('exam as EXAME','EXAME.id','NE.id_exam')
+            ->join('themes_time AS TT', 'TT.id', 'EXAME.id_theme_time')
+            ->join('subjects AS S', 'S.id', 'TT.id_subject')
+            ->join('users AS UT', 'UT.id', 'NE.id_teacher');
+            
+
+        $homework=DB::table('notes_homework as NH')
+            ->join('homework as HW','HW.id','NH.id_homework')
+            ->join('parcial_notes as PN','PN.id','NH.id_parcial_notes')
+            ->join('themes_time AS TT', 'TT.id', 'HW.id_theme_time')
+            ->join('subjects AS S', 'S.id', 'TT.id_subject')
+            ->join('users AS UT', 'UT.id', 'NH.id_teacher');
+            
+        if ($search !== '' && $search !== null) {
+            $exam = $exam->where('UT.name', 'LIKE', '%' . $search . '%');
+            // $exam = $exam->orWhere(DB::raw("CONCAT('UT.name', ' ', 'UT.last_name')"), 'LIKE', '%' . $search . '%');
+            $exam = $exam->orWhere('UT.last_name', 'LIKE', '%' . $search . '%');
+            $exam = $exam->orWhere('S.name', 'LIKE', '%' . $search . '%');
+            $exam = $exam->orWhere('TT.name', 'LIKE', '%' . $search . '%');
+
+            $homework = $homework->where('UT.name', 'LIKE', '%' . $search . '%');
+            // $homework = $homework->orWhere(DB::raw("CONCAT('UT.name', ' ', 'UT.last_name')"), 'LIKE', '%' . $search . '%');
+            $homework = $homework->orWhere('UT.last_name', 'LIKE', '%' . $search . '%');
+            $homework = $homework->orWhere('S.name', 'LIKE', '%' . $search . '%');
+            $homework = $homework->orWhere('TT.name', 'LIKE', '%' . $search . '%');
+           
+        }
+
+        if ($teacher !== '' && $teacher !== null) {
+            $exam = $exam->where('UT.id', $teacher);
+            $homework = $homework->where('UT.id', $teacher);
+        }
+
+        if ($subject !== '' && $subject !== null) {
+            $exam = $exam->where('S.id', $subject);
+            $homework = $homework->where('S.id', $subject);
+        }
+
+        $exam=$exam->where('NE.id_student', $student)
+            ->select(
+                'S.name AS subject_name',
+                'UT.name AS teacher_name',
+                'UT.last_name AS teacher_lastname',
+                'TT.name AS work',
+                'PN.value'
+            );
+        $homeworkCounter=$homework->where('NH.id_student', $student)
+        ->select(
+            'S.name AS subject_name',
+            'UT.name AS teacher_name',
+            'UT.last_name AS teacher_lastname',
+            'TT.name AS work',
+            'PN.value'
+        )
+        ->union($exam)
+        ->count();
+
+        $homework=$homework->where('NH.id_student', $student)
+        ->select(
+            'S.name AS subject_name',
+            'UT.name AS teacher_name',
+            'UT.last_name AS teacher_lastname',
+            'TT.name AS work',
+            'PN.value'
+        )
+        ->union($exam)
+        ->skip($prev)
+        ->take(20)
+        ->get();
+        return compact('homework','homeworkCounter');
 
     }
 
@@ -78,3 +152,4 @@ class NotesController
 
     function getTeacherFilter() { $teacher = DB::table('users')->where('id_rol', 4)->get(); return [ 'teacher' => $teacher ]; }
 }
+

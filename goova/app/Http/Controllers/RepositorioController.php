@@ -321,6 +321,7 @@ class RepositorioController extends Controller
         $nota_tarea = new Notes_homework();
         $nota_tarea->id_homework = decrypt($request->homework);
         $nota_tarea->id_student = $request->user;
+        $nota_tarea->id_teacher = 2;
         $nota_tarea->id_parcial_notes = $nota->id;
         $nota_tarea->save();
 
@@ -892,6 +893,7 @@ class RepositorioController extends Controller
             $nota_examen = new Notes_exam();
             $nota_examen->id_exam = decrypt($request->id_exam);
             $nota_examen->id_course = $curso->id;
+            $nota_examen->id_teacher = 2;
             $nota_examen->id_student = $id_user;
             $nota_examen->id_parcial_notes = $nota->id;
             $nota_examen->save();

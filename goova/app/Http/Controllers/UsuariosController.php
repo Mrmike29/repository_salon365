@@ -17,10 +17,12 @@ class UsuariosController extends Controller
 {
     public function index()
     {
-        $usarios = User::join('rol','rol.id','users.id_rol')->join('type_document','type_document.id','users.id_type_document')->select('users.id','users.document','type_document.name as type_document','rol.name as rol','users.state','users.name','users.last_name','users.email','users.phone','users.address')->get();
+        $usuarios = User::join('rol','rol.id','users.id_rol')->join('type_document','type_document.id','users.id_type_document')->select('users.id','users.document','type_document.name as type_document','rol.name as rol','users.state','users.name','users.last_name','users.email','users.phone','users.address')->get();
+        $type_document = Type_document::get();
+        $roles = Rol::where('id','<>',1)->get();
         // dd(Hash::make('12345678'));
 
-        return view('usuarios.index',array('usuarios'=>$usarios));
+        return view('usuarios.index',compact('usuarios','type_document','roles'));
     }
 
     public function create(Request $request)
@@ -168,5 +170,20 @@ class UsuariosController extends Controller
                         'status' => false
                             ], 200);
         }
+    }
+
+    public function getFilteUser(Request $request){
+        extract($request->all());
+        $usuarios = User::join('rol','rol.id','users.id_rol')->join('type_document','type_document.id','users.id_type_document');
+        if (!empty($tipo)) {
+            $usuarios=$usuarios->where('type_document.name',$tipo);
+        }
+        if (!empty($rol)) {
+            $usuarios=$usuarios->where('rol.name',$rol);
+        }
+        $usuarios=$usuarios->select('users.id','users.document','type_document.name as type_document','rol.name as rol','users.state','users.name','users.last_name','users.email','users.phone','users.address')->get();
+
+        $view= view('usuarios.tables.user-table',compact('usuarios'))->render();
+        return $view;
     }
 }
