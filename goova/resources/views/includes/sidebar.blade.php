@@ -34,6 +34,7 @@
             <li>
                <a href="/gestionar-rubricas">Gestionar Rúbricas</a>
             </li>
+            @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2)
             <li>
                <a href="#subMenuProgramaticContentAreas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                   Gestionar Asignaturas
@@ -63,6 +64,7 @@
             <li>
                <a href="/fechas-importantes"> Fechas Importantes</a>
             </li>
+            @endif
          </ul>
       </li>
       @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2)
@@ -164,20 +166,24 @@
             </li>
          </ul>
       </li>
-      <li>
-         <a href="#subMenuSalas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-            <span class="flaticon-analytics"></span>
-            Audiovisual
-         </a>
-         <ul class="collapse list-unstyled" id="subMenuSalas">
-            <li>
-               <a href="/listar/sala">Listar</a>
-            </li>
-            <li>
-               <a href="/crear/sala">Crear</a>
-            </li>
-         </ul>
-      </li>
+      @if(Auth::user()->id_rol != 1 )
+        <li>
+           <a href="#subMenuSalas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <span class="flaticon-analytics"></span>
+              Audiovisual
+           </a>
+           <ul class="collapse list-unstyled" id="subMenuSalas">
+              <li>
+                 <a href="/listar/sala">Listar</a>
+              </li>
+               @if(Auth::user()->id_rol != 1 && Auth::user()->id_rol != 2)
+                <li>
+                   <a href="/crear/sala">Crear</a>
+                </li>
+               @endif
+           </ul>
+        </li>
+      @endif
       @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2)
          <li>
             <a href="#subMenuUsuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">

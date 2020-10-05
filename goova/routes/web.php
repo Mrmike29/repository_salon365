@@ -228,6 +228,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ingresar/sala/{id}', [SalaController::class, 'ingresarSala']);
     Route::get('/room_filter', [SalaController::class, 'room_filter']);
     Route::post('/saveAssist', [SalaController::class, 'saveAssist']);
+    Route::get('/getListado', [SalaController::class, 'getListado']);
 
     /* SECRETARIA */
     Route::get('/getHorarios', [SalaController::class, 'getHorario']);
