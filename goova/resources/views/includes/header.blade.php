@@ -179,12 +179,6 @@
                                                 </div>
                                             </a>
                                             <ul class="list-unstyled">
-                                                <li>
-                                                    <a href="view-staff/1">
-                                                        <span class="ti-user"></span>
-                                                        view profile
-                                                    </a>
-                                                </li>
                                                 <li id="password_change">
                                                     <a href="#change">
                                                         <span class="ti-key"></span>

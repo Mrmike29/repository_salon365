@@ -81,7 +81,7 @@ const
                     paranoia($(this).data('id').split("_").pop()*1);
                 });
 
-                if(next.attr('data-id')*20 >= themesC){ next.addClass('n-t-s'); }
+                if(next.attr('data-id')*1 >= themesC){ next.addClass('n-t-s'); }
                 else{ next.removeClass('n-t-s'); }
 
                 $('#table_info').text(`Mostrando registros del ${ (themesC !== 0)? parseInt(previous.attr('data-id') ) + 1 : 0 } al ${ parseInt(previous.attr('data-id') ) + themes.length } de un total de ${ themesC } registros`)

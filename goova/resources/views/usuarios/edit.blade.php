@@ -30,7 +30,7 @@
                                                 <div class="form-group col-lg-6" >
                                                     <div class="col-lg-6 col-sm-6 col-xs-6 col-6">Imagen perfil</div>
                                                     <div class="col-lg-6 col-sm-6 col-xs-6 col-6" style="text-align: unset;">
-                                                        <div style="text-align:center;@if(empty(Auth::user()->picture)) display: none; @else display: block; @endif width: 55%;height: 150px;border: 1px solid gainsboro;margin-bottom: 10px;margin-left: 20px;" id="imgPrev2"><img class="img_a" src="@if(!empty(Auth::user()->picture)) {{Auth::user()->picture}} @endif" style="width: auto;height: 145px;"></div>
+                                                        <div style="text-align:center;@if(empty($usuario->picture)) display: none; @else display: block; @endif width: 55%;height: 150px;border: 1px solid gainsboro;margin-bottom: 10px;margin-left: 20px;" id="imgPrev2"><img class="img_a" src="@if(!empty($usuario->picture)) {{$usuario->picture}} @endif" style="width: auto;height: 145px;"></div>
                                                         <label class="filebutton"><span><input onchange="$(this).parents('tr').find('b').html('Archivo cargado');" type="file" id="id1" name="picture" style="display: none;"></span><b id="1" class="btn btn-primary btn-sm" style="width: 100%"><i class="tam fa fa-upload"></i> Seleccionar Archivo...</b></label>
                                                     </div>
                                                 </div>
@@ -201,7 +201,7 @@
                     contentType: false,
                     success:function(data){
                         if (data.nm2!="") {
-                            
+
                             $('#imgPrev2').html(`<img class="img_a" src="${data.nm2}" style="width: auto;height: 145px;">`)
                             $('#imgPrev2').css('display','block')
                         }

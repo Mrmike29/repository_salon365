@@ -140,7 +140,7 @@
                             },
                             columns: [
                                 { data: "name" },
-                                { 
+                                {
                                     data: "id",
                                     render: function (data, type, row, meta) {
                                         return  `<div class="dropdown">

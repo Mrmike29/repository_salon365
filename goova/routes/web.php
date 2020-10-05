@@ -17,6 +17,7 @@ use App\Http\Controllers\NotesController;
 use App\Http\Controllers\TimesController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\UploadFile;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
 
     /**  */
     Route::get('/home', [HomeController::class, 'home']);
-    
+
     /**  */
     Route::get('/getBoletin', [SalaController::class, 'getBoletin']);
 
@@ -77,6 +78,12 @@ Route::middleware(['auth'])->group(function () {
 
     /**  */
     Route::post('/probandoAndo', [UsuariosController::class, 'changePassword']);
+
+
+    /** PRIMERA VEZ */
+    Route::get('/get-f-t','UsuariosController@getFT');
+    Route::post('/change-pass-new', [UsuariosController::class, 'changePasswordNew']);
+
 
     Route::get('/getFilteUser','UsuariosController@getFilteUser');
     /** USUARIOS */
@@ -152,7 +159,13 @@ Route::middleware(['auth'])->group(function () {
     /** CICLO O PERIODO */
     Route::get('/ciclo-o-periodo', function () { return view('times/ciclo_o_periodo'); });
     Route::get('/get-times-list', [TimesController::class, 'getTimesList']);
+    Route::get('/get-time', [TimesController::class, 'getTime']);
+
     Route::post('/post-save-time', [TimesController::class, 'postSaveTime']);
+
+    Route::put('/put-edit-time', [TimesController::class, 'putEditTime']);
+
+    Route::delete('/delete-time', [TimesController::class, 'deleteTime']);
 
 
     /** TEMAS */
@@ -172,8 +185,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-held-events', [ImportantDatesController::class, 'getHeldEvents']);
     Route::get('/get-event', [ImportantDatesController::class, 'getEvent']);
     Route::get('/get-calendar-events', [ImportantDatesController::class, 'getCalendarEvents']);
+
     Route::post('/post-save-event', [ImportantDatesController::class, 'postSaveEvent']);
+
     Route::put('/put-edit-event', [ImportantDatesController::class, 'putEditEvent']);
+
+    Route::delete('/delete-event', [ImportantDatesController::class, 'deleteEvent']);
+
 
     /** NOTAS */
     Route::get('/notas', [NotesController::class, 'getNotesView']);
@@ -192,7 +210,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-reports-anual', 'ReportsController@getReportsAnual');
     Route::get('/get-reports-subjects', 'ReportsController@getSubjectReport');
     Route::get('/get-period-filter', 'ReportsController@getPeriodFilter');
-    
+
 
 
     /** BOLETIN */
@@ -232,4 +250,9 @@ Route::middleware(['auth'])->group(function () {
 
     /* SECRETARIA */
     Route::get('/getHorarios', [SalaController::class, 'getHorario']);
+
+    /** PROGRESS BAR */
+    Route::get('/progress-bar', [UploadFile::class, 'getProgressBarView']);
+    Route::post('/post-upload-file', [UploadFile::class, 'postUploadFile']);
+
 });

@@ -55,7 +55,17 @@ class UsuariosController extends Controller
         }
 
         $usuario = new User($request->except($except));
-        $usuario->picture='/previsualizador/imagen_'.Auth::user()->document.'.png';
+
+        $usuario->picture='';
+
+        if(!empty($_FILES['picture']['tmp_name']))
+        {
+            $nm2='perfil/imagen_'.$request->get('document').'.png';
+            if(move_uploaded_file($_FILES['picture']['tmp_name'], $nm2))
+            {
+                $usuario->picture='/perfil/imagen_'.$request->get('document').'.png';
+            }
+        }
         $usuario->id_info_entity = $entity;
         $usuario->password = Hash::make($request->password);
         $usuario->save();
@@ -80,7 +90,10 @@ class UsuariosController extends Controller
         if ($rol == 6) {
             $c = $request->get('c');
             for ($i = 1; $i <= $c; $i++){
-                DB::table('parent_student')->insert([ 'id_parent' => $usuario->id, 'id_student' => $request->get('student_' . $i) ]);
+                $t = $request->get('student_' . $i, null);
+                if ($t != null){
+                    DB::table('parent_student')->insert([ 'id_parent' => $usuario->id, 'id_student' => $request->get('student_' . $i) ]);
+                }
             }
         }
 
@@ -120,7 +133,18 @@ class UsuariosController extends Controller
         if(!empty($request->password)){
             $usuario->password = Hash::make($request->password);
         }
-        $usuario->picture='/previsualizador/imagen_'.Auth::user()->document.'.png';
+
+        $usuario->picture='';
+
+        if(!empty($_FILES['picture']['tmp_name']))
+        {
+            $nm2='perfil/imagen_'.$request->get('document').'.png';
+            if(move_uploaded_file($_FILES['picture']['tmp_name'], $nm2))
+            {
+                $usuario->picture='/perfil/imagen_'.$request->get('document').'.png';
+            }
+        }
+
         $usuario->update($request->except(['password','c-password','id_list_students','picture']));
 
         $user_list = User_list_students::where('id_users',$request->id)->first();
@@ -171,9 +195,9 @@ class UsuariosController extends Controller
     public function changePassword(Request $request) {
         try {
             $valid = validator($request->only('old_password', 'new_password', 'confirm_password'), [
-                'old_password' => 'required|string|min:6',
-                'new_password' => 'required|string|min:6|different:old_password',
-                'confirm_password' => 'required_with:new_password|same:new_password|string|min:6',
+                'old_password' => 'required',
+                'new_password' => 'required|min:9|different:old_password',
+                'confirm_password' => 'required_with:new_password|same:new_password',
                     ], [
                 'confirm_password.required_with' => 'Confirm password is required.'
             ]);
@@ -245,5 +269,24 @@ class UsuariosController extends Controller
             ->get();
 
         return [ 'students' => $students ];
+    }
+
+    function getFT() { return [ 'ft' => DB::table('users')->select('first_time AS ft')->where('id', Auth::user()->id)->first() ]; }
+
+    function changePasswordNew (Request $request){
+        $pass = $request->get('newPassword', null);
+
+        if($pass === null){ return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 500); }
+
+        $user = User::find(Auth::user()->id);
+        $user->password = Hash::make($pass);
+        $user->first_time = 0;
+        if ($user->save()) {
+            return response()->json([
+                'data' => [],
+                'message' => 'Su contraseña fue actualizada.',
+                'status' => true
+            ], 200);
+        }
     }
 }

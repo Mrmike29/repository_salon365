@@ -3,6 +3,18 @@
     <head>
         @include('includes.head')
     </head>
+    <style>
+
+        .m-btn-trash {
+            padding: 0;
+            width: 25px;
+            height: 100%;
+            text-align: center;
+            font-family: Themify;
+        }
+
+        .m-btn-trash:before { content: "\e605"; }
+    </style>
     <body class="admin">
 
         <div class="main-wrapper" style="min-height: 600px">
@@ -98,6 +110,10 @@
         @include('includes.footer')
 
         <script type="text/javascript">
+            const _token = "{{ csrf_token() }}";
+        </script>
+
+        <script type="text/javascript">
 
             /** Mi función, la utilizo para hacer mis validaciones y la voy a patentar */
             (function( $ ){
@@ -126,6 +142,9 @@
                                                 item.date.slice(0, -3) + ' - ' + item.end.slice(0, -3) +
                                             '</p>' +
                                         '</div>' +
+                                        '<div>' +
+                                            '<button type="button" class="btn btn-danger m-btn-trash" onclick="deleteEvent(' + item.id + ')"></button>' +
+                                        '</div>' +
                                     '</div>'
                             })
 
@@ -144,11 +163,14 @@
                             dates.forEach((item) => {
                                 html +=
                                     '<div class="single-to-do d-flex justify-content-between toDoList" id="event_held_date_' + item.id + '">' +
-                                        '<div style="cursor: pointer;">' +
+                                        '<div onclick="openModalEvent(' + item.id + ')" style="cursor: pointer;">' +
                                             '<h5 class="d-inline">' + item.name + '</h5>' +
                                             '<p>' +
                                                 item.date.slice(0, -3) + ' - ' + item.end.slice(0, -3) +
                                             '</p>' +
+                                        '</div>' +
+                                        '<div>' +
+                                            '<button type="button" class="btn btn-danger m-btn-trash" onclick="deleteEvent(' + item.id + ')"></button>' +
                                         '</div>' +
                                     '</div>'
                             })
@@ -263,7 +285,7 @@
                                                     '</div>' +
                                                 '</div>';
 
-                                            universalModal('Crear Evento', html);
+                                            universalModal('Info Evento', html);
                                         }
                                     });
                                     return false;
@@ -271,6 +293,36 @@
                                 height: 650,
                                 events: dates,
                             });
+                        }
+                    });
+                },
+                deleteEvent = (id) => {
+                    $("body").overhang({
+                        type: "confirm",
+                        message: "¿En realidad desea eliminar el evento?",
+                        yesMessage: "Sí",
+                        overlay: true,
+                        callback: function (value) {
+                            if (value) {
+                                $.ajax({
+                                    type: 'DELETE',
+                                    url: '/delete-event',
+                                    data: { _token, id }
+                                }).done((data) => {
+                                    getCalendarEvents();
+                                    getPendingEvents();
+                                    getHeldEvents();
+                                    $("body").overhang({
+                                        type: "success",
+                                        message: "Exito! Se eliminó el evento exitosamente!"
+                                    });
+                                }).fail(() => {
+                                    $("body").overhang({
+                                        type: "error",
+                                        message: "Oops! Se detectó un problema, intenta más tarde."
+                                    });
+                                })
+                            }
                         }
                     });
                 };
@@ -354,10 +406,45 @@
                 universalModal('Crear Evento', html);
                 $('input').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
                 $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
-                $('#date_create_event').datepicker({ format: 'yyyy-mm-dd', autoclose: false, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
-                $('#date_end_create_event').datepicker({ format: 'yyyy-mm-dd', autoclose: false, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
-                $("#datetime_create_event").datetimepicker({format: 'HH:mm' }).val("12:00");
-                $("#datetime_end_create_event").datetimepicker({format: 'HH:mm' }).val("12:00");
+
+                $('#date_create_event').datepicker({
+                    format: 'yyyy-mm-dd', autoclose: false, setDate: new Date(), yearRange: '1999:2012'
+                }).on('focusin', function(){
+                    $(this).data('val', $(this).val());
+                }).on('change', function (ev) {
+                    let prev = $(this).data('val'), current = $(this).val();
+                    maxDateEnd('date_end_create_event', 'date_create_event', current, prev)
+                });
+
+                $('#date_end_create_event').datepicker({
+                    format: 'yyyy-mm-dd', autoclose: false, setDate: new Date(), yearRange: '1999:2012'
+                }).on('focusin', function(){
+                    $(this).data('val', $(this).val());
+                }).on('change', function (ev) {
+                    let prev = $(this).data('val'), current = $(this).val();
+                    minDateEnd('date_create_event', 'date_end_create_event', current, prev)
+                });
+
+                $("#datetime_create_event").datetimepicker({
+                    format: 'HH:mm'
+                }).on('focusin', function(){
+                    $(this).data('val', $(this).val());
+                }).on('dp.change', function (ev) {
+                    let prev = $(this).data('val'), current = $(this).val();
+                    maxDateEnd('datetime_end_create_event', 'datetime_create_event', current, prev)
+                }).val("12:00");
+
+                $("#datetime_end_create_event").datetimepicker({
+                    format: 'HH:mm'
+                }).on('focusin', function(){
+                    $(this).data('val', $(this).val());
+                }).on('dp.change', function (ev) {
+                    let prev = $(this).data('val'), current = $(this).val();
+                    minDateEnd('datetime_create_event', 'datetime_end_create_event', current, prev)
+                }).val("12:01");
+
+                function minDateEnd (selector1, selector2, newVal, prevVal) { if (newVal < $(`#${selector1}`).val() ) $(`#${selector2}`).val(prevVal); }
+                function maxDateEnd (selector1, selector2, newVal, prevVal) { if (newVal > $(`#${selector1}`).val()) $(`#${selector2}`).val(prevVal); }
             }
 
             function saveNewEvent() {
@@ -500,9 +587,45 @@
                         $('textarea').change(function (){ if($.trim($(this).val()) !== ''){ $(this).addClass('has-content') } else { $(this).removeClass('has-content') } })
                         $('#name_edit_event').change(function (){ if($(this).val() !== ''){ $(this).focus() } })
                         $('#start-date-icon').on('click', function () { $('#date_edit_event').focus(); });
-                        $('#date_edit_event').datepicker({ format: 'yyyy-mm-dd', autoclose: false, setDate: new Date() }).on('changeDate', function (ev) { $(this).focus(); });
-                        $("#datetime_edit_event").datetimepicker({format: 'HH:mm' });
-                        $("#datetime_end_edit_event").datetimepicker({format: 'HH:mm' });
+
+                        $('#date_edit_event').datepicker({
+                            format: 'yyyy-mm-dd', autoclose: false, setDate: new Date(), yearRange: '1999:2012'
+                        }).on('focusin', function(){
+                            $(this).data('val', $(this).val());
+                        }).on('change', function (ev) {
+                            let prev = $(this).data('val'), current = $(this).val();
+                            maxDateEnd('date_end_edit_event', 'date_edit_event', current, prev)
+                        });
+
+                        $('#date_end_edit_event').datepicker({
+                            format: 'yyyy-mm-dd', autoclose: false, setDate: new Date(), yearRange: '1999:2012'
+                        }).on('focusin', function(){
+                            $(this).data('val', $(this).val());
+                        }).on('change', function (ev) {
+                            let prev = $(this).data('val'), current = $(this).val();
+                            minDateEnd('date_edit_event', 'date_end_edit_event', current, prev)
+                        });
+
+                        $("#datetime_edit_event").datetimepicker({
+                            format: 'HH:mm'
+                        }).on('focusin', function(){
+                            $(this).data('val', $(this).val());
+                        }).on('dp.change', function (ev) {
+                            let prev = $(this).data('val'), current = $(this).val();
+                            maxDateEnd('datetime_end_edit_event', 'datetime_edit_event', current, prev)
+                        });
+
+                        $("#datetime_end_edit_event").datetimepicker({
+                            format: 'HH:mm'
+                        }).on('focusin', function(){
+                            $(this).data('val', $(this).val());
+                        }).on('dp.change', function (ev) {
+                            let prev = $(this).data('val'), current = $(this).val();
+                            minDateEnd('datetime_edit_event', 'datetime_end_edit_event', current, prev)
+                        });
+
+                        function minDateEnd (selector1, selector2, newVal, prevVal) { if (newVal < $(`#${selector1}`).val() ) $(`#${selector2}`).val(prevVal); }
+                        function maxDateEnd (selector1, selector2, newVal, prevVal) { if (newVal > $(`#${selector1}`).val()) $(`#${selector2}`).val(prevVal); }
                     }
                 });
             }

@@ -122,11 +122,11 @@ class ThemesController {
 
     function putEditTheme(Request $request) {
         $id = $request->get('id');
-        $time = $request->get('time');
+        $time = $request->get('timeE');
         $name = $request->get('name');
         $exam = $request->get('exam');
         $course = $request->get('course');
-        $subject = $request->get('subject');
+        $subject = $request->get('subjectE');
         $homework = $request->get('homework');
         $description = $request->get('description');
 

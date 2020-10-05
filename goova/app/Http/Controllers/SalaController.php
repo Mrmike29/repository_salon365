@@ -18,11 +18,7 @@ use Mail;
 
 use Dompdf\Dompdf;
 
-
-
 if(session_status() === PHP_SESSION_NONE) session_start();
-
-
 
 class SalaController extends Controller
 

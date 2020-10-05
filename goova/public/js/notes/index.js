@@ -77,7 +77,7 @@ const
                     paranoia($(this).data('id').split("_").pop()*1);
                 });
 
-                if(next.attr('data-id')*20 >= notesC){ next.addClass('n-t-s'); }
+                if(next.attr('data-id')*1 >= notesC){ next.addClass('n-t-s'); }
                 else{ next.removeClass('n-t-s'); }
 
                 $('#table_info').text(`Mostrando registros del ${ (notesC !== 0)? parseInt(previous.attr('data-id') ) + 1 : 0 } al ${ parseInt(previous.attr('data-id') ) + notes.length } de un total de ${ notesC } registros`)
@@ -343,7 +343,7 @@ const
                     paranoia($(this).data('id').split("_").pop()*1);
                 });
 
-                if(next.attr('data-id')*20 >= notesC){ next.addClass('n-t-s'); }
+                if(next.attr('data-id')*1 >= notesC){ next.addClass('n-t-s'); }
                 else{ next.removeClass('n-t-s'); }
 
                 $('#table_info_n').text(`Mostrando registros del ${ (notesC !== 0)? parseInt(previous.attr('data-id') ) + 1 : 0 } al ${ parseInt(previous.attr('data-id') ) + notes.length } de un total de ${ notesC } registros`)

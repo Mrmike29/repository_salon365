@@ -57,6 +57,7 @@
                                                 <th>Fecha Inicio</th>
                                                 <th>Fecha Fin</th>
                                                 <th>Duración</th>
+                                                <th style="text-align: center;">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody id="tbody_times">
@@ -95,6 +96,6 @@
         <script type="text/javascript">
             const _token = "{{ csrf_token() }}";
         </script>
-        <script type="text/javascript" src="{{asset('js/times/courses-index.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/times/index.js')}}"></script>
     </body>
 </html>

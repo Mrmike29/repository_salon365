@@ -28,7 +28,7 @@
                                                 <th>Nombre</th>
                                                 <th>Estudiantes</th>
                                                 <th>Profesores</th>
-                                                <th>Lider de Grupo</th>
+                                                <th>Director de Grupo</th>
                                                 <th class="noExport">Acciones</th>
                                             </tr>
                                         </thead>
@@ -110,7 +110,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">ESTUDIENTES</h4>
+                        <h4 class="modal-title">ESTUDIANTES</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">

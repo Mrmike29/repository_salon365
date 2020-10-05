@@ -53,15 +53,16 @@
 <script src="{{asset('js/froala_editor.pkgd.min.js')}}"></script>
 <script src="{{asset('js/application-18caf78ea729799d396faaacacecde7c.js')}}"></script>
 <script src="{{asset('js/goova-template.js')}}"></script>
+<script src="{{asset('js/m-validpass.js')}}"></script>
 <script type="text/javascript">
 
-    function universalModal(title, body, footer = "", extraClass = "") {
+    function universalModal(title, body, footer = "", extraClass = "", dismiss = true) {
         let html =
             '<div class="modal-dialog ' + extraClass + ' modal-dialog-centered">' +
                 '<div class="modal-content">' +
                     '<div class="modal-header">' +
                         '<h4 class="modal-title">' + title + '</h4>' +
-                        '<button type="button" class="close" data-dismiss="modal">×</button>' +
+                        ((dismiss) ? '<button type="button" class="close" data-dismiss="modal">×</button>' : '') +
                     '</div>' +
                     '<div class="modal-body" style="height: 355px; overflow-y: auto;">' +
                         body +
@@ -71,7 +72,10 @@
                     '</div>' +
                 '</div>' +
             '</div>'
-        $('#universal_modal').html(html).modal('show');
+
+        let show = (dismiss)? 'show' : {backdrop: 'static', keyboard: false};
+
+        $('#universal_modal').html(html).modal(show);
     }
 </script>
 <script type="text/javascript">
@@ -154,8 +158,13 @@
                     <div id="errors_change"></div>
                  </form>`
         universalModal('Cambio de contraseña',html)
+
+        $('[name="new_password"]').mPassword('_97gAr8pSAZ3w3bT')
     })
     $(document).on('submit','#change-password',function(){
+
+        if($('.error-m-password_97gAr8pSAZ3w3bT').length > 0) return false;
+
         $.ajax({
             url:'/probandoAndo',
             data:$('#change-password').serialize(),
@@ -185,6 +194,78 @@
         })
         return false;
     })
+
+    const checkFT = () => {
+        $.ajax({
+            type: 'GET',
+            url: '/get-f-t'
+        }).done((data) => {
+            if(data.ft.ft){
+                openModalChangePass()
+            }
+        })
+    }
+
+    function openModalChangePass(){
+        var html=
+            `<div class="form-group">
+                <div class="row no-gutters input-right-icon">
+                    <div class="input-effect sm2_mb_20 md_mb_20">
+                          <input type="password" name="new_password" class="read-only-input primary-input form-control" id="password" value="">
+                          <label for="name">Contraseña Nueva</label>
+                          <span class="focus-border"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row no-gutters input-right-icon">
+                    <div class="input-effect sm2_mb_20 md_mb_20">
+                          <input type="password" name="confirm_password" class="read-only-input primary-input form-control" id="password_confirmation">
+                          <label for="name">Confirmar Contraseña</label>
+                          <span class="focus-border"></span>
+                    </div>
+                </div>
+            </div>
+            <center><button onclick="changePassNew()" type="submit" class="btn btn-primary btn-sm">Cambiar Contraseña</button></center>`
+        universalModal('Bienvenido/a, cambia tu contraseña para continuar.', html, "", "", false)
+
+        $('[name="new_password"]').mPassword('_j5y7jyWXuvQPMdp')
+
+        $('[name="confirm_password"]').bind('paste input', function (){
+            $(this).siblings('span.error-m-cpassword').remove();
+            if ($('[name="new_password"]').val() !== $(this).val()){
+                $(this).parent('div').append('<span class="error-m-cpassword" style="color: red">La contraseña no coincide.</span>')
+            }
+        })
+    }
+
+    function changePassNew() {
+        let newPassword = $('[name="new_password"]').val();
+
+        if($('.error-m-password_j5y7jyWXuvQPMdp').length > 0 || $('.error-m-cpassword').length > 0) return false;
+
+        $.ajax({
+            type: 'POST',
+            url: '/change-pass-new',
+            data: { "_token": "{{ csrf_token() }}", newPassword}
+        }).done((data) => {
+            $("body").overhang({
+                type: "success",
+                message: data.message
+            });
+            $('.modal').modal('hide');
+        }).fail(() => {
+            $("body").overhang({
+                type: "error",
+                message: "Oops! Se detectó un problema, intenta más tarde.",
+                closeConfirm: true
+            });
+        })
+    }
+
+    $('.modal').on('hidden.bs.modal', function () { checkFT(); });
+
+    checkFT();
 
 </script>
 <script src="{{asset('js/search.js')}}"></script>

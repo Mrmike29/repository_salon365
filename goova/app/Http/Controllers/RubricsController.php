@@ -15,21 +15,31 @@ class RubricsController
     function postSaveRubric (Request $request) {
         $idEntity = Auth::user()->id_info_entity;
         $name = $request->get('name');
+        $act = $request->get('act');
+        $momtE = $request->get('momtE');
         $obj = $request->get('obj');
 
         try {
             $rubrics = DB::table('rubrics')
                 ->insertGetId([
                     'id_entity' => $idEntity,
-                    'name' => $name
+                    'name' => $name,
+                    'activity' => $act,
+                    'moment' => $momtE
                 ]);
 
             foreach ($obj AS $item){
                 DB::table('rubrics_range')
                     ->insert([
                         'id_rubrics' => $rubrics,
-                        'description' => $item['desc'],
-                        'score' => $item['value']
+                        'to_value' => $item['to_value'],
+                        'high_text' => $item['high_text'],
+                        'medium_text' => $item['med_text'],
+                        'low_text' => $item['low_text'],
+                        'high_points' => $item['high_points'],
+                        'medium_points' => $item['med_points'],
+                        'low_points' => $item['low_points'],
+                        'status' => 1
                     ]);
             }
         } catch (QueryException $e){
@@ -93,31 +103,48 @@ class RubricsController
     function putSaveEditedRubric (Request $request) {
         $id = $request->get('id');
         $name = $request->get('name');
+        $act = $request->get('act');
+        $momtE = $request->get('momtE');
         $fields = $request->get('fields');
 
         try {
-            DB::table('rubrics')->where('id', $id)->update([ 'name' => $name ]);
+            DB::table('rubrics')->where('id', $id)->update([ 'name' => $name, 'activity' => $act, 'moment' => $momtE ]);
+            if(isset($fields)) {
+                foreach ($fields as $item) {
+                    switch ($item['type']) {
+                        case 'i':
+                            DB::table('rubrics_range')
+                                ->insert([
+                                    'id_rubrics' => $id,
+                                    'to_value' => $item['to_value'],
+                                    'high_text' => $item['high_text'],
+                                    'medium_text' => $item['med_text'],
+                                    'low_text' => $item['low_text'],
+                                    'high_points' => $item['high_points'],
+                                    'medium_points' => $item['med_points'],
+                                    'low_points' => $item['low_points']
+                                ]);
+                            break;
+                        case 'u':
+                        case 'd':
+                            $data = ($item['type'] === 'u') ? [
+                                'to_value' => $item['to_value'],
+                                'high_text' => $item['high_text'],
+                                'medium_text' => $item['med_text'],
+                                'low_text' => $item['low_text'],
+                                'high_points' => $item['high_points'],
+                                'medium_points' => $item['med_points'],
+                                'low_points' => $item['low_points']
+                            ] :
+                                ['status' => 0];
 
-            foreach ($fields AS $item){
-                switch ($item['type']) {
-                    case 'i':
-                        DB::table('rubrics_range')
-                            ->insert([
-                                'id_rubrics' => $id,
-                                'description' => $item['desc'],
-                                'score' => $item['val']
-                            ]);
-                        break;
-                    case 'u':
-                    case 'd':
-                        $data = ($item['type'] === 'u')? [ 'description' => $item['desc'], 'score' => $item['val'] ] : ['status' => 0];
+                            DB::table('rubrics_range')
+                                ->where('id', $item['idE'])
+                                ->update($data);
+                            break;
+                    }
 
-                        DB::table('rubrics_range')
-                            ->where('id', $item['idE'])
-                            ->update($data);
-                        break;
                 }
-
             }
         } catch (QueryException $e){
             return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 500);

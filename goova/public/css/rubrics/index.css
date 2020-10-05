@@ -13,6 +13,8 @@ table.table.school-table tbody tr td { padding: 15px; }
 }
 
 .textarea-m {
+    width: 100%;
+    border: none;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--g-third) #d9dce8;
@@ -85,3 +87,5 @@ table.table.school-table tbody tr td { padding: 15px; }
 
 a.restore { cursor: pointer; }
 a.restore:hover { text-decoration: underline !important; }
+
+.the-border { border: 1px solid black; }

@@ -40,7 +40,7 @@
                                                 <div class="form-group col-lg-4">
                                                     <div class="input-effect sm2_mb_20 md_mb_20">
                                                         <select class="niceSelect w-100 bb form-control" name="id_leader_group" id="classSelectStudent" required>
-                                                            <option data-display="Seleccionar Lide de Grupo *" value="">Select</option>
+                                                            <option data-display="Seleccionar Director de Grupo *" value="">Select</option>
                                                             @foreach($teachers as $key => $val)
                                                                 <option value="{{$val->id}}">{{$val->name}} {{$val->last_name}}</option>
                                                             @endforeach

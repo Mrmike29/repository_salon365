@@ -198,8 +198,14 @@
                     password = true
                 }
             })
+
+            $('[name="password"]').mPassword();
+
             $('form.form-horizontal').submit(function(){
-                if(password == true){
+
+                if($('.error-m-password').length > 0) return false;
+
+                if(password){
                     return true
                 }else{
                     $('.invalid-feedback strong').html('Las contraseñas no coinciden')
@@ -208,94 +214,132 @@
                 }
                 return false
             })
-            $(document).on('change','select[name=id_rol]',function(){
-                var id = $(this).val()
-                if(id == 5){
+
+            $('[name="id_rol"]').change(function () {
+                $('#parent_students').remove();
+
+                let newVal = $(this).val()*1;
+
+                if (newVal !== 6 && newVal !== 5) return false;
+
+                if(newVal === 5){
                     var html = `<div class="input-effect sm2_mb_20 md_mb_20">
                                     <select class="niceSelect w-100 bb form-control" name="id_list_students" id="classSelectStudent" required>
                                         <option data-display="Seleccionar Curso *" value="">Select</option>
                                         @foreach($list_students as $key => $val)
-                                            <option value="{{$val->id}}">{{$val->name}}</option>
+                                        <option value="{{$val->id}}">{{$val->name}}</option>
                                         @endforeach
                                     </select>
                                     <span class="focus-border"></span>
                                 </div>`
                     $('#list_students').html(html).addClass('col-md-6')
                     $('select[name=id_list_students]').niceSelect();
-                }
-                {{--else if(id == 6){
-                    var html = `<div class="form-group col-md-12">
-                                    <div class="input-effect sm2_mb_20 md_mb_20">
-                                        <select class="niceSelect w-100 bb form-control" name="id_students" id="classSelectStudent" required>
-                                            <option data-display="Seleccionar  *" value="">Select</option>
-                                            @foreach($students as $key => $val)
-                                                <option value="{{$val->id}}">{{$val->document}}-{{$val->name}} {{$val->last_name}}</option>
-                                            @endforeach
-                                        </select>
-                                        <span class="focus-border"></span>
-                                    </div>
-                                </div>`
-                    $('#list_students').html(html).addClass('col-md-6')
-                    $('select[name=id_students]').niceSelect();
-                }--}}
-                else{
+                } else if (newVal === 6){
+                    let c = 1;
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '/get-courses-parents',
+                    }).done((data) => {
+                        let co = data.courses;
+
+                        let html =
+                            '<div class="form-group col-12" style="height: 300px; max-height: 300px; overflow-y: auto;" id="parent_students">' +
+                                '<div style="display: flex">' +
+                                    '<div class="form-group col-5">' +
+                                        '<div class="row no-gutters input-right-icon">' +
+                                            '<div class="col">' +
+                                                '<div class="input-effect sm2_mb_20 md_mb_20">' +
+                                                    '<input type="hidden" name="c" id="c" value="' + c + '">' +
+                                                    '<select class="niceSelect w-100 bb form-control" name="course_' + c + '" id="course_' + c + '" required>' +
+                                                        '<option data-display="Seleccione Curso" value="">Seleccione Curso</option>';
+                        co.forEach((item) => { html += '<option value="' + item.id +'">' + item.name +'</option>' })
+                            html +=                 '</select>' +
+                                                    '<span class="focus-border"></span>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="form-group col-5">' +
+                                        '<div class="row no-gutters input-right-icon">' +
+                                            '<div class="col">' +
+                                                '<div class="input-effect sm2_mb_20 md_mb_20">' +
+                                                    '<select class="niceSelect w-100 bb form-control" name="student_' + c + '" id="student_' + c + '" required>' +
+
+                                                    '</select>' +
+                                                    '<span class="focus-border"></span>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="form-group col-2">' +
+                                        '<div class="input-effect sm2_mb_20 md_mb_20">' +
+                                            '<button type="button" id="add_children" class="btn btn-primary ti-plus"></button>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>';
+
+                        $(html).insertAfter($('#rols'));
+                        $('#course_' + c).niceSelect('destroy').niceSelect();
+                        $('#student_' + c).niceSelect('destroy').niceSelect();
+
+                        $('[id^="course_"]').change(function () { searchStudents($(this).attr('id').split('_').pop()*1, $(this).val()); })
+
+                        $('#add_children').click(() => {
+                            c++;
+
+                            let added =
+                                '<div style="display: flex" id="children_' + c + '">' +
+                                    '<div class="form-group col-5">' +
+                                        '<div class="row no-gutters input-right-icon">' +
+                                            '<div class="col">' +
+                                                '<div class="input-effect sm2_mb_20 md_mb_20">' +
+                                                    '<input type="hidden" name="c" id="c" value="' + c + '">' +
+                                                    '<select class="niceSelect w-100 bb form-control" name="course_' + c + '" id="course_' + c + '" required>' +
+                                                        '<option data-display="Seleccione Curso" value="">Seleccione Curso</option>';
+                        co.forEach((item) => { added += '<option value="' + item.id +'">' + item.name +'</option>' })
+                            added +=                 '</select>' +
+                                                    '<span class="focus-border"></span>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="form-group col-5">' +
+                                        '<div class="row no-gutters input-right-icon">' +
+                                            '<div class="col">' +
+                                                '<div class="input-effect sm2_mb_20 md_mb_20">' +
+                                                    '<select class="niceSelect w-100 bb form-control" name="student_' + c + '" id="student_' + c + '" required>' +
+
+                                                    '</select>' +
+                                                    '<span class="focus-border"></span>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="form-group col-2">' +
+                                        '<div class="input-effect sm2_mb_20 md_mb_20">' +
+                                            '<button type="button" id="remove_children_'  + c + '" data-children="'  + c + '" class="btn btn-danger ti-minus"></button>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>';
+
+                            $('#parent_students').append(added);
+
+                            $('#course_' + c).niceSelect('destroy').niceSelect();
+                            $('#student_' + c).niceSelect('destroy').niceSelect();
+
+                            $('[id^="course_"]').change(function () { searchStudents($(this).attr('id').split('_').pop()*1, $(this).val()); })
+
+                            $('[id^="remove_children_"]').click(function (){
+                                let child = $(this).attr('data-children');
+                                $('#children_' + child).remove();
+                            })
+                        })
+                    });
+                } else {
                     $('#list_students').removeClass('col-md-6').html("")
                 }
-            })
-
-            $('[name="id_rol"]').change(function () {
-                $('#parent_students').remove();
-                if ($(this).val()*1 !== 6) return false;
-
-                let c = 1;
-
-                $.ajax({
-                    type: 'GET',
-                    url: '/get-courses-parents',
-                }).done((data) => {
-                    let co = data.courses;
-
-                    let html =
-                        '<div class="form-group col-12" style="height: 300px; max-height: 300px; overflow-y: auto;" id="parent_students">' +
-                            '<div style="display: flex">' +
-                                '<div class="form-group col-5">' +
-                                    '<div class="row no-gutters input-right-icon">' +
-                                        '<div class="col">' +
-                                            '<div class="input-effect sm2_mb_20 md_mb_20">' +
-                                                '<input type="hidden" name="c" id="c" value="' + c + '">' +
-                                                '<select class="niceSelect w-100 bb form-control" name="course_' + c + '" id="course_' + c + '" required>' +
-                                                    '<option data-display="Seleccione Curso" value="">Seleccione Curso</option>';
-                    co.forEach((item) => { html += '<option value="' + item.id +'">' + item.name +'</option>' })
-                        html +=                 '</select>' +
-                                                '<span class="focus-border"></span>' +
-                                            '</div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="form-group col-5">' +
-                                    '<div class="row no-gutters input-right-icon">' +
-                                        '<div class="col">' +
-                                            '<div class="input-effect sm2_mb_20 md_mb_20">' +
-                                                '<select class="niceSelect w-100 bb form-control" name="student_' + c + '" id="student_' + c + '" required>' +
-
-                                                '</select>' +
-                                                '<span class="focus-border"></span>' +
-                                            '</div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="form-group col-2">' +
-
-                                '</div>' +
-                            '</div>' +
-                        '</div>';
-
-                    $(html).insertAfter($('#rols'));
-                    $('#course_' + c).niceSelect('destroy').niceSelect();
-                    $('#student_' + c).niceSelect('destroy').niceSelect();
-
-                    $('[id^="course_"]').change(function () { searchStudents($(this).attr('id').split('_').pop()*1, $(this).val()); })
-                });
             });
 
             const searchStudents = (id, val) => {

@@ -3,9 +3,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Response;
 
 class ImportantDatesController
 {
@@ -92,4 +94,19 @@ class ImportantDatesController
 
         return [ 'dates' => $dates ];
     }
+
+    function deleteEvent (Request $request) {
+        $id = $request->get('id', null);
+
+        if ($id === null) { return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 500); }
+
+        try {
+            DB::table('important_dates')->where('id', $id)->delete();
+        } catch (QueryException $e) {
+            return Response::json(['error' => 'Oops! Se detectó un problema, intenta más tarde.'], 500);
+        }
+
+        return Response::json(['success' => true], 200);
+    }
+
 }

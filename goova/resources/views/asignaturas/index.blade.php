@@ -18,7 +18,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 text-right">
-                                <a href="#!" class="primary-btn small goova-bt create_subject" data-toggle="tooltip" title="" data-original-title="Agregar Subject">
+                                <a href="#!" class="primary-btn small goova-bt create_subject" data-toggle="tooltip" title="" data-original-title="Agregar Asignatura">
                                     <span class="ti-plus"></span>
                                 </a>
                             </div>
@@ -164,7 +164,7 @@
                             columns: [
                                 { data: "name_areas" },
                                 { data: "name" },
-                                { 
+                                {
                                     data: "id",
                                     render: function (data, type, row, meta) {
                                         return  `<div class="dropdown">
