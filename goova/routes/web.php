@@ -218,6 +218,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-c-d', [PdfController::class, 'getCryptData']);
 
     /* VIDEOCHAT */
+    Route::post('/listar/asistencia','SalaController@getAssist');
     Route::get('/listar/sala', [SalaController::class, 'index']);
     Route::get('/crear/sala', [SalaController::class, 'getCrearSala']);
     Route::post('/crear/sala', [SalaController::class, 'crearSala'])->name('crearSala');

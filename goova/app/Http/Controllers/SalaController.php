@@ -29,6 +29,9 @@ class SalaController extends Controller
         return $pdf->stream();
     }
 
+    public function getAssist(){
+        
+    }
 
     public function index()
     {
@@ -48,7 +51,7 @@ class SalaController extends Controller
         if ($tipo=="Estudiante") {
             $room=$room->where('room.id_list_students',$users_list_students);
             $asignatura=DB::table('subjects')
-            ->join('course','course.id','subjects.id_course')
+            // ->join('course','course.id','subjects.id_course')
             ->join('users_list_students as ul','ul.id','course.id_list_students')
             ->where('ul.id_users',Auth::user()->id)
             ->get();
